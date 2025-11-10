@@ -55,16 +55,7 @@ const Header = ({ toggleTheme, isDark }) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <svg
-            fill="currentColor"
-            viewBox="0 0 147 70"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            className="text-foreground rounded-full size-8 w-8"
-          >
-            <path d="M56 50.2031V14H70V60.1562C70 65.5928 65.5928 70 60.1562 70C57.5605 70 54.9982 68.9992 53.1562 67.1573L0 14H19.7969L56 50.2031Z"></path>
-            <path d="M147 56H133V23.9531L100.953 56H133V70H96.6875C85.8144 70 77 61.1856 77 50.3125V14H91V46.1562L123.156 14H91V0H127.312C138.186 0 147 8.81439 147 19.6875V56Z"></path>
-          </svg>
+          
         </a>
 
         <div className="absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-muted-foreground transition duration-200 hover:text-foreground md:flex md:space-x-2">
@@ -152,7 +143,7 @@ const Header = ({ toggleTheme, isDark }) => {
 
         <button
           onClick={toggleTheme}
-          className=" cursor-pointer z-20 group p-3 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300"
+          className=" cursor-pointer z-20 group p-3 rounded-lg   transition-all duration-300"
           aria-label="Toggle theme"
         >
           {isDark ? (
@@ -255,7 +246,7 @@ const Header = ({ toggleTheme, isDark }) => {
               </button>
               <button
                 onClick={toggleTheme}
-                className="group p-3 rounded-lg border border-border hover:border-muted-foreground/50 transition-all duration-300"
+                className="group p-3 rounded-lg  transition-all duration-300"
                 aria-label="Toggle theme"
               >
                 {isDark ? (
