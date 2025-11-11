@@ -139,7 +139,7 @@ export default function Home() {
                   tech: ["React", "TypeScript", "Next.js"],
                 },
                 {
-                  year: "Jun 2024 – Jul 2024",
+                  year: "Jun 2025 – Jul 2025",
 
                   role: "Full-Stack Developer (Contract)",
                   company: "Tactix – Software Agency",
