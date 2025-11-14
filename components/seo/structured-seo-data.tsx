@@ -1,4 +1,5 @@
-// components/structured-seo-data.tsx
+import Script from 'next/script';
+
 interface StructuredDataProps {
   type?: "Organization" | "WebSite" | "BreadcrumbList" | "FAQPage";
   breadcrumbs?: Array<{ name: string; url: string }>;
@@ -74,11 +75,12 @@ export function StructuredData({
 
   const schema = getSchema();
 
-  return (
-    <script
+  return schema ? (
+    <Script
+      id={`structured-data-${type}`}
       type="application/ld+json"
+      strategy="afterInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      suppressHydrationWarning
     />
-  );
+  ) : null;
 }
