@@ -1,29 +1,32 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Geist } from "next/font/google"
-import "./globals.css"
+import type React from "react";
+import type { Metadata } from "next";
+import { Geist } from "next/font/google";
+import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const geist = Geist({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-geist",
-})
+});
 
 export const metadata: Metadata = {
   title: "Hamza Benarfa - Full stack Developer",
   description: "Fullstack Developer from Tunisia with 3 years of experience.",
-  generator: "Nextd,js",
-}
+  generator: "Next.js",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
       <body className="font-sans antialiased">
-      {children}</body>
+        {children}
+        <Analytics />
+      </body>
     </html>
-  )
+  );
 }
