@@ -5,6 +5,7 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SEO } from "@/components/seo/seo";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const geist = Geist({
   subsets: ["latin"],
@@ -76,6 +77,8 @@ export default function RootLayout({
         {children}
         <SEO />
         <Analytics />
+        <SpeedInsights />
+
         </ThemeProvider>
       </body>
     </html>
