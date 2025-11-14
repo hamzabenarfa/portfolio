@@ -7,5 +7,16 @@ import {
 } from 'next-themes'
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    // Skip theme application during SSR to avoid hydration mismatch
+    return <>{children}</>
+  }
+
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>
 }

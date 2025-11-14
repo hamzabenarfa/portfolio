@@ -1,11 +1,16 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
-const Header = ({ toggleTheme, isDark }) => {
-      console.log("Header isDark prop:", isDark);
+const Header = () => {
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, setTheme } = useTheme()
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
+  const isDark = theme === 'dark';
 
   useEffect(() => {
     const handleScroll = () => {
