@@ -94,26 +94,7 @@ const Header = () => {
           >
             <span className="relative z-20">Work</span>
           </a>
-          <a
-            className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-            onClick={(e) => {
-              e.preventDefault();
-              const element = document.getElementById("thoughts");
-              if (element) {
-                const headerOffset = 120; // Account for sticky header height + margin
-                const elementPosition =
-                  element.getBoundingClientRect().top + window.pageYOffset;
-                const offsetPosition = elementPosition - headerOffset;
-
-                window.scrollTo({
-                  top: offsetPosition,
-                  behavior: "smooth",
-                });
-              }
-            }}
-          >
-            <span className="relative z-20">thoughts</span>
-          </a>
+          
           <a
             className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             onClick={(e) => {
@@ -239,12 +220,7 @@ const Header = () => {
               >
                 work
               </button>
-              <button
-                onClick={() => handleMobileNavClick("thoughts")}
-                className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
-              >
-                thoughts
-              </button>
+             
               <button
                 onClick={() => handleMobileNavClick("connect")}
                 className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
