@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const Header = () => {
@@ -53,17 +54,26 @@ const Header = () => {
         className={`sticky top-4 z-40 mx-auto hidden w-full  flex-row items-center justify-between self-start rounded-xl  md:flex backdrop-blur-sm border border-border/50 shadow-lg transition-all duration-300 max-w-3xl p-3`}
   
       >
+        {/* Brand/Title */}
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 group"
+        >
+          <Image 
+            src="/avatar.jpeg"
+            width={32} 
+            height={32}
+            alt="Hamza Benarfa"
+            className="rounded-full aspect-square"
+            priority
+            quality={90}
+          />
+          <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-300">
+             Benarfa Hamza
+          </span>
+        </Link>
         
-        <div className="  hidden flex-1 flex-row items-center  space-x-2 text-sm font-medium text-muted-foreground transition duration-200 hover:text-foreground md:flex md:space-x-2">
-            <Image 
-              src="/avatar.jpeg"
-              width={30} 
-              height={30}
-              alt="Hamza Benarfa"
-              className="rounded-full aspect-square"
-              priority
-              quality={90}
-            />
+        <div className="  hidden flex-1 flex-row items-center justify-center  space-x-2 text-sm font-medium text-muted-foreground transition duration-200 hover:text-foreground md:flex md:space-x-2">
           <a
             className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             onClick={(e) => {
@@ -82,7 +92,7 @@ const Header = () => {
               }
             }}
           >
-            <span className="relative z-20">Intro</span>
+            <span className="relative z-20">About</span>
           </a>
           <a
             className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
@@ -102,9 +112,28 @@ const Header = () => {
               }
             }}
           >
-            <span className="relative z-20">Work</span>
+            <span className="relative z-20">Experience</span>
           </a>
-          
+          <a
+            className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              const element = document.getElementById("projects");
+              if (element) {
+                const headerOffset = 120; // Account for sticky header height + margin
+                const elementPosition =
+                  element.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - headerOffset;
+
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: "smooth",
+                });
+              }
+            }}
+          >
+            <span className="relative z-20">Projects</span>
+          </a>
           <a
             className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             onClick={(e) => {
@@ -123,7 +152,7 @@ const Header = () => {
               }
             }}
           >
-            <span className="relative z-20">connect</span>
+            <span className="relative z-20">Contact</span>
           </a>
         </div>
 
@@ -159,8 +188,24 @@ const Header = () => {
 
       {/* Mobile Header */}
       <header className="sticky top-4 z-[9999] mx-4 flex w-auto flex-row items-center justify-between rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg md:hidden px-4 py-3">
-       
-     
+        {/* Mobile Brand/Title */}
+        <Link
+          href="/"
+          className="flex items-center gap-2 group"
+        >
+          <Image 
+            src="/avatar.jpeg"
+            width={28} 
+            height={28}
+            alt="Hamza Benarfa"
+            className="rounded-full aspect-square"
+            priority
+            quality={90}
+          />
+          <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-300">
+            H. Benarfa
+          </span>
+        </Link>
 
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -220,24 +265,43 @@ const Header = () => {
         <div className="fixed inset-0 z-[9998] bg-black/50 backdrop-blur-sm md:hidden">
           <div className="absolute top-20 left-4 right-4 bg-background/95 backdrop-blur-md border border-border/50 rounded-2xl shadow-2xl p-6">
             <nav className="flex flex-col space-y-4">
+              <Link
+                href="/"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-left px-4 py-3 text-lg font-medium text-foreground hover:text-primary transition-colors rounded-lg hover:bg-background/50 flex items-center gap-3"
+              >
+                <Image 
+                  src="/avatar.jpeg"
+                  width={32} 
+                  height={32}
+                  alt="Hamza Benarfa"
+                  className="rounded-full aspect-square"
+                />
+                <span>Home</span>
+              </Link>
               <button
                 onClick={() => handleMobileNavClick("intro")}
                 className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
               >
-                intro
+                About
               </button>
               <button
                 onClick={() => handleMobileNavClick("work")}
                 className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
               >
-                work
+                Experience
               </button>
-             
+              <button
+                onClick={() => handleMobileNavClick("projects")}
+                className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
+              >
+                Projects
+              </button>
               <button
                 onClick={() => handleMobileNavClick("connect")}
                 className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
               >
-                connect
+                Contact
               </button>
               <button
                 onClick={toggleTheme}
