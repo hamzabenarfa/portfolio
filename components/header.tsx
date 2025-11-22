@@ -1,16 +1,24 @@
 "use client";
 
 import { useTheme } from "next-themes";
+import Image from "next/image";
 import { useState, useEffect } from "react";
-const Header = () => {
 
+const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark')
-  }
-  const isDark = theme === 'dark';
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+  
+  const isDark = mounted && theme === 'dark';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,18 +50,20 @@ const Header = () => {
     <>
       {/* Desktop Header */}
       <header
-        className={`sticky top-4 z-[9999]  mx-auto hidden w-full flex-row items-center justify-between self-start rounded-full bg-background/80 md:flex backdrop-blur-sm border border-border/50 shadow-lg transition-all duration-300 ${
-          isScrolled ? "max-w-3xl px-2" : "max-w-4xl px-4"
-        } py-2`}
-        style={{
-          willChange: "transform",
-          transform: "translateZ(0)",
-          backfaceVisibility: "hidden",
-          perspective: "1000px",
-        }}
+        className={`sticky top-4 z-40 mx-auto hidden w-full  flex-row items-center justify-between self-start rounded-xl  md:flex backdrop-blur-sm border border-border/50 shadow-lg transition-all duration-300 max-w-3xl p-3`}
+  
       >
         
         <div className="  hidden flex-1 flex-row items-center  space-x-2 text-sm font-medium text-muted-foreground transition duration-200 hover:text-foreground md:flex md:space-x-2">
+            <Image 
+              src="/avatar.jpeg"
+              width={30} 
+              height={30}
+              alt="Hamza Benarfa"
+              className="rounded-full aspect-square"
+              priority
+              quality={90}
+            />
           <a
             className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             onClick={(e) => {
@@ -119,10 +129,11 @@ const Header = () => {
 
         <button
           onClick={toggleTheme}
-          className=" cursor-pointer z-20 group p-3 rounded-lg   transition-all duration-300"
+          className="cursor-pointer z-20 group p-3 rounded-lg transition-all duration-300"
           aria-label="Toggle theme"
+          disabled={!mounted}
         >
-          {isDark ? (
+          {mounted && isDark ? (
             <svg
               className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
               fill="currentColor"
@@ -176,10 +187,11 @@ const Header = () => {
         </button>
            <button
           onClick={toggleTheme}
-          className=" cursor-pointer z-20 group p-3 rounded-lg   transition-all duration-300"
+          className="cursor-pointer z-20 group p-3 rounded-lg transition-all duration-300"
           aria-label="Toggle theme"
+          disabled={!mounted}
         >
-          {isDark ? (
+          {mounted && isDark ? (
             <svg
               className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
               fill="currentColor"
@@ -229,10 +241,11 @@ const Header = () => {
               </button>
               <button
                 onClick={toggleTheme}
-                className="group p-3 rounded-lg  transition-all duration-300"
+                className="group p-3 rounded-lg transition-all duration-300"
                 aria-label="Toggle theme"
+                disabled={!mounted}
               >
-                {isDark ? (
+                {mounted && isDark ? (
                   <svg
                     className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
                     fill="currentColor"

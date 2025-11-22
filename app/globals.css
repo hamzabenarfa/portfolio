@@ -130,6 +130,23 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Typography improvements */
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+    font-feature-settings: "kern" 1;
+  }
+  
+  p {
+    @apply tracking-normal;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Improve readability for long text */
+  .prose {
+    max-width: 65ch;
   }
 }
 

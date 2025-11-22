@@ -14,20 +14,36 @@ const geist = Geist({
 });
 
 export const metadata: Metadata ={
-  title: "Hamza Benarfa | Full-Stack Developer & Tech Mentor",
-  description: "I build scalable web & mobile apps with React, Next.js, React Native, and NestJS. Available for freelance and collaborations.",
+  title: {
+    default: "Hamza Benarfa | Full-Stack Developer & DevOps Engineer",
+    template: "%s | Hamza Benarfa",
+  },
+  description:"Freelance full-stack developer & DevOps engineer from Tunisia. I build fast, accessible, and scalable web & mobile apps with Next.js, TypeScript, React, NestJS, and cloud infrastructure.",
+
   keywords: [
+    "freelance developer Tunisia",
+    "freelance developer",
     "full-stack developer",
-    "Next.js portfolio",
-    "React Native",
-    "TypeScript",
+    "Next.js expert",
+    "TypeScript developer",
+    "React developer",
+    "DevOps engineer",
+    "web development portfolio",
+    "mobile app development",
     "Stripe integration",
-    "KonvaJS",
+    "CI/CD automation",
+    "cloud deployment",
+    "SaaS development",
+    "startup tech partner",
+    "accessible web apps",
+    "pixel-perfect UI",
+    "NestJS backend",
     "Zustand",
+    "React Query",
     "ShadCN",
-    "freelance developer Tunisia"
+    "KonvaJS",
   ],
-  authors: [{ name: "Hamza Benarfa" }],
+  authors: [{ name: "Hamza Benarfa", url: "https://benarfa.com" }],
   openGraph: {
     title: "Hamza Benarfa — Full-Stack Developer",
     description: "Building pixel-perfect, performant web apps with modern stacks.",
@@ -35,6 +51,14 @@ export const metadata: Metadata ={
     siteName: "benarfa.com",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "https://benarfa.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Hamza Benarfa",
+      },
+    ],
   
   },
  
