@@ -9,17 +9,20 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   
   useEffect(() => {
     setMounted(true);
   }, []);
   
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    // Use resolvedTheme for more reliable detection, fallback to theme
+    const currentTheme = resolvedTheme || theme;
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
   };
   
-  const isDark = mounted && theme === 'dark';
+  // Use resolvedTheme for more accurate theme detection
+  const isDark = mounted && (resolvedTheme === 'dark' || (resolvedTheme === undefined && theme === 'dark'));
 
   useEffect(() => {
     const handleScroll = () => {
@@ -160,9 +163,8 @@ const Header = () => {
           onClick={toggleTheme}
           className="cursor-pointer z-20 group p-3 rounded-lg transition-all duration-300"
           aria-label="Toggle theme"
-          disabled={!mounted}
         >
-          {mounted && isDark ? (
+          {isDark ? (
             <svg
               className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
               fill="currentColor"
@@ -234,9 +236,8 @@ const Header = () => {
           onClick={toggleTheme}
           className="cursor-pointer z-20 group p-3 rounded-lg transition-all duration-300"
           aria-label="Toggle theme"
-          disabled={!mounted}
         >
-          {mounted && isDark ? (
+          {isDark ? (
             <svg
               className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
               fill="currentColor"
@@ -307,9 +308,8 @@ const Header = () => {
                 onClick={toggleTheme}
                 className="group p-3 rounded-lg transition-all duration-300"
                 aria-label="Toggle theme"
-                disabled={!mounted}
               >
-                {mounted && isDark ? (
+                {isDark ? (
                   <svg
                     className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors duration-300"
                     fill="currentColor"

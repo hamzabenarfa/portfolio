@@ -6,6 +6,7 @@ import ProjectShowcase from "@/components/project-showcase";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { Download } from "lucide-react";
 import {
   CURRENT_POSITION,
   SOCIAL_LINKS,
@@ -61,65 +62,118 @@ export default function Home() {
           id="intro"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="min-h-screen flex items-center"
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="min-h-screen flex items-center relative"
         >
-          <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
-            <div className="lg:col-span-3 space-y-6 sm:space-y-8">
-              <div className="space-y-3 sm:space-y-2">
-                <div className="text-sm text-muted-foreground font-mono tracking-wider ml-1.5">
-                  PORTFOLIO{" "}
-                </div>
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight">
-                  Benarfa
-                  <br />
-                  <span className="text-primary">Hamza</span>
-                </h1>
-              </div>
+          {/* Background gradient decoration */}
+          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+            <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+          </div>
 
-              <div className="space-y-6 max-w-2xl">
-                <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-[65ch]">
-                  Full-stack developer from Tunisia with 3 years of experience building 
-                  scalable web applications. I specialize in crafting pixel-perfect interfaces 
-                  and robust backend systems using modern JavaScript ecosystems.
+          <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full relative z-10">
+            <div className="lg:col-span-3 space-y-8 sm:space-y-10">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="space-y-4 sm:space-y-3"
+              >
+                <div className="text-xs sm:text-sm text-muted-foreground font-mono tracking-wider uppercase">
+                  Full-Stack Developer
+                </div>
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-light tracking-tight leading-[0.9]">
+                  <motion.span
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="block"
+                  >
+                    Benarfa
+                  </motion.span>
+                  <motion.span
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    className="block text-[#C0C0C0]"
+                  >
+                    Hamza
+                  </motion.span>
+                </h1>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="space-y-6 max-w-2xl"
+              >
+                <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-[65ch] font-light">
+                  Full-stack developer from <span className="text-foreground font-medium">Tunisia</span> with{" "}
+                  <span className="text-foreground font-medium">3 years</span> of experience building 
+                  scalable web applications. I specialize in crafting{" "}
+                  <span className="text-primary">pixel-perfect interfaces</span> and{" "}
+                  <span className="text-primary">robust backend systems</span> using modern JavaScript ecosystems.
                 </p>
 
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                    <span>Available for opportunities</span>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 pt-2">
+                  <div className="flex items-center gap-3 px-4 py-2.5 bg-secondary/30 border border-secondary/40 rounded-lg w-fit">
+                    <div className="relative">
+                      <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full"></div>
+                      <div className="absolute inset-0 w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping opacity-75"></div>
+                    </div>
+                    <span className="text-sm font-medium text-foreground">Available for opportunities</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>Tunisia</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
-            <div className="lg:col-span-2 flex flex-col justify-end space-y-6 sm:space-y-8 mt-8 lg:mt-0">
-              <div className="space-y-4">
-                <div className="text-sm text-muted-foreground font-mono">
-                  CURRENTLY
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="lg:col-span-2 flex flex-col justify-end space-y-8 sm:space-y-10 mt-8 lg:mt-0"
+            >
+              <div className="space-y-4 p-6 bg-secondary/20 border border-secondary/30 rounded-xl">
+                <div className="text-xs text-muted-foreground font-mono tracking-wider uppercase">
+                  Currently Working
                 </div>
                 <div className="space-y-2">
-                  <div className="text-foreground">{CURRENT_POSITION.title}</div>
-                  <div className="text-primary/70">
+                  <div className="text-lg font-medium text-foreground">{CURRENT_POSITION.title}</div>
+                  <div className="text-primary font-medium">
                     {CURRENT_POSITION.company}
                   </div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-sm text-muted-foreground">
                     {CURRENT_POSITION.period}
                   </div>
                 </div>
               </div>
 
               <div className="space-y-4">
-                <div className="text-sm text-muted-foreground font-mono">
-                  FOCUS
+                <div className="text-xs text-muted-foreground font-mono tracking-wider uppercase">
+                  Tech Focus
                 </div>
-                <div className="flex flex-wrap gap-2 cursor-pointer">
-                  {TECH_STACK.map((skill) => (
-                    <TechTag key={skill}>{skill}</TechTag>
+                <div className="flex flex-wrap gap-2">
+                  {TECH_STACK.map((skill, index) => (
+                    <motion.div
+                      key={skill}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: 0.6 + index * 0.05 }}
+                    >
+                      <TechTag>{skill}</TechTag>
+                    </motion.div>
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </motion.header>
 
@@ -196,6 +250,17 @@ export default function Home() {
                       />
                     </svg>
                   </Link>
+                  <a
+                    href="/benarfa-hamza-en.pdf"
+                    download
+                    className="group flex items-center gap-3 text-foreground hover:text-primary transition-colors duration-300"
+                  >
+                    <Download className="w-5 h-5" />
+                    <span className="text-base sm:text-lg">
+                      Download CV
+                    </span>
+                  
+                  </a>
                 </div>
               </div>
             </div>
