@@ -42,7 +42,9 @@ export default function JobModal({ isOpen, onClose, job }: JobModalProps) {
 
           <div>
             <h4 className="font-semibold text-foreground mb-2">Details</h4>
-            <p className="text-muted-foreground leading-relaxed">{job.details}</p>
+            <p className="text-muted-foreground leading-relaxed">
+              {job.details || job.description}
+            </p>
           </div>
 
           <div>

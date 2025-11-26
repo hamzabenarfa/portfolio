@@ -79,35 +79,35 @@ export const WORK_EXPERIENCE = [
     year: "Nov 2024 – Present",
     role: "Full-Stack Developer",
     company: "D-TALK Startup",
-    description:
-      "Building a multi-role fashion e-commerce platform serving designers, brands, and administrators. Architected the frontend with Next.js 15 and React 19, implementing advanced canvas editing, real-time design customization, and role-based dashboards. Delivered pixel-perfect UI from Figma designs with focus on performance and accessibility.",
-    tech: ["Next.js 15", "React 19", "TypeScript", "Zustand", "TanStack Query", "Konva.js", "Fabric.js"],
+    description: "Developing a multi-tenant fashion e-commerce platform serving designers, brands, and administrators using Next.js 15 and React 19.",
+    details: "Architected and implemented the core frontend system featuring advanced canvas-based product customization with Konva.js, real-time preview capabilities, and role-specific dashboards. Translated complex Figma designs into accessible, performant UIs (Lighthouse scores >90) while establishing scalable state management patterns with Zustand and TanStack Query.",
+    tech: ["Next.js 15", "React 19", "TypeScript", "Zustand", "TanStack Query", "Konva.js"],
   },
   {
     id: 2,
-    year: "Jun 2024 – Jul 2024",
+    year: "Jun 2025 – Jul 2025",
     role: "Full-Stack Developer (Contract)",
     company: "Tactix – Software Agency",
-    description:
-      "Delivered a production-ready e-commerce platform within a 2-month sprint. Collaborated in an Agile team to build scalable features using React, Nest.js, and MongoDB. Implemented GraphQL APIs and optimized frontend performance with Framer Motion animations.",
-    tech: ["React", "Nest.js", "GraphQL", "MongoDB", "Framer Motion"],
+    description: "Accelerated delivery of a high-performance e-commerce platform within an aggressive 2-month sprint using React and Nest.js.",
+    details: "Collaborated in an Agile team to build scalable features using React, Nest.js, and MongoDB. Implemented RESTful APIs and optimized frontend performance with Framer Motion animations. Focused on delivering high-quality code within tight deadlines.",
+    tech: ["React", "Nest.js", "MongoDB", "Framer Motion"],
   },
   {
     id: 3,
     year: "Aug 2024 – Oct 2024",
     role: "Full-Stack Development Trainer",
     company: "NGB Professional",
-    description:
-      "Led comprehensive training programs in full-stack development, teaching the MERN stack (MongoDB, Express, React, Node.js) to aspiring developers. Created hands-on projects and mentored students through real-world application development.",
+    description: "Led comprehensive training programs in full-stack development teaching the MERN stack.",
+    details: "Led comprehensive training programs in full-stack development, teaching the MERN stack (MongoDB, Express, React, Node.js) to aspiring developers. Created hands-on projects and mentored students through real-world application development scenarios.",
     tech: ["MongoDB", "Express", "React", "Node.js", "PostgreSQL"],
   },
   {
     id: 4,
     year: "Jun 2022 – Present",
-    role: "Freelance Full-Stack Developer",
+    role: "Senior Freelance Developer",
     company: "Self-Employed",
-    description:
-      "Delivered 15+ client projects ranging from MVPs to production systems. Specialized in building scalable web applications with modern tech stacks, focusing on clean architecture, performance optimization, and user experience.",
+    description: "Delivered 15+ production applications for startups and SMBs with 100% client retention across 3 repeat engagements.",
+    details: "Delivered 15+ client projects ranging from MVPs to production systems. Specialized in building scalable web applications with modern tech stacks, focusing on clean architecture, performance optimization, and user experience.",
     tech: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL", "MySQL"],
   },
 ];
