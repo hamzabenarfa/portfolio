@@ -64,9 +64,6 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
                   <h3 className="text-xl sm:text-2xl font-light text-foreground group-hover:text-primary transition-colors duration-300">
                     {project.title}
                   </h3>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    {project.year}
-                  </p>
                 </div>
                 <div className="group-hover:translate-x-1 transition-transform duration-300">
                   <MoveUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors duration-300" />

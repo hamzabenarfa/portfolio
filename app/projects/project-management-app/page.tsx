@@ -5,34 +5,36 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { PROJECTS } from '@/data/consts';
-import { ArrowLeft, ExternalLink, CheckCircle2, Code2, Zap, Shield, Globe, Users, ShoppingCart, Palette } from 'lucide-react';
+import { ArrowLeft, ExternalLink, CheckCircle2, Code2, Zap, Shield, Layout, Calendar, Users, PenTool } from 'lucide-react';
 
-export default function DTalkProjectPage() {
-  const project = PROJECTS.find((p) => p.slug === 'dtalk-ecosystem');
+export default function ProjectManagementPage() {
+  const project = PROJECTS.find((p) => p.slug === 'project-management-app');
   const [imageError, setImageError] = useState(false);
 
   if (!project) return null;
 
-  const otherProject = PROJECTS.find((p) => p.slug === 'ecommerce-platform');
+  const otherProject = PROJECTS.find((p) => p.slug === 'dtalk-ecosystem');
 
   const keyFeatures = [
-    'Multi-role architecture with specialized dashboards for designers, brands, and administrators',
-    'Advanced canvas editing with Fabric.js and Konva for professional design creation',
-    'AI-powered design generation and custom design uploads',
-    'Complete e-commerce system with shopping cart, favorites, and payment integration',
-    'Earnings tracking and financial management for creators with withdrawal system',
-    'Security-first approach with HTTP-only cookies, JWT tokens, and role-based access control',
-    'Built-in internationalization supporting English and French',
-    'Azure Blob Storage for secure image management with SAS URL generation',
+    'Comprehensive project management with Kanban boards and burn down charts',
+    'Interactive drag-and-drop task management using @dnd-kit',
+    'Team and member management with role-based access control',
+    'Full calendar view for scheduling appointments and recurring events',
+    'Integrated whiteboard for brainstorming and sketching',
+    'Built-in support for creating technical diagrams with Mermaid.js',
+    'Dashboard with project status charts and task distribution',
+    'Secure authentication with NextAuth.js and session management',
   ];
 
   const frontendTech = project.tech.filter(t => 
     t.includes('React') || t.includes('Next.js') || t.includes('TypeScript') || 
-    t.includes('Tailwind') || t.includes('Framer') || t.includes('Zustand')
+    t.includes('Tailwind') || t.includes('shadcn') || t.includes('Zustand') || t.includes('Framer')
   );
-  const toolsTech = project.tech.filter(t => 
-    t.includes('Fabric') || t.includes('Konva') || t.includes('Query') || 
-    t.includes('Form') || t.includes('Zod') || t.includes('intl') || t.includes('Azure')
+  const backendTech = project.tech.filter(t => 
+    t.includes('MySQL') || t.includes('Prisma') || t.includes('NextAuth')
+  );
+  const otherTech = project.tech.filter(t => 
+    !frontendTech.includes(t) && !backendTech.includes(t)
   );
 
   return (
@@ -47,7 +49,7 @@ export default function DTalkProjectPage() {
             <ArrowLeft className="w-4 h-4" />
             Back to Portfolio
           </Link>
-          {project.url && (
+          {project.url && project.url !== '#' && (
             <a
               href={project.url}
               target="_blank"
@@ -78,9 +80,7 @@ export default function DTalkProjectPage() {
           </h1>
           
           <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl">
-            A comprehensive fashion e-commerce platform enabling designers to create and sell, 
-            brands to customize products, and admins to manage the ecosystem. Features advanced 
-            canvas editing, AI-powered design tools, and multi-role dashboards.
+            {project.description}
           </p>
 
           {/* Quick Stats */}
@@ -91,7 +91,7 @@ export default function DTalkProjectPage() {
             </div>
             <div className="px-4 py-2 bg-secondary/30 rounded-lg border border-secondary/40">
               <div className="text-xs text-muted-foreground font-mono mb-1">STATUS</div>
-              <div className="text-sm font-medium">Production Ready</div>
+              <div className="text-sm font-medium">In Development</div>
             </div>
           </div>
         </motion.div>
@@ -117,7 +117,7 @@ export default function DTalkProjectPage() {
           ) : (
             <div className="w-full h-full flex items-center justify-center">
               <div className="text-center">
-                <div className="text-6xl mb-4">📦</div>
+                <div className="text-6xl mb-4">📊</div>
                 <p className="text-muted-foreground">{project.title}</p>
               </div>
             </div>
@@ -133,7 +133,7 @@ export default function DTalkProjectPage() {
         >
           <h2 className="text-2xl sm:text-3xl font-light mb-8">Key Features</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {keyFeatures.slice(0, 8).map((feature, index) => (
+            {keyFeatures.map((feature, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 10 }}
@@ -173,53 +173,53 @@ export default function DTalkProjectPage() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
                   <div className="text-sm font-medium mb-1 flex items-center gap-2">
+                    <Layout className="w-4 h-4" />
+                    Project Management
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    Projects, Kanban boards, and Burn down charts for complete tracking
+                  </div>
+                </div>
+                <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
+                  <div className="text-sm font-medium mb-1 flex items-center gap-2">
                     <Users className="w-4 h-4" />
-                    Multi-Role System
+                    Team & Members
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    Four distinct user roles with specialized dashboards and role-based routing
+                    Role-based access control and member directory management
                   </div>
                 </div>
                 <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
                   <div className="text-sm font-medium mb-1 flex items-center gap-2">
-                    <Palette className="w-4 h-4" />
-                    Canvas Editor
+                    <Calendar className="w-4 h-4" />
+                    Scheduling
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    Professional-grade editing with Fabric.js and Konva for design creation
+                    Full calendar view with appointments and recurring events
                   </div>
                 </div>
                 <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
                   <div className="text-sm font-medium mb-1 flex items-center gap-2">
-                    <ShoppingCart className="w-4 h-4" />
-                    E-Commerce
+                    <PenTool className="w-4 h-4" />
+                    Visual Tools
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    Complete shopping experience with cart, favorites, and payment integration
+                    Interactive whiteboard and Mermaid.js diagram support
                   </div>
                 </div>
                 <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
                   <div className="text-sm font-medium mb-1 flex items-center gap-2">
                     <Shield className="w-4 h-4" />
-                    Security First
+                    Security
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    HTTP-only cookies, JWT tokens, and role-based access control
-                  </div>
-                </div>
-                <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
-                  <div className="text-sm font-medium mb-1 flex items-center gap-2">
-                    <Globe className="w-4 h-4" />
-                    Multilingual
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    Built-in i18n support for English and French with locale-based routing
+                    Secure auth with NextAuth.js and session management via Prisma
                   </div>
                 </div>
                 <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
                   <div className="text-sm font-medium mb-1">Modern Stack</div>
                   <div className="text-xs text-muted-foreground">
-                    Next.js 15, React 19, TypeScript for optimal performance
+                    Next.js 14, React Query, Zustand, and Tailwind CSS
                   </div>
                 </div>
               </div>
@@ -246,7 +246,7 @@ export default function DTalkProjectPage() {
                   {frontendTech.map((tech) => (
                     <div
                       key={tech}
-                      className="px-3 py-2    text-sm text-foreground"
+                      className="px-3 py-2 text-sm text-foreground"
                     >
                       {tech}
                     </div>
@@ -254,23 +254,41 @@ export default function DTalkProjectPage() {
                 </div>
               </div>
 
-              <div>
-                <div className="text-xs text-muted-foreground mb-2 font-mono">Tools & Services</div>
-                <div className="space-y-2">
-                  {toolsTech.map((tech) => (
-                    <div
-                      key={tech}
-                      className="px-3 py-2 bg-secondary/20 border border-secondary/40 rounded-lg text-sm text-foreground"
-                    >
-                      {tech}
-                    </div>
-                  ))}
+              {backendTech.length > 0 && (
+                <div className="mb-4">
+                  <div className="text-xs text-muted-foreground mb-2 font-mono">Backend</div>
+                  <div className="space-y-2">
+                    {backendTech.map((tech) => (
+                      <div
+                        key={tech}
+                        className="px-3 py-2 bg-secondary/20 border border-secondary/40 rounded-lg text-sm text-foreground"
+                      >
+                        {tech}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {otherTech.length > 0 && (
+                <div>
+                  <div className="text-xs text-muted-foreground mb-2 font-mono">Tools & Services</div>
+                  <div className="space-y-2">
+                    {otherTech.map((tech) => (
+                      <div
+                        key={tech}
+                        className="px-3 py-2 bg-secondary/20 border border-secondary/40 rounded-lg text-sm text-foreground"
+                      >
+                        {tech}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* CTA Button */}
-            {project.url && (
+            {project.url && project.url !== '#' && (
               <a
                 href={project.url}
                 target="_blank"
@@ -297,12 +315,12 @@ export default function DTalkProjectPage() {
               href={`/projects/${otherProject.slug}`}
               className="group p-6 border border-secondary/30 rounded-xl hover:border-primary/60 hover:bg-primary/5 transition-all duration-300 block"
             >
-              <div className="flex items-center justify-end gap-2 mb-3 text-sm text-muted-foreground group-hover:text-primary transition-colors duration-300">
-                Next Project
-                <ArrowLeft className="w-4 h-4 rotate-180" />
+              <div className="flex items-center gap-2 mb-3 text-sm text-muted-foreground group-hover:text-primary transition-colors duration-300">
+                <ArrowLeft className="w-4 h-4" />
+                Previous Project
               </div>
-              <h4 className="text-lg font-light text-right">{otherProject.title}</h4>
-              <p className="text-sm text-muted-foreground mt-2 text-right line-clamp-2">
+              <h4 className="text-lg font-light">{otherProject.title}</h4>
+              <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
                 {otherProject.description}
               </p>
             </Link>

@@ -13,7 +13,7 @@ export default function EcommerceProjectPage() {
 
   if (!project) return null;
 
-  const otherProject = PROJECTS.find((p) => p.slug === 'dtalk-ecosystem');
+  const otherProject = PROJECTS.find((p) => p.slug === 'project-management-app');
 
   const keyFeatures = [
     'Modern storefront with advanced filtering across multiple product categories',
@@ -72,7 +72,7 @@ export default function EcommerceProjectPage() {
           className="space-y-6 mb-12"
         >
           <div className="text-xs text-muted-foreground font-mono tracking-wider">
-            PROJECT • {project.year}
+            PROJECT
           </div>
           
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight leading-tight">
@@ -94,10 +94,6 @@ export default function EcommerceProjectPage() {
             <div className="px-4 py-2 bg-secondary/30 rounded-lg border border-secondary/40">
               <div className="text-xs text-muted-foreground font-mono mb-1">STATUS</div>
               <div className="text-sm font-medium">Production Ready</div>
-            </div>
-            <div className="px-4 py-2 bg-secondary/30 rounded-lg border border-secondary/40">
-              <div className="text-xs text-muted-foreground font-mono mb-1">YEAR</div>
-              <div className="text-sm font-medium">{project.year}</div>
             </div>
           </div>
         </motion.div>
