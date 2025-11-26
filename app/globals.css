@@ -1,10 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -14,6 +16,7 @@
 .fade-in-on-load {
   animation: fadeInUp 0.6s ease-out forwards;
 }
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -128,22 +131,28 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-  
+
   /* Typography improvements */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply tracking-tight;
     font-feature-settings: "kern" 1;
   }
-  
+
   p {
     @apply tracking-normal;
     text-rendering: optimizeLegibility;
   }
-  
+
   /* Improve readability for long text */
   .prose {
     max-width: 65ch;
@@ -160,6 +169,7 @@
       opacity: 0;
       transform: translateY(24px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);

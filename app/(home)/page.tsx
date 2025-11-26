@@ -29,7 +29,7 @@ const Section = ({
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-50px" }}
     transition={{ duration: 0.5, ease: "easeOut" }}
-    className="min-h-screen py-20 sm:py-32"
+    className="min-h-screen py-20 sm:py- 32"
     {...props}
   >
     {children}
@@ -56,7 +56,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground relative">
       <Header />
 
-      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-16 pt-16">
+      <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-16 pt-16 ">
         {/* Intro Section */}
         <motion.header
           id="intro"
@@ -110,7 +110,7 @@ export default function Home() {
               >
                 <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-[65ch] font-light">
                   Full-stack developer from <span className="text-foreground font-medium">Tunisia</span> with{" "}
-                  <span className="text-foreground font-medium">3 years</span> of experience building 
+                  <span className="text-foreground font-medium">3 years</span> of experience building
                   scalable web applications. I specialize in crafting{" "}
                   <span className="text-primary">pixel-perfect interfaces</span> and{" "}
                   <span className="text-primary">robust backend systems</span> using modern JavaScript ecosystems.
@@ -179,7 +179,7 @@ export default function Home() {
 
         {/* Work Section */}
         <Section id="work">
-          <div className="space-y-12 sm:space-y-16">
+          <div className="space-y-12 sm:space-y-14 ">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <h2 className="text-3xl sm:text-4xl font-light">Selected Work</h2>
               <div className="text-sm text-muted-foreground font-mono">
@@ -187,7 +187,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="space-y-6 sm:space-y-8">
+            <div className="">
               {WORK_EXPERIENCE.map((job) => (
                 <WorkItem
                   key={job.id}
@@ -200,7 +200,7 @@ export default function Home() {
         </Section>
 
         {/* Projects Section */}
-        <Section id="projects">
+        <Section id="projects" >
           <div className="space-y-12 sm:space-y-16">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <h2 className="text-3xl sm:text-4xl font-light">Featured Projects</h2>
@@ -215,14 +215,14 @@ export default function Home() {
         </Section>
 
         {/* Connect Section */}
-        <Section id="connect" className="flex items-center py-20 sm:py-32">
+        <Section id="connect" className="flex items-center py-20 ">
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16">
             <div className="space-y-6 sm:space-y-8">
               <h2 className="text-3xl sm:text-4xl font-light">Let's Connect</h2>
               <div className="space-y-6">
                 <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-[65ch]">
-                  Open to new opportunities, collaborations, and meaningful conversations 
-                  about building exceptional digital products. Let's connect and explore 
+                  Open to new opportunities, collaborations, and meaningful conversations
+                  about building exceptional digital products. Let's connect and explore
                   how we can work together.
                 </p>
                 <div className="space-y-4">
@@ -256,7 +256,7 @@ export default function Home() {
                     <span className="text-base sm:text-lg">
                       Download CV
                     </span>
-                  
+
                   </a>
                 </div>
               </div>
