@@ -66,7 +66,8 @@ const Header = () => {
         </Link>
 
         <div className="  hidden flex-1 flex-row items-center justify-center  space-x-2 text-sm font-medium text-muted-foreground transition duration-200 hover:text-foreground md:flex md:space-x-2">
-          <a
+          <button
+            type="button"
             className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             onClick={(e) => {
               e.preventDefault();
@@ -83,10 +84,12 @@ const Header = () => {
                 });
               }
             }}
+            aria-label="Scroll to About section"
           >
             <span className="relative z-20">About</span>
-          </a>
-          <a
+          </button>
+          <button
+            type="button"
             className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             onClick={(e) => {
               e.preventDefault();
@@ -103,10 +106,12 @@ const Header = () => {
                 });
               }
             }}
+            aria-label="Scroll to Experience section"
           >
             <span className="relative z-20">Experience</span>
-          </a>
-          <a
+          </button>
+          <button
+            type="button"
             className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             onClick={(e) => {
               e.preventDefault();
@@ -123,10 +128,12 @@ const Header = () => {
                 });
               }
             }}
+            aria-label="Scroll to Projects section"
           >
             <span className="relative z-20">Projects</span>
-          </a>
-          <a
+          </button>
+          <button
+            type="button"
             className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
             onClick={(e) => {
               e.preventDefault();
@@ -143,9 +150,10 @@ const Header = () => {
                 });
               }
             }}
+            aria-label="Scroll to Contact section"
           >
             <span className="relative z-20">Contact</span>
-          </a>
+          </button>
         </div>
 
         <button
@@ -227,30 +235,39 @@ const Header = () => {
             <nav className="flex flex-col space-y-4">
 
               <button
+                type="button"
                 onClick={() => handleMobileNavClick("intro")}
                 className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
+                aria-label="Navigate to About section"
               >
                 About
               </button>
               <button
+                type="button"
                 onClick={() => handleMobileNavClick("work")}
                 className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
+                aria-label="Navigate to Experience section"
               >
                 Experience
               </button>
               <button
+                type="button"
                 onClick={() => handleMobileNavClick("projects")}
                 className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
+                aria-label="Navigate to Projects section"
               >
                 Projects
               </button>
               <button
+                type="button"
                 onClick={() => handleMobileNavClick("connect")}
                 className="text-left px-4 py-3 text-lg font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-background/50"
+                aria-label="Navigate to Contact section"
               >
                 Contact
               </button>
               <button
+                type="button"
                 onClick={toggleTheme}
                 className="group p-3 rounded-lg transition-all duration-300"
                 aria-label="Toggle theme"
