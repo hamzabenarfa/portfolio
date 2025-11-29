@@ -10,13 +10,13 @@ import {
 
 interface JobModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (open: boolean) => void;
   job: {
     role: string;
     company: string;
     year: string;
     description: string;
-    details: string;
+    details?: string;
     tech: string[];
   } | null;
 }
@@ -33,7 +33,7 @@ export default function JobModal({ isOpen, onClose, job }: JobModalProps) {
             {job.company} • {job.year}
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="space-y-6 py-4">
           <div>
             <h4 className="font-semibold text-foreground mb-2">Overview</h4>

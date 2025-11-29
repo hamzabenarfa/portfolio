@@ -6,32 +6,21 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme, resolvedTheme } = useTheme();
-  
+
   useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   const toggleTheme = () => {
-    // Use resolvedTheme for more reliable detection, fallback to theme
     const currentTheme = resolvedTheme || theme;
     setTheme(currentTheme === 'dark' ? 'light' : 'dark');
   };
-  
-  // Use resolvedTheme for more accurate theme detection
+
   const isDark = mounted && (resolvedTheme === 'dark' || (resolvedTheme === undefined && theme === 'dark'));
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const handleMobileNavClick = (elementId: string) => {
     setIsMobileMenuOpen(false);
@@ -54,17 +43,17 @@ const Header = () => {
     <>
       {/* Desktop Header */}
       <header
-        className={`sticky top-4 z-40 mx-auto hidden w-full  flex-row items-center justify-between self-start rounded-xl  md:flex backdrop-blur-sm border border-border/50 shadow-lg transition-all duration-300 max-w-3xl p-3`}
-  
+        className={`sticky top-4 z-40 mx-auto hidden w-full  flex-row items-center justify-between self-start rounded-xl  md:flex backdrop-blur-sm border border-border/50 shadow-lg transition-all duration-300 max-w-4xl p-3`}
+
       >
         {/* Brand/Title */}
         <Link
           href="/"
           className="flex items-center gap-2.5 group"
         >
-          <Image 
+          <Image
             src="/avatar.jpeg"
-            width={32} 
+            width={32}
             height={32}
             alt="Hamza Benarfa"
             className="rounded-full aspect-square"
@@ -72,10 +61,10 @@ const Header = () => {
             quality={90}
           />
           <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors duration-300">
-             Benarfa Hamza
+            Benarfa Hamza
           </span>
         </Link>
-        
+
         <div className="  hidden flex-1 flex-row items-center justify-center  space-x-2 text-sm font-medium text-muted-foreground transition duration-200 hover:text-foreground md:flex md:space-x-2">
           <a
             className="relative px-4 py-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
@@ -195,9 +184,9 @@ const Header = () => {
           href="/"
           className="flex items-center gap-2 group"
         >
-          <Image 
+          <Image
             src="/avatar.jpeg"
-            width={28} 
+            width={28}
             height={28}
             alt="Hamza Benarfa"
             className="rounded-full aspect-square"
@@ -216,19 +205,16 @@ const Header = () => {
         >
           <div className="flex flex-col items-center justify-center w-5 h-5 space-y-1">
             <span
-              className={`block w-4 h-0.5 bg-foreground transition-all duration-300 ${
-                isMobileMenuOpen ? "rotate-45 translate-y-1.5" : ""
-              }`}
+              className={`block w-4 h-0.5 bg-foreground transition-all duration-300 ${isMobileMenuOpen ? "rotate-45 translate-y-1.5" : ""
+                }`}
             ></span>
             <span
-              className={`block w-4 h-0.5 bg-foreground transition-all duration-300 ${
-                isMobileMenuOpen ? "opacity-0" : ""
-              }`}
+              className={`block w-4 h-0.5 bg-foreground transition-all duration-300 ${isMobileMenuOpen ? "opacity-0" : ""
+                }`}
             ></span>
             <span
-              className={`block w-4 h-0.5 bg-foreground transition-all duration-300 ${
-                isMobileMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
-              }`}
+              className={`block w-4 h-0.5 bg-foreground transition-all duration-300 ${isMobileMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
+                }`}
             ></span>
           </div>
         </button>

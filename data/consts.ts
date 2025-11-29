@@ -1,20 +1,4 @@
 
-
-export const CURRENT_POSITION = {
-  title: "Full Stack Developer",
-  company: "@ D-Talk",
-  period: "2024 — Present",
-};
-
-export const TECH_STACK = [
-  "Nextjs",
-  "TypeScript",
-  "Zustand",
-  "TanStack Query",
-  "Konva.js",
-  "TailwindCSS",
-  "Framer Motion",
-];
 export const SOCIAL_LINKS = [
   {
     name: "GitHub",
@@ -30,6 +14,12 @@ export const SOCIAL_LINKS = [
     name: "WhatsApp",
     handle: "+216 22 633 345",
     url: "https://wa.me/21622633345",
+  },
+  {
+    name: "Download CV",
+    handle: "Resume / Portfolio",
+    url: "/benarfa-hamza-en.pdf",
+    download: true,
   },
 ];
 export const PROJECTS = [
@@ -79,7 +69,7 @@ export const WORK_EXPERIENCE = [
     year: "Nov 2024 – Present",
     role: "Full-Stack Developer",
     company: "D-TALK Startup",
-    description: "Developing a multi-tenant fashion e-commerce platform serving designers, brands, and administrators using Next.js 15 and React 19.",
+    description: "Developing a multi-tenant fashion e-commerce platform serving designers,fashion designers, brands owners, and adminstrators. ",
     details: "Architected and implemented the core frontend system featuring advanced canvas-based product customization with Konva.js, real-time preview capabilities, and role-specific dashboards. Translated complex Figma designs into accessible, performant UIs (Lighthouse scores >90) while establishing scalable state management patterns with Zustand and TanStack Query.",
     tech: ["Next.js 15", "React 19", "TypeScript", "Zustand", "TanStack Query", "Konva.js"],
   },
@@ -95,7 +85,7 @@ export const WORK_EXPERIENCE = [
   {
     id: 3,
     year: "Aug 2024 – Oct 2024",
-    role: "Full-Stack Development Trainer",
+    role: "Full-Stack Development Instructor",
     company: "NGB Professional",
     description: "Led comprehensive training programs in full-stack development teaching the MERN stack.",
     details: "Led comprehensive training programs in full-stack development, teaching the MERN stack (MongoDB, Express, React, Node.js) to aspiring developers. Created hands-on projects and mentored students through real-world application development scenarios.",
@@ -104,9 +94,9 @@ export const WORK_EXPERIENCE = [
   {
     id: 4,
     year: "Jun 2022 – Present",
-    role: "Senior Freelance Developer",
+    role: "Freelance Developer",
     company: "Self-Employed",
-    description: "Delivered 15+ production applications for startups and SMBs with 100% client retention across 3 repeat engagements.",
+    description: "Delivered 15+ applications from mvp to production .",
     details: "Delivered 15+ client projects ranging from MVPs to production systems. Specialized in building scalable web applications with modern tech stacks, focusing on clean architecture, performance optimization, and user experience.",
     tech: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL", "MySQL"],
   },

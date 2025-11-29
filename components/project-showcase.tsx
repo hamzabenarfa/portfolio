@@ -30,7 +30,7 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
         transition={{ duration: 0.2, ease: "easeOut" }}
         className="group cursor-pointer"
       >
-        <div className="relative overflow-hidden rounded-xl border border-secondary/30 bg-secondary/5 hover:border-primary/60 transition-all duration-300">
+        <div className="relative overflow-hidden rounded-xl border border-secondary/30 bg-secondary/5  transition-all duration-300">
           <div className="relative h-64 sm:h-80 overflow-hidden bg-gradient-to-br from-secondary/20 to-primary/10">
             {!imageError ? (
               <Image
@@ -51,7 +51,7 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
                 </div>
               </div>
             )}
-            
+
             {/* Overlay gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
