@@ -110,7 +110,7 @@ export default function Home() {
 
                 {/* Social Media Icons */}
                 <div className="flex items-center gap-3 pt-2">
-                  {SOCIAL_LINKS.map((social) => {
+                  {SOCIAL_LINKS.filter(social => social.name !== 'Download CV').map((social) => {
                     const Icon = social.name === 'GitHub'
                       ? () => (
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
