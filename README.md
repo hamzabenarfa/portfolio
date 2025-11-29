@@ -10,7 +10,7 @@ A clean, modern portfolio website built with Next.js and Tailwind CSS, featuring
 - **Smooth Animations** - Subtle scroll-triggered animations and hover effects
 - **Modern Stack** - Built with Next.js 15, TypeScript, and Tailwind CSS
 
-## 🚀 Built With
+##  Built With
 
 - [Next.js](https://nextjs.org/) - React framework
 - [TypeScript](https://www.typescriptlang.org/) - Type safety

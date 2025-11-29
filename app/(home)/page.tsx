@@ -21,7 +21,7 @@ const Section = ({
 }: React.HTMLAttributes<HTMLElement> & { id: string }) => (
   <section
     id={id}
-    className="min-h-screen py-20 sm:py- 32"
+    className="min-h-screen py-10 "
     {...props}
   >
     {children}

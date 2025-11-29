@@ -5,7 +5,7 @@ This document outlines all optimizations made to improve performance, readabilit
 
 ---
 
-## 🚀 Performance Optimizations
+##  Performance Optimizations
 
 ### 1. Image Optimization
 - **Enabled Next.js Image Optimization**: Removed `unoptimized: true` from `next.config.mjs`
