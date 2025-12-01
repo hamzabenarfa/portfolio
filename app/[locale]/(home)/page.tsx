@@ -11,13 +11,12 @@ import {
   WORK_EXPERIENCE,
   PROJECTS,
   STATS,
-  SKILLS,
 } from "@/data/consts";
 import { WorkItem } from "./_components/work-item";
 import { SocialLink } from "./_components/social-links";
 import Script from "next/script";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Code2, Rocket } from "lucide-react";
+import { ArrowRight, Sparkles, Rocket } from "lucide-react";
 
 const Section = ({
   id,
@@ -76,17 +75,20 @@ const staggerContainer = {
   },
 };
 
-// Skill level indicator component
-const SkillLevel = ({ level }: { level: number }) => (
-  <div className="flex gap-1">
-    {[1, 2, 3, 4, 5].map((i) => (
-      <div
-        key={i}
-        className={`w-2 h-2 rounded-full transition-colors ${
-          i <= level ? "bg-primary" : "bg-secondary/40"
-        }`}
-      />
-    ))}
+// Capability item component
+const CapabilityItem = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => (
+  <div className="flex gap-4">
+    <div className="w-1 bg-primary rounded-full shrink-0" />
+    <div className="space-y-2">
+      <h3 className="text-lg font-semibold text-primary">{title}</h3>
+      <p className="text-muted-foreground leading-relaxed">{description}</p>
+    </div>
   </div>
 );
 
@@ -392,8 +394,8 @@ export default function Home() {
           </motion.div>
         </Section>
 
-        {/* Skills Section */}
-        <Section id="skills" className="py-20 border-t border-secondary/30">
+        {/* Capabilities Section */}
+        <Section id="capabilities" className="py-20 border-t border-secondary/30">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -402,69 +404,31 @@ export default function Home() {
             className="space-y-12"
           >
             <motion.div variants={fadeInUp}>
-              <h2 className="text-3xl sm:text-4xl font-light flex items-center gap-3">
-                <Code2 className="w-8 h-8 text-primary" />
-                {t("skills.title")}
+              <h2 className="text-3xl sm:text-4xl font-semibold">
+                {t("capabilities.title")}
               </h2>
-              <p className="text-muted-foreground mt-2">
-                {t("skills.description")}
-              </p>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="grid md:grid-cols-3 gap-8">
-              {/* Frontend */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-primary font-mono tracking-wider">
-                  {t("skills.frontend")}
-                </h3>
-                <div className="space-y-3">
-                  {SKILLS.frontend.map((skill) => (
-                    <div
-                      key={skill.name}
-                      className="flex items-center justify-between p-3 bg-secondary/10 border border-secondary/20 rounded-lg"
-                    >
-                      <span className="text-sm">{skill.name}</span>
-                      <SkillLevel level={skill.level} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Backend */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-primary font-mono tracking-wider">
-                  {t("skills.backend")}
-                </h3>
-                <div className="space-y-3">
-                  {SKILLS.backend.map((skill) => (
-                    <div
-                      key={skill.name}
-                      className="flex items-center justify-between p-3 bg-secondary/10 border border-secondary/20 rounded-lg"
-                    >
-                      <span className="text-sm">{skill.name}</span>
-                      <SkillLevel level={skill.level} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Tools */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-primary font-mono tracking-wider">
-                  {t("skills.tools")}
-                </h3>
-                <div className="space-y-3">
-                  {SKILLS.tools.map((skill) => (
-                    <div
-                      key={skill.name}
-                      className="flex items-center justify-between p-3 bg-secondary/10 border border-secondary/20 rounded-lg"
-                    >
-                      <span className="text-sm">{skill.name}</span>
-                      <SkillLevel level={skill.level} />
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <motion.div
+              variants={fadeInUp}
+              className="grid md:grid-cols-2 gap-x-16 gap-y-10"
+            >
+              <CapabilityItem
+                title={t("capabilities.webDev.title")}
+                description={t("capabilities.webDev.description")}
+              />
+              <CapabilityItem
+                title={t("capabilities.mobileDev.title")}
+                description={t("capabilities.mobileDev.description")}
+              />
+              <CapabilityItem
+                title={t("capabilities.backendDev.title")}
+                description={t("capabilities.backendDev.description")}
+              />
+              <CapabilityItem
+                title={t("capabilities.productMgmt.title")}
+                description={t("capabilities.productMgmt.description")}
+              />
             </motion.div>
           </motion.div>
         </Section>

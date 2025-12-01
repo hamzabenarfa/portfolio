@@ -37,12 +37,24 @@
     "description": "A selection of recent work across e-commerce, SaaS, and productivity",
     "viewProject": "View Project"
   },
-  "skills": {
-    "title": "Technical Expertise",
-    "description": "Technologies I use to bring ideas to life",
-    "frontend": "FRONTEND",
-    "backend": "BACKEND",
-    "tools": "TOOLS & INFRASTRUCTURE"
+  "capabilities": {
+    "title": "Capabilities",
+    "webDev": {
+      "title": "Web App Development",
+      "description": "I develop tailor-made software solutions to meet your unique business requirements, from concept to deployment"
+    },
+    "mobileDev": {
+      "title": "Mobile App Development",
+      "description": "I create robust and intuitive mobile applications for iOS and Android platforms simultaneously via Expo and React Native"
+    },
+    "backendDev": {
+      "title": "Backend Development",
+      "description": "I build scalable, secure, and efficient backend solutions using Node.js, NestJS, GraphQL, and other modern technologies"
+    },
+    "productMgmt": {
+      "title": "Product Management",
+      "description": "I guide you through the entire lifecycle, from idea to market, ensuring your product aligns with business goals and resonates with your user base"
+    }
   },
   "experience": {
     "title": "Experience"
