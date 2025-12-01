@@ -2,39 +2,37 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { PROJECTS } from '@/data/consts';
-import { ArrowLeft, ExternalLink, CheckCircle2, Code2, Zap, Shield, Layout, Calendar, Users, PenTool } from 'lucide-react';
+import { ArrowLeft, ExternalLink, CheckCircle2, Code2, Zap, Shield, Globe, Users, ShoppingCart, Palette } from 'lucide-react';
 
-export default function ProjectManagementPage() {
-  const project = PROJECTS.find((p) => p.slug === 'project-management-app');
+export default function DTalkProjectPage() {
+  const project = PROJECTS.find((p) => p.slug === 'dtalk-ecosystem');
   const [imageError, setImageError] = useState(false);
 
   if (!project) return null;
 
-  const otherProject = PROJECTS.find((p) => p.slug === 'dtalk-ecosystem');
+  const otherProject = PROJECTS.find((p) => p.slug === 'ecommerce-platform');
 
   const keyFeatures = [
-    'Comprehensive project management with Kanban boards and burn down charts',
-    'Interactive drag-and-drop task management using @dnd-kit',
-    'Team and member management with role-based access control',
-    'Full calendar view for scheduling appointments and recurring events',
-    'Integrated whiteboard for brainstorming and sketching',
-    'Built-in support for creating technical diagrams with Mermaid.js',
-    'Dashboard with project status charts and task distribution',
-    'Secure authentication with NextAuth.js and session management',
+    'Multi-role architecture with specialized dashboards for designers, brands, and administrators',
+    'Advanced canvas editing with Fabric.js and Konva for professional design creation',
+    'AI-powered design generation and custom design uploads',
+    'Complete e-commerce system with shopping cart, favorites, and payment integration',
+    'Earnings tracking and financial management for creators with withdrawal system',
+    'Security-first approach with HTTP-only cookies, JWT tokens, and role-based access control',
+    'Built-in internationalization supporting English and French',
+    'Azure Blob Storage for secure image management with SAS URL generation',
   ];
 
   const frontendTech = project.tech.filter(t =>
     t.includes('React') || t.includes('Next.js') || t.includes('TypeScript') ||
-    t.includes('Tailwind') || t.includes('shadcn') || t.includes('Zustand') || t.includes('Framer')
+    t.includes('Tailwind') || t.includes('Framer') || t.includes('Zustand')
   );
-  const backendTech = project.tech.filter(t =>
-    t.includes('MySQL') || t.includes('Prisma') || t.includes('NextAuth')
-  );
-  const otherTech = project.tech.filter(t =>
-    !frontendTech.includes(t) && !backendTech.includes(t)
+  const toolsTech = project.tech.filter(t =>
+    t.includes('Fabric') || t.includes('Konva') || t.includes('Query') ||
+    t.includes('Form') || t.includes('Zod') || t.includes('intl') || t.includes('Azure')
   );
 
   return (
@@ -49,7 +47,7 @@ export default function ProjectManagementPage() {
             <ArrowLeft className="w-4 h-4" />
             Back to Portfolio
           </Link>
-          {project.url && project.url !== '#' && (
+          {project.url && (
             <motion.a
               href={project.url}
               target="_blank"
@@ -87,7 +85,9 @@ export default function ProjectManagementPage() {
           </h1>
 
           <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl">
-            {project.description}
+            A comprehensive fashion e-commerce platform enabling designers to create and sell,
+            brands to customize products, and admins to manage the ecosystem. Features advanced
+            canvas editing, AI-powered design tools, and multi-role dashboards.
           </p>
 
           {/* Quick Stats */}
@@ -98,7 +98,7 @@ export default function ProjectManagementPage() {
             </div>
             <div className="px-4 py-2 bg-secondary/30 rounded-lg border border-secondary/40">
               <div className="text-xs text-muted-foreground font-mono mb-1">STATUS</div>
-              <div className="text-sm font-medium">In Development</div>
+              <div className="text-sm font-medium">Production Ready</div>
             </div>
           </div>
         </motion.div>
@@ -124,7 +124,7 @@ export default function ProjectManagementPage() {
           ) : (
             <div className="w-full h-full flex items-center justify-center">
               <div className="text-center">
-                <div className="text-6xl mb-4">📊</div>
+                <div className="text-6xl mb-4">📦</div>
                 <p className="text-muted-foreground">{project.title}</p>
               </div>
             </div>
@@ -140,7 +140,7 @@ export default function ProjectManagementPage() {
         >
           <h2 className="text-2xl sm:text-3xl font-light mb-8">Key Features</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {keyFeatures.map((feature, index) => (
+            {keyFeatures.slice(0, 8).map((feature, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 10 }}
@@ -180,53 +180,53 @@ export default function ProjectManagementPage() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
                   <div className="text-sm font-medium mb-1 flex items-center gap-2">
-                    <Layout className="w-4 h-4" />
-                    Project Management
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    Projects, Kanban boards, and Burn down charts for complete tracking
-                  </div>
-                </div>
-                <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
-                  <div className="text-sm font-medium mb-1 flex items-center gap-2">
                     <Users className="w-4 h-4" />
-                    Team & Members
+                    Multi-Role System
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    Role-based access control and member directory management
+                    Four distinct user roles with specialized dashboards and role-based routing
                   </div>
                 </div>
                 <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
                   <div className="text-sm font-medium mb-1 flex items-center gap-2">
-                    <Calendar className="w-4 h-4" />
-                    Scheduling
+                    <Palette className="w-4 h-4" />
+                    Canvas Editor
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    Full calendar view with appointments and recurring events
+                    Professional-grade editing with Fabric.js and Konva for design creation
                   </div>
                 </div>
                 <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
                   <div className="text-sm font-medium mb-1 flex items-center gap-2">
-                    <PenTool className="w-4 h-4" />
-                    Visual Tools
+                    <ShoppingCart className="w-4 h-4" />
+                    E-Commerce
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    Interactive whiteboard and Mermaid.js diagram support
+                    Complete shopping experience with cart, favorites, and payment integration
                   </div>
                 </div>
                 <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
                   <div className="text-sm font-medium mb-1 flex items-center gap-2">
                     <Shield className="w-4 h-4" />
-                    Security
+                    Security First
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    Secure auth with NextAuth.js and session management via Prisma
+                    HTTP-only cookies, JWT tokens, and role-based access control
+                  </div>
+                </div>
+                <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
+                  <div className="text-sm font-medium mb-1 flex items-center gap-2">
+                    <Globe className="w-4 h-4" />
+                    Multilingual
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    Built-in i18n support for English and French with locale-based routing
                   </div>
                 </div>
                 <div className="p-4 bg-secondary/20 border border-secondary/40 rounded-lg">
                   <div className="text-sm font-medium mb-1">Modern Stack</div>
                   <div className="text-xs text-muted-foreground">
-                    Next.js 14, React Query, Zustand, and Tailwind CSS
+                    Next.js 15, React 19, TypeScript for optimal performance
                   </div>
                 </div>
               </div>
@@ -253,7 +253,7 @@ export default function ProjectManagementPage() {
                   {frontendTech.map((tech) => (
                     <div
                       key={tech}
-                      className="px-3 py-2 text-sm text-foreground"
+                      className="px-3 py-2    text-sm text-foreground"
                     >
                       {tech}
                     </div>
@@ -261,41 +261,23 @@ export default function ProjectManagementPage() {
                 </div>
               </div>
 
-              {backendTech.length > 0 && (
-                <div className="mb-4">
-                  <div className="text-xs text-muted-foreground mb-2 font-mono">Backend</div>
-                  <div className="space-y-2">
-                    {backendTech.map((tech) => (
-                      <div
-                        key={tech}
-                        className="px-3 py-2 bg-secondary/20 border border-secondary/40 rounded-lg text-sm text-foreground"
-                      >
-                        {tech}
-                      </div>
-                    ))}
-                  </div>
+              <div>
+                <div className="text-xs text-muted-foreground mb-2 font-mono">Tools & Services</div>
+                <div className="space-y-2">
+                  {toolsTech.map((tech) => (
+                    <div
+                      key={tech}
+                      className="px-3 py-2 bg-secondary/20 border border-secondary/40 rounded-lg text-sm text-foreground"
+                    >
+                      {tech}
+                    </div>
+                  ))}
                 </div>
-              )}
-
-              {otherTech.length > 0 && (
-                <div>
-                  <div className="text-xs text-muted-foreground mb-2 font-mono">Tools & Services</div>
-                  <div className="space-y-2">
-                    {otherTech.map((tech) => (
-                      <div
-                        key={tech}
-                        className="px-3 py-2 bg-secondary/20 border border-secondary/40 rounded-lg text-sm text-foreground"
-                      >
-                        {tech}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
 
             {/* CTA Button */}
-            {project.url && project.url !== '#' && (
+            {project.url && (
               <motion.a
                 href={project.url}
                 target="_blank"
@@ -351,12 +333,12 @@ export default function ProjectManagementPage() {
               href={`/projects/${otherProject.slug}`}
               className="group p-6 border border-secondary/30 rounded-xl hover:border-primary/60 hover:bg-primary/5 transition-all duration-300 block"
             >
-              <div className="flex items-center gap-2 mb-3 text-sm text-muted-foreground group-hover:text-primary transition-colors duration-300">
-                <ArrowLeft className="w-4 h-4" />
-                Previous Project
+              <div className="flex items-center justify-end gap-2 mb-3 text-sm text-muted-foreground group-hover:text-primary transition-colors duration-300">
+                Next Project
+                <ArrowLeft className="w-4 h-4 rotate-180" />
               </div>
-              <h4 className="text-lg font-light">{otherProject.title}</h4>
-              <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
+              <h4 className="text-lg font-light text-right">{otherProject.title}</h4>
+              <p className="text-sm text-muted-foreground mt-2 text-right line-clamp-2">
                 {otherProject.description}
               </p>
             </Link>

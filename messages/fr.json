@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "title": "Hamza Benarfa | Développeur Full-Stack & Ingénieur DevOps",
+    "description": "Développeur full-stack freelance & ingénieur DevOps de Tunisie. Je construis des applications web et mobiles rapides, accessibles et évolutives avec Next.js, TypeScript, React, NestJS et l'infrastructure cloud."
+  },
+  "header": {
+    "about": "À propos",
+    "experience": "Expérience",
+    "projects": "Projets",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tagline": "Disponible pour de nouveaux projets",
+    "title": {
+      "line1": "Je construis des produits qui",
+      "line2": "font croître les entreprises"
+    },
+    "description": "Ingénieur full-stack de <country>Tunisie</country> spécialisé dans <highlight>la création de MVPs livrés rapidement</highlight>. Je transforme des exigences complexes en solutions élégantes et évolutives qui génèrent de vrais résultats commerciaux.",
+    "country": "Tunisie",
+    "highlight": "la création de MVPs livrés rapidement",
+    "cta": {
+      "viewWork": "Voir Mon Travail",
+      "letsTalk": "Discutons"
+    }
+  },
+  "stats": {
+    "yearsExperience": "Années d'Expérience",
+    "projectsShipped": "Projets Livrés",
+    "clientSatisfaction": "Satisfaction Client"
+  },
+  "featured": {
+    "label": "PROJET VEDETTE",
+    "viewCaseStudy": "Voir l'Étude de Cas"
+  },
+  "projects": {
+    "title": "Autres Projets",
+    "description": "Une sélection de travaux récents dans l'e-commerce, le SaaS et la productivité",
+    "viewProject": "Voir le Projet"
+  },
+  "skills": {
+    "title": "Expertise Technique",
+    "description": "Technologies que j'utilise pour donner vie aux idées",
+    "frontend": "FRONTEND",
+    "backend": "BACKEND",
+    "tools": "OUTILS & INFRASTRUCTURE"
+  },
+  "experience": {
+    "title": "Expérience"
+  },
+  "connect": {
+    "title": "Prêt à construire",
+    "titleHighlight": "quelque chose d'exceptionnel ?",
+    "description": "Je suis actuellement disponible pour des projets freelance, du conseil et des opportunités à temps plein. Discutons de la façon dont je peux vous aider à réaliser votre vision.",
+    "cta": "Commencer une Conversation",
+    "downloadCV": "Télécharger CV",
+    "connectLabel": "CONTACT"
+  },
+  "footer": {
+    "copyright": "© 2025 Hamza Benarfa.",
+    "backToTop": "Retour en haut ↑"
+  },
+  "language": {
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية"
+  }
+}
+

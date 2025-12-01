@@ -10,7 +10,7 @@ export const WorkItem = ({
   <button
     type="button"
     onClick={onClick}
-    className="group flex flex-col gap-4 sm:gap-6 py-6 sm:py-8 border-b border-secondary/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 cursor-pointer rounded-lg px-4 -mx-4 w-full text-left"
+    className="group flex flex-col gap-4 sm:gap-6 py-6 sm:py-8 border-b border-secondary/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 cursor-pointer rounded-lg px-4 -mx-4 w-full text-start"
     aria-label={`View details for ${job.role} at ${job.company}`}
   >
     <div className="space-y-3">

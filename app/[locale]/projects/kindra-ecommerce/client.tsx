@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { PROJECTS } from '@/data/consts';
 import { ArrowLeft, ExternalLink, CheckCircle2, Code2, Zap, Shield, ShoppingBag, BarChart3, CreditCard, Layers, Smartphone, Search } from 'lucide-react';

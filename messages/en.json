@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "title": "Hamza Benarfa | Full-Stack Developer & DevOps Engineer",
+    "description": "Freelance full-stack developer & DevOps engineer from Tunisia. I build fast, accessible, and scalable web & mobile apps with Next.js, TypeScript, React, NestJS, and cloud infrastructure."
+  },
+  "header": {
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tagline": "Available for new projects",
+    "title": {
+      "line1": "I build products that",
+      "line2": "scale businesses"
+    },
+    "description": "Full-stack engineer from <country>Tunisia</country> specializing in <highlight>building MVPs that ship fast</highlight>. I transform complex requirements into elegant, scalable solutions that drive real business outcomes.",
+    "country": "Tunisia",
+    "highlight": "building MVPs that ship fast",
+    "cta": {
+      "viewWork": "View My Work",
+      "letsTalk": "Let's Talk"
+    }
+  },
+  "stats": {
+    "yearsExperience": "Years Experience",
+    "projectsShipped": "Projects Shipped",
+    "clientSatisfaction": "Client Satisfaction"
+  },
+  "featured": {
+    "label": "FEATURED PROJECT",
+    "viewCaseStudy": "View Case Study"
+  },
+  "projects": {
+    "title": "More Projects",
+    "description": "A selection of recent work across e-commerce, SaaS, and productivity",
+    "viewProject": "View Project"
+  },
+  "skills": {
+    "title": "Technical Expertise",
+    "description": "Technologies I use to bring ideas to life",
+    "frontend": "FRONTEND",
+    "backend": "BACKEND",
+    "tools": "TOOLS & INFRASTRUCTURE"
+  },
+  "experience": {
+    "title": "Experience"
+  },
+  "connect": {
+    "title": "Ready to build",
+    "titleHighlight": "something exceptional?",
+    "description": "I'm currently available for freelance projects, consulting, and full-time opportunities. Let's discuss how I can help bring your vision to life.",
+    "cta": "Start a Conversation",
+    "downloadCV": "Download CV",
+    "connectLabel": "CONNECT"
+  },
+  "footer": {
+    "copyright": "© 2025 Hamza Benarfa.",
+    "backToTop": "Back to top ↑"
+  },
+  "language": {
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية"
+  }
+}
+
