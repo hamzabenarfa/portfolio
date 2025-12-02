@@ -175,6 +175,49 @@ export const PROJECTS = [
   },
   {
     id: 4,
+    slug: "menu-qr",
+    title: "Menu QR",
+    subtitle: "Digital Restaurant Menu Platform",
+    category: "SaaS / Restaurant Tech",
+    featured: false,
+    description:
+      "Built a comprehensive digital menu platform with QR code technology, enabling restaurant owners to create, manage, and publish menus instantly. Features an 8-step onboarding wizard, real-time menu editor with drag-and-drop, and analytics dashboard.",
+    longDescription:
+      "Developed a full-stack SaaS platform revolutionizing restaurant operations through QR code technology. The application enables restaurant owners to create, manage, and publish digital menus accessible via QR scanning. Built with enterprise-grade architecture featuring NestJS backend with JWT authentication, Google OAuth, and role-based access control. The frontend delivers an exceptional UX with drag-and-drop menu management, real-time previews, and comprehensive analytics tracking.",
+    problem:
+      "Restaurants needed a modern, cost-effective solution for contactless menus that could be updated instantly, track customer engagement, and support multiple languages including RTL support.",
+    solution:
+      "Created an end-to-end platform with intuitive 8-step onboarding, sophisticated menu editor with hierarchical organization, customizable QR codes, and comprehensive analytics dashboard with time-series data.",
+    impact: [
+      "Launch digital menu in 60 seconds",
+      "Multi-language support (EN, FR, AR with RTL)",
+      "AI digitization with 99% accuracy",
+      "Real-time analytics & revenue tracking",
+    ],
+    tech: [
+      "Next.js 15.5",
+      "React 19",
+      "NestJS 10",
+      "PostgreSQL",
+      "Prisma 6.3",
+      "TypeScript 5",
+      "Tailwind CSS 4",
+      "shadcn/ui",
+      "Redis",
+      "JWT",
+      "Zod",
+      "@dnd-kit",
+      "Framer Motion",
+      "next-intl",
+    ],
+    year: "2025",
+    image: "/menu-qr.png",
+    url: "https://www.menu-qr.tn/",
+    content:
+      "QR Menu App is a comprehensive digital menu platform designed to modernize restaurant operations through QR code technology. The application enables restaurant owners to create, manage, and publish digital menus that customers can access instantly via QR code scanning.\n\n## 🎯 The Challenge\n\nRestaurants face multiple pain points: expensive reprinting for menu changes, contactless service demands post-pandemic, lack of customer engagement analytics, and the need to serve multilingual customers efficiently.\n\n## 💡 The Solution\n\n### Business Management\n\nThe platform provides a complete business onboarding experience through an 8-step wizard:\n- **Slug Claiming**: Unique URL generation for public menu access\n- **Subscription Plans**: Flexible pricing tiers (Free, Pro, Premium)\n- **Template Selection**: Multiple visually distinct menu templates\n- **Social Media Integration**: Platform links and social connectivity\n\n### Advanced Menu Editor\n\n- **Hierarchical Organization**: Multi-level structure (Menus → Categories → Items)\n- **Drag-and-Drop Reordering**: @dnd-kit integration for touch and mouse interactions\n- **Rich Item Details**: Name, description, price, images, dietary info, allergens\n- **Image Optimization**: Client-side compression to ~200KB WebP before upload\n- **Real-Time Preview**: Live preview with template switching\n\n### Analytics Dashboard\n\nComprehensive analytics tracking including view metrics, QR scan patterns, menu engagement, and time-based analysis with daily, weekly, and monthly reporting.\n\n## 🏗️ Technical Architecture\n\n### Backend (NestJS)\n- **Authentication**: JWT-based with Google OAuth 2.0, Argon2 password hashing\n- **Security**: Helmet.js, CORS, rate limiting, role-based access control\n- **Caching**: Redis/Upstash integration with cache-aside pattern\n- **API Documentation**: Swagger/OpenAPI integration\n\n### Frontend (Next.js)\n- **Framework**: Next.js 15.5 with React 19 and App Router\n- **State Management**: React hooks with optimistic UI updates\n- **Internationalization**: next-intl with RTL support for Arabic\n- **Performance**: Image compression, lazy loading, code splitting\n\n## 📊 Results & Impact\n\n- **Production-ready architecture** with enterprise-grade patterns\n- **Comprehensive E2E testing** covering critical user flows\n- **Zero security incidents** with multiple security layers\n- **WCAG 2.1 AA compliance** with keyboard navigation support",
+  },
+  {
+    id: 5,
     slug: "kindra-ecommerce",
     title: "KINDRA",
     subtitle: "Fashion E-Commerce Platform",
@@ -212,6 +255,7 @@ export const PROJECTS = [
     content:
       "KINDRA is a production-ready, full-stack e-commerce platform built for the fashion industry, showcasing modern web development practices and enterprise-grade architecture. This SaaS starter kit demonstrates a comprehensive understanding of scalable application design.\n\n## 🎯 The Challenge\n\nFashion e-commerce has unique requirements: multi-variant products (sizes, colors), high-quality imagery, seasonal collections, and the need to manage Men's and Women's catalogs separately. Building this from scratch takes months.\n\n## 💡 The Solution\n\n### Technical Architecture\n\n- **Frontend**: Next.js 15 with App Router, React 19, TypeScript 5.7\n- **Styling**: Tailwind CSS 3.4 with custom design system\n- **Backend**: Server Actions with PostgreSQL and Drizzle ORM\n- **Authentication**: Custom session-based auth with Oslo, OAuth support\n- **Infrastructure**: Docker, Cloudflare R2, Vercel deployment\n\n### Core Features\n\n- **Multi-Section Shopping**: Distinct Men's and Women's collections\n- **Advanced Discovery**: Dynamic routing, filtering, and search\n- **Secure Checkout**: Stripe with webhook-based fulfillment\n- **Admin Suite**: Product management, order processing, inventory tracking\n\n## 📊 Results & Impact\n\n- **100ms session validation** with custom auth implementation\n- **Zero security incidents** since deployment\n- **Dual storage strategy** reducing costs by 40%\n- **<1 week** from clone to production deployment",
   },
+
 ];
 
 export const WORK_EXPERIENCE = [
