@@ -247,7 +247,7 @@ export default function Home() {
         </header>
 
         {/* Stats Section */}
-        <motion.section
+        {/* <motion.section
           className="py-16 border-y border-secondary/30"
           initial="hidden"
           whileInView="visible"
@@ -266,7 +266,7 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
-        </motion.section>
+        </motion.section> */}
 
         {/* Featured Project Section */}
         {featuredProject && (
