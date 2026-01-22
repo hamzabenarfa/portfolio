@@ -15,7 +15,10 @@ export function LanguageSwitcher() {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleLocaleChange = (newLocale: Locale) => {
-    router.replace(pathname, { locale: newLocale });
+    // Set the locale cookie for middleware to pick up
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`;
+    // Refresh to apply the new locale without changing URL
+    window.location.reload();
     setIsOpen(false);
   };
 
@@ -51,11 +54,10 @@ export function LanguageSwitcher() {
             <button
               key={loc}
               onClick={() => handleLocaleChange(loc)}
-              className={`w-full px-4 py-2.5 text-sm text-start transition-colors ${
-                locale === loc
+              className={`w-full px-4 py-2.5 text-sm text-start transition-colors ${locale === loc
                   ? "bg-primary/10 text-primary font-medium"
                   : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
-              }`}
+                }`}
             >
               {t(loc)}
             </button>

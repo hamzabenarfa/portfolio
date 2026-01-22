@@ -104,10 +104,6 @@ export async function generateMetadata({
     },
     alternates: {
       canonical: "https://benarfa.com",
-      languages: {
-        en: "https://benarfa.com/en",
-        fr: "https://benarfa.com/fr",
-      },
     },
     icons: {
       icon: "/favicon.ico",
