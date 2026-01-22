@@ -7,7 +7,11 @@ import Image from 'next/image';
 import { PROJECTS } from '@/data/consts';
 import { ArrowLeft, ExternalLink, CheckCircle2, Code2, Zap, Shield, ShoppingBag, BarChart3, CreditCard, Layers, Smartphone, Search } from 'lucide-react';
 
+import { useTranslations } from 'next-intl';
+
 export default function KindraProjectPage() {
+    const t = useTranslations('projectsItems.kindra-ecommerce');
+    const tNext = useTranslations('projectsItems.ecommerce-platform');
     const project = PROJECTS.find((p) => p.slug === 'kindra-ecommerce');
     const [imageError, setImageError] = useState(false);
 
@@ -54,11 +58,11 @@ export default function KindraProjectPage() {
                             href={project.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="relative group px-4 py-2 overflow-hidden rounded-lg bg-gradient-to-r from-primary via-primary/90 to-primary text-primary-foreground font-medium text-sm shadow-lg hover:shadow-xl hover:shadow-primary/50 transition-all duration-300"
+                            className="relative group px-4 py-2 overflow-hidden rounded-lg bg-linear-to-r from-primary via-primary/90 to-primary text-primary-foreground font-medium text-sm shadow-lg hover:shadow-xl hover:shadow-primary/50 transition-all duration-300"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.98 }}
                         >
-                            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-linear-to-r from-transparent via-white/30 to-transparent" />
                             <span className="relative flex items-center gap-2">
                                 Visit Live Site
                                 <ExternalLink className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
@@ -81,11 +85,11 @@ export default function KindraProjectPage() {
                     </div>
 
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight leading-tight">
-                        {project.title}
+                        {t('title')}
                     </h1>
 
                     <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl">
-                        {project.description}
+                        {t('description')}
                     </p>
 
                     {/* Quick Stats */}
@@ -110,12 +114,12 @@ export default function KindraProjectPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className="relative h-64 sm:h-96 lg:h-[500px] rounded-2xl overflow-hidden border border-secondary/30 mb-16 bg-gradient-to-br from-secondary/20 to-primary/10 shadow-2xl"
+                    className="relative h-64 sm:h-96 lg:h-[500px] rounded-2xl overflow-hidden border border-secondary/30 mb-16 bg-linear-to-br from-secondary/20 to-primary/10 shadow-2xl"
                 >
                     {!imageError ? (
                         <Image
                             src={project.image || '/placeholder.svg'}
-                            alt={project.title}
+                            alt={t('title')}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
                             className="object-cover"
@@ -127,7 +131,7 @@ export default function KindraProjectPage() {
                         <div className="w-full h-full flex items-center justify-center">
                             <div className="text-center">
                                 <div className="text-6xl mb-4">👗</div>
-                                <p className="text-muted-foreground">{project.title}</p>
+                                <p className="text-muted-foreground">{t('title')}</p>
                             </div>
                         </div>
                     )}
@@ -169,7 +173,7 @@ export default function KindraProjectPage() {
                         <div>
                             <h2 className="text-2xl sm:text-3xl font-light mb-6">Overview</h2>
                             <p className="text-base leading-relaxed text-muted-foreground mb-6">
-                                {project.longDescription}
+                                {t('longDescription')}
                             </p>
                         </div>
 
@@ -305,12 +309,12 @@ export default function KindraProjectPage() {
                                 href={project.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="relative group block w-full px-8 py-4 overflow-hidden rounded-xl bg-gradient-to-r from-primary via-primary/95 to-primary text-primary-foreground font-semibold text-center shadow-2xl hover:shadow-primary/60"
+                                className="relative group block w-full px-8 py-4 overflow-hidden rounded-xl bg-linear-to-r from-primary via-primary/95 to-primary text-primary-foreground font-semibold text-center shadow-2xl hover:shadow-primary/60"
                                 whileHover={{ scale: 1.02, y: -2 }}
                                 whileTap={{ scale: 0.98 }}
                             >
-                                <div className="absolute inset-0 bg-gradient-to-r from-primary/50 via-primary to-primary/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+                                <div className="absolute inset-0 bg-linear-to-r from-primary/50 via-primary to-primary/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-linear-to-r from-transparent via-white/40 to-transparent" />
                                 <span className="relative flex items-center justify-center gap-2 text-base">
                                     View Live Project
                                     <ExternalLink className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
@@ -337,9 +341,9 @@ export default function KindraProjectPage() {
                                 <ArrowLeft className="w-4 h-4" />
                                 Previous Project
                             </div>
-                            <h4 className="text-lg font-light">{otherProject.title}</h4>
+                            <h4 className="text-lg font-light">{tNext('title')}</h4>
                             <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
-                                {otherProject.description}
+                                {tNext('description')}
                             </p>
                         </Link>
                     </motion.div>

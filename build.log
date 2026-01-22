@@ -1,0 +1,49 @@
+$ next build
+   ▲ Next.js 16.0.10 (Turbopack)
+   - Experiments (use with caution):
+     · optimizePackageImports
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 4.3s
+   Skipping validation of types
+   Collecting page data using 11 workers ...
+   Generating static pages using 11 workers (0/22) ...
+   Generating static pages using 11 workers (5/22) 
+   Generating static pages using 11 workers (10/22) 
+   Generating static pages using 11 workers (16/22) 
+ ✓ Generating static pages using 11 workers (22/22) in 1040.8ms
+   Finalizing page optimization ...
+
+Route (app)
+┌ ○ /_not-found
+├ ● /[locale]
+│ ├ /en
+│ └ /fr
+├ ● /[locale]/projects/dtalk-ecosystem
+│ ├ /en/projects/dtalk-ecosystem
+│ └ /fr/projects/dtalk-ecosystem
+├ ● /[locale]/projects/ecommerce-platform
+│ ├ /en/projects/ecommerce-platform
+│ └ /fr/projects/ecommerce-platform
+├ ● /[locale]/projects/kindra-ecommerce
+│ ├ /en/projects/kindra-ecommerce
+│ └ /fr/projects/kindra-ecommerce
+├ ● /[locale]/projects/menu-qr
+│ ├ /en/projects/menu-qr
+│ └ /fr/projects/menu-qr
+├ ● /[locale]/projects/project-management-app
+│ ├ /en/projects/project-management-app
+│ └ /fr/projects/project-management-app
+├ ƒ /api/og
+├ ○ /apple-icon.png
+├ ○ /icon0.svg
+├ ○ /icon1.png
+├ ○ /manifest.webmanifest
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+

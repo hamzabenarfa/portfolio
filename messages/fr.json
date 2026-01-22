@@ -54,7 +54,14 @@
     "productMgmt": {
       "title": "Gestion de Produit",
       "description": "Je vous guide tout au long du cycle de vie, de l'idée au marché, en veillant à ce que votre produit s'aligne sur les objectifs commerciaux"
-    }
+    },
+    "techStack": "Pile Technique",
+    "visitSite": "Visiter le Site",
+    "problem": "Le Problème",
+    "solution": "La Solution",
+    "impact": "Impact & Résultats",
+    "year": "Année",
+    "role": "Rôle"
   },
   "experience": {
     "title": "Expérience"
@@ -73,8 +80,175 @@
   },
   "language": {
     "en": "English",
-    "fr": "Français",
-    "ar": "العربية"
+    "fr": "Français"
+  },
+  "projectsItems": {
+    "dtalk-ecosystem": {
+      "title": "Écosystème D-Talk",
+      "subtitle": "Marketplace de Mode Multi-Rôles",
+      "category": "E-Commerce / SaaS",
+      "description": "Architecture frontend dirigée pour une startup fashion-tech, permettant à plus de 500 designers de monétiser leur travail. Création d'un studio de design en temps réel réduisant le temps de personnalisation de 60%.",
+      "longDescription": "Pilotage du développement frontend d'une plateforme e-commerce révolutionnaire connectant designers, marques et consommateurs. La plateforme traite plus de 50K$ de transactions mensuelles. Architecture complète du système frontend avec personnalisation canvas (Konva.js) et aperçus en temps réel.",
+      "problem": "Les designers de mode manquaient de plateformes accessibles pour monétiser leurs créations numériques, tandis que les marques peinaient à trouver des designs uniques.",
+      "solution": "Construction d'un écosystème complet avec tableaux de bord spécifiques par rôle, outils de personnalisation en temps réel et intégration de paiement transparente.",
+      "impact": [
+        "500+ designers actifs sur la plateforme",
+        "Architecture multi-rôles pour 4 types d'utilisateurs",
+        "Réduction de 60% du temps de personnalisation",
+        "Scores Lighthouse >90 sur toutes les métriques"
+      ],
+      "content": "D-Talk Ecosystem est une plateforme e-commerce sophistiquée et multi-rôles conçue pour révolutionner l'industrie de la mode...\n\n## 🎯 Le Défi\n\nLes designers de mode manquaient de plateformes accessibles pour monétiser leurs designs. Les chaînes d'approvisionnement traditionnelles créaient des barrières pour les talents créatifs.\n\n## 💡 La Solution\n\n### Architecture Multi-Rôles\n\nLa plateforme dessert quatre rôles distincts :\n\n- **Designers** : Création et monétisation d'actifs visuels\n- **Designers de Mode** : Développement de plans techniques\n- **Marques** : Achat de designs et gestion de production\n- **Admins** : Gestion de l'écosystème\n\n### Studio de Design Interactif\n\nUn éditeur puissant basé sur le navigateur (Fabric.js, Konva) permettant la personnalisation en temps réel.\n\n## 📊 Résultats & Impact\n\n- **500+ designers** actifs\n- **50K$+ mensuels** en transactions\n- **60% plus rapide** que les méthodes traditionnelles\n- **Scores Lighthouse 95+**",
+      "keyFeatures": [
+        "Architecture multi-rôles avec tableaux de bord spécialisés pour designers, marques et administrateurs",
+        "Édition canvas avancée avec Fabric.js et Konva pour la création de designs professionnels",
+        "Génération de designs par IA et téléchargements de designs personnalisés",
+        "Système e-commerce complet avec panier, favoris et intégration de paiement",
+        "Suivi des gains et gestion financière pour les créateurs avec système de retrait",
+        "Approche orientée sécurité avec cookies HTTP-only, tokens JWT et contrôle d'accès basé sur les rôles",
+        "Internationalisation intégrée supportant l'anglais et le français",
+        "Azure Blob Storage pour la gestion sécurisée des images avec génération d'URL SAS"
+      ]
+    },
+    "ecommerce-platform": {
+      "title": "Vertex",
+      "subtitle": "Marketplace de Produits High-Tech",
+      "category": "E-Commerce",
+      "description": "Architecture d'une plateforme e-commerce gérant plus de 1000 références. Scores Lighthouse de 95+ et temps de chargement <2s grâce au Domain-Driven Design.",
+      "longDescription": "Solution e-commerce complète, de la boutique au tableau de bord admin. Supporte les ventes flash avec compte à rebours, paniers persistants et paiements Stripe automatisés.",
+      "problem": "Les petits détaillants tech avaient besoin de solutions abordables et évolutives pour concurrencer les grandes plateformes.",
+      "solution": "Développement d'une plateforme complète avec vitrine moderne, dashboard admin et traitement des paiements, déployable rapidement.",
+      "impact": [
+        "Scores de performance Lighthouse 95+",
+        "Temps de chargement moyen <2s",
+        "Intégrité des données du panier de 99.9%"
+      ],
+      "content": "Vertex représente une approche moderne du développement e-commerce. Cette plateforme prête pour la production sert à la fois les clients et les administrateurs.\n\n## 🎯 Le Défi\n\nLes détaillants tech font face à un dilemme : solutions d'entreprise coûteuses ou plateformes limitées. Ils avaient besoin de personnalisation et de performance.\n\n## 💡 La Solution\n\n### Expérience Client\n\nCatalogue moderne avec filtrage avancé. Ventes flash pour créer l'urgence.\n\n### Puissance Administrative\n\nTableau de bord complet pour la gestion des stocks, des catégories et le suivi des commandes.\n\n## 📊 Résultats & Impact\n\n- **1000+ références** gérées\n- **Scores Lighthouse 95+**\n- **Chargement <2s**",
+      "keyFeatures": [
+        "Vitrine moderne avec filtrage avancé à travers plusieurs catégories de produits",
+        "Ventes flash avec compte à rebours en direct et navigation par marque",
+        "Panier d'achat avec état persistant entre les sessions",
+        "Système de favoris pour sauvegarder des articles et Stripe Checkout intégré",
+        "Tableau de bord admin complet avec gestion des produits et des commandes",
+        "Suivi des stocks en temps réel et gestion dynamique des catégories",
+        "Contrôle d'accès basé sur les rôles pour la collaboration d'équipe",
+        "Intégration analytique prête pour Google Analytics"
+      ]
+    },
+    "project-management-app": {
+      "title": "Planner",
+      "subtitle": "Suite de Productivité d'Équipe",
+      "category": "Productivité / SaaS",
+      "description": "Outil de gestion de projet complet avec tableaux Kanban, graphiques d'avancement et tableau blanc collaboratif. Utilisé par 200+ utilisateurs actifs.",
+      "longDescription": "Plateforme de productivité combinant gestion de projet, calendrier et collaboration visuelle. Inclut rendez-vous récurrents et diagrammes techniques avec Mermaid.js.",
+      "problem": "Les équipes utilisaient de multiples outils déconnectés, entraînant une perte de contexte et de productivité.",
+      "solution": "Création d'une suite tout-en-un combinant Kanban, calendriers et tableaux blancs dans une interface unique.",
+      "impact": [
+        "Amélioration de 40% de la productivité rapportée",
+        "Collaboration temps réel <100ms de latence",
+        "Tableau blanc + diagrammes intégrés"
+      ],
+      "content": "Planner est une application complète de gestion de projet construite avec Next.js.\n\n## 🎯 Le Défi\n\nLa fragmentation des outils (Trello, Calendar, Miro) tue la productivité.\n\n## 💡 La Solution\n\n- **Tableaux Kanban** : Glisser-déposer interactif\n- **Gestion d'Équipe** : Rôles et permissions\n- **Collaboration Visuelle** : Tableau blanc et diagrammes\n\n## 📊 Résultats & Impact\n\n- **200+ utilisateurs actifs**\n- **40% de gain de productivité**",
+      "keyFeatures": [
+        "Gestion de projet complète avec tableaux Kanban et graphiques burn down",
+        "Gestion de tâches interactive en glisser-déposer utilisant @dnd-kit",
+        "Gestion d'équipe et de membres avec contrôle d'accès basé sur les rôles",
+        "Vue calendrier complète pour planifier rendez-vous et événements récurrents",
+        "Tableau blanc intégré pour brainstorming et esquisses",
+        "Support intégré pour créer des diagrammes techniques avec Mermaid.js",
+        "Tableau de bord avec graphiques d'état du projet et distribution des tâches",
+        "Authentification sécurisée avec NextAuth.js et gestion de session"
+      ]
+    },
+    "menu-qr": {
+      "title": "Menu QR",
+      "subtitle": "Plateforme de Menu Restaurant Numérique",
+      "category": "SaaS / Tech Restaurant",
+      "description": "Plateforme de menu numérique avec technologie QR code. Assistant d'intégration en 8 étapes, éditeur de menu temps réel et tableau de bord analytique.",
+      "longDescription": "Plateforme SaaS complète révolutionnant les opérations de restaurant via QR code. Backend NestJS avec authentification JWT et frontend Next.js optimisé.",
+      "problem": "Les restaurants avaient besoin d'une solution moderne et économique pour des menus sans contact, multilingues et faciles à mettre à jour.",
+      "solution": "Plateforme de bout en bout avec éditeur intuitif, codes QR personnalisables et analyses complètes.",
+      "impact": [
+        "Lancement du menu en 60 secondes",
+        "Support multilingue (EN, FR, AR avec RTL)",
+        "Numérisation IA avec 99% de précision",
+        "Analytique temps réel"
+      ],
+      "content": "QR Menu App est une plateforme complète pour moderniser les restaurants.\n\n## 🎯 Le Défi\n\nCoûts de réimpression, besoin de sans-contact et support multilingue.\n\n## 💡 La Solution\n\n- **Gestion Business** : Assistant en 8 étapes\n- **Éditeur Avancé** : Organisation hiérarchique et glisser-déposer\n- **Analytique** : Suivi des scans et de l'engagement\n\n## 📊 Résultats & Impact\n\n- **Architecture entreprise**\n- **Conformité WCAG 2.1 AA**",
+      "keyFeatures": [
+        "Numérisation de menu par IA avec 99% de précision - glisser-déposer PDF pour structuration instantanée",
+        "Mises à jour de menu en temps réel - modification prix, masquage articles épuisés pendant le service",
+        "Support multilingue avec 100+ langues et support RTL pour l'arabe",
+        "Tableau de bord analytique complet avec suivi des revenus et insights commandes",
+        "Assistant d'intégration en 8 étapes pour configuration profil restaurant transparente",
+        "QR codes personnalisables avec export PDF instantané pour impression table",
+        "Organisation hiérarchique du menu avec réorganisation glisser-déposer",
+        "Sécurité niveau entreprise avec JWT, OAuth 2.0 et contrôle d'accès basé sur les rôles"
+      ]
+    },
+    "kindra-ecommerce": {
+      "title": "KINDRA",
+      "subtitle": "Plateforme E-Commerce Mode",
+      "category": "E-Commerce / SaaS Starter",
+      "description": "Marketplace de mode évolutive supportant les produits multi-variantes avec stratégie de stockage cloud double. Auth personnalisée sécurisée.",
+      "longDescription": "Kit de démarrage SaaS production-ready pour la mode. Vitrines séparées Homme/Femme, paiements Stripe et suite admin complète.",
+      "problem": "Lancer un e-commerce de mode demande un investissement initial lourd et des fonctionnalités complexes (variantes, paiements).",
+      "solution": "Kit de démarrage complet gérant toutes les complexités, permettant un lancement en quelques semaines.",
+      "impact": [
+        "Zéro incident de sécurité",
+        "Stockage cloud double (optimisation des coûts)",
+        "Prêt au lancement en <1 semaine"
+      ],
+      "content": "KINDRA est une plateforme e-commerce complète pour l'industrie de la mode.\n\n## 🎯 Le Défi\n\nExigences uniques de la mode : tailles, couleurs, images haute qualité, collections saisonnières.\n\n## 💡 La Solution\n\n- **Frontend** : Next.js 15, React 19\n- **Backend** : Server Actions, Drizzle ORM\n- **Fonctionnalités** : Collections Homme/Femme, Recherche avancée, Stripe Checkout\n\n## 📊 Résultats & Impact\n\n- **Validation de session en 100ms**\n- **Réduction des coûts de 40%**",
+      "keyFeatures": [
+        "Expérience d'achat multi-sections (Homme/Femme)",
+        "Découverte produit avancée avec routage dynamique",
+        "Stripe Checkout sécurisé avec exécution webhook",
+        "Tableau de bord admin complet pour inventaire",
+        "Contrôle d'accès basé sur les rôles avec auth personnalisée",
+        "Support produit multi-variantes (Taille/Couleur)",
+        "Stockage image double (Cloudflare R2 & Vercel Blob)",
+        "Optimisé SEO avec métadonnées dynamiques"
+      ]
+    }
+  },
+  "experienceItems": {
+    "job_1": {
+      "role": "Développeur Full-Stack",
+      "company": "Startup D-TALK",
+      "description": "Architecture frontend pour une plateforme fashion-tech, traitant les transactions mensuelles.",
+      "details": "Direction de l'implémentation de la personnalisation produit avec Konva.js. Création d'une bibliothèque de composants réduisant le temps de dev de 40%."
+    },
+    "job_2": {
+      "role": "Développeur Full-Stack (Contrat)",
+      "company": "Tactix – Agence Logicielle",
+      "description": "Livraison d'une plateforme e-commerce haute performance en un sprint agressif de 8 semaines.",
+      "details": "Création d'API RESTful avec Nest.js. Animations Framer Motion améliorant la performance perçue de 35%."
+    },
+    "job_3": {
+      "role": "Instructeur Développement Full-Stack",
+      "company": "NGB Professional",
+      "description": "Direction de programmes de formation MERN stack avec 95% de taux de complétion.",
+      "details": "Conception et livraison de curriculum (MongoDB, Express, React, Node.js) pour 30+ développeurs aspirants."
+    },
+    "job_4": {
+      "role": "Consultant Logiciel Indépendant",
+      "company": "Auto-Entrepreneur",
+      "description": "Livraison de 15+ projets clients du MVP à la production.",
+      "details": "Spécialisé dans la transformation d'idées de startups en produits évolutifs. E-commerce, SaaS et outils de productivité."
+    }
+  },
+  "testimonialsItems": {
+    "testimonial_1": {
+      "quote": "Hamza a livré notre MVP 2 semaines en avance avec une qualité de code exceptionnelle. Son expertise technique a rendu le processus fluide.",
+      "author": "Ahmed K.",
+      "role": "Fondateur Startup",
+      "company": "Tech Startup"
+    },
+    "testimonial_2": {
+      "quote": "Travailler avec Hamza a transformé notre vision e-commerce en réalité. La plateforme dépasse nos attentes.",
+      "author": "Sarah M.",
+      "role": "Propriétaire",
+      "company": "Marque de Mode"
+    }
   }
 }
-

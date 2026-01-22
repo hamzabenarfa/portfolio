@@ -4,7 +4,7 @@ import { Geist } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import { routing, isRtlLocale, type Locale } from "@/i18n/routing";
+import { routing, type Locale } from "@/i18n/routing";
 import "../globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SEO } from "@/components/seo/seo";
@@ -36,13 +36,11 @@ export async function generateMetadata({
   const titles: Record<string, string> = {
     en: "Hamza Benarfa | Full-Stack Developer & DevOps Engineer",
     fr: "Hamza Benarfa | Développeur Full-Stack & Ingénieur DevOps",
-    ar: "حمزة بن عرفة | مطور Full-Stack ومهندس DevOps",
   };
 
   const descriptions: Record<string, string> = {
     en: "Freelance full-stack developer & DevOps engineer from Tunisia. I build fast, accessible, and scalable web & mobile apps with Next.js, TypeScript, React, NestJS, and cloud infrastructure.",
     fr: "Développeur full-stack freelance & ingénieur DevOps de Tunisie. Je construis des applications web et mobiles rapides, accessibles et évolutives avec Next.js, TypeScript, React, NestJS et l'infrastructure cloud.",
-    ar: "مطور full-stack مستقل ومهندس DevOps من تونس. أقوم ببناء تطبيقات ويب وموبايل سريعة وسهلة الوصول وقابلة للتوسع باستخدام Next.js و TypeScript و React و NestJS والبنية التحتية السحابية.",
   };
 
   return {
@@ -74,7 +72,7 @@ export async function generateMetadata({
         "Building pixel-perfect, performant web apps with modern stacks.",
       url: "https://benarfa.com",
       siteName: "Hamza Benarfa",
-      locale: locale === "ar" ? "ar_TN" : locale === "fr" ? "fr_FR" : "en_US",
+      locale: locale === "fr" ? "fr_FR" : "en_US",
       type: "website",
       images: [
         {
@@ -109,7 +107,6 @@ export async function generateMetadata({
       languages: {
         en: "https://benarfa.com/en",
         fr: "https://benarfa.com/fr",
-        ar: "https://benarfa.com/ar",
       },
     },
     icons: {
@@ -134,12 +131,10 @@ export default async function LocaleLayout({ children, params }: Props) {
   // Fetch messages for the current locale
   const messages = await getMessages();
 
-  const isRtl = isRtlLocale(locale as Locale);
-
   return (
     <html
       lang={locale}
-      dir={isRtl ? "rtl" : "ltr"}
+      dir="ltr"
       className={`${geist.variable}`}
       suppressHydrationWarning
     >

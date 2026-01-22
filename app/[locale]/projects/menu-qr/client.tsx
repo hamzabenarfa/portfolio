@@ -5,23 +5,27 @@ import { motion } from 'framer-motion';
 import { Link } from '@/i18n/navigation';
 import Image from 'next/image';
 import { PROJECTS } from '@/data/consts';
-import { 
-  ArrowLeft, 
-  ExternalLink, 
-  CheckCircle2, 
-  Code2, 
-  Zap, 
-  Shield, 
-  Globe, 
-  QrCode, 
-  BarChart3, 
+import {
+  ArrowLeft,
+  ExternalLink,
+  CheckCircle2,
+  Code2,
+  Zap,
+  Shield,
+  Globe,
+  QrCode,
+  BarChart3,
   Sparkles,
   Clock,
   Languages,
   GripVertical
 } from 'lucide-react';
 
+import { useTranslations } from 'next-intl';
+
 export default function MenuQRProjectPage() {
+  const t = useTranslations('projectsItems.menu-qr');
+  const tNext = useTranslations('projectsItems.dtalk-ecosystem');
   const project = PROJECTS.find((p) => p.slug === 'menu-qr');
   const [imageError, setImageError] = useState(false);
 
@@ -29,27 +33,19 @@ export default function MenuQRProjectPage() {
 
   const otherProject = PROJECTS.find((p) => p.slug === 'dtalk-ecosystem');
 
-  const keyFeatures = [
-    'AI-powered menu digitization with 99% accuracy - drag & drop PDF for instant structuring',
-    'Real-time menu updates - edit prices, hide sold-out items during service',
-    'Multilingual support with 100+ languages and RTL support for Arabic',
-    'Comprehensive analytics dashboard with revenue tracking and order insights',
-    '8-step onboarding wizard for seamless restaurant profile setup',
-    'Customizable QR codes with instant PDF export for table printing',
-    'Hierarchical menu organization with drag-and-drop reordering',
-    'Enterprise-grade security with JWT, OAuth 2.0, and role-based access control',
-  ];
+  /* @ts-ignore */
+  const keyFeatures = (t.raw('keyFeatures') as string[]) || [];
 
   const frontendTech = project.tech.filter(t =>
     t.includes('React') || t.includes('Next.js') || t.includes('TypeScript') ||
     t.includes('Tailwind') || t.includes('Framer') || t.includes('shadcn')
   );
-  
+
   const backendTech = project.tech.filter(t =>
     t.includes('NestJS') || t.includes('PostgreSQL') || t.includes('Prisma') ||
     t.includes('Redis') || t.includes('JWT')
   );
-  
+
   const toolsTech = project.tech.filter(t =>
     t.includes('Zod') || t.includes('dnd-kit') || t.includes('intl')
   );
@@ -71,12 +67,12 @@ export default function MenuQRProjectPage() {
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative group px-4 py-2 overflow-hidden rounded-lg bg-gradient-to-r from-primary via-primary/90 to-primary text-primary-foreground font-medium text-sm shadow-lg hover:shadow-xl hover:shadow-primary/50 transition-all duration-300"
+              className="relative group px-4 py-2 overflow-hidden rounded-lg bg-linear-to-r from-primary via-primary/90 to-primary text-primary-foreground font-medium text-sm shadow-lg hover:shadow-xl hover:shadow-primary/50 transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
             >
               {/* Shimmer effect */}
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-linear-to-r from-transparent via-white/30 to-transparent" />
 
               <span className="relative flex items-center gap-2">
                 Visit Live Site
@@ -100,13 +96,11 @@ export default function MenuQRProjectPage() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight leading-tight">
-            {project.title}
+            {t('title')}
           </h1>
 
           <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl">
-            The frictionless way to manage restaurant menus. Launch your digital menu in 60 seconds,
-            update prices mid-service, switch languages instantly, and increase table turnover with
-            comprehensive analytics.
+            {t('description')}
           </p>
 
           {/* Quick Stats */}
@@ -131,12 +125,12 @@ export default function MenuQRProjectPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="relative h-64 sm:h-96 lg:h-[500px] rounded-2xl overflow-hidden border border-secondary/30 mb-16 bg-gradient-to-br from-secondary/20 to-primary/10"
+          className="relative h-64 sm:h-96 lg:h-[500px] rounded-2xl overflow-hidden border border-secondary/30 mb-16 bg-linear-to-br from-secondary/20 to-primary/10"
         >
           {!imageError ? (
             <Image
               src={project.image || '/placeholder.svg'}
-              alt={project.title}
+              alt={t('title')}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
               className="object-cover"
@@ -148,7 +142,7 @@ export default function MenuQRProjectPage() {
             <div className="w-full h-full flex items-center justify-center">
               <div className="text-center">
                 <QrCode className="w-16 h-16 mx-auto mb-4 text-primary" />
-                <p className="text-muted-foreground">{project.title}</p>
+                <p className="text-muted-foreground">{t('title')}</p>
               </div>
             </div>
           )}
@@ -190,7 +184,7 @@ export default function MenuQRProjectPage() {
             <div>
               <h2 className="text-2xl sm:text-3xl font-light mb-6">Overview</h2>
               <p className="text-base leading-relaxed text-muted-foreground mb-6">
-                {project.longDescription}
+                {t('longDescription')}
               </p>
             </div>
 
@@ -268,21 +262,21 @@ export default function MenuQRProjectPage() {
                 <div className="p-4 bg-secondary/10 border border-secondary/30 rounded-lg">
                   <h4 className="text-sm font-semibold mb-2">Backend (NestJS 10)</h4>
                   <p className="text-xs text-muted-foreground">
-                    Modular architecture with Prisma ORM, Redis caching (cache-aside pattern), 
+                    Modular architecture with Prisma ORM, Redis caching (cache-aside pattern),
                     Swagger API documentation, and comprehensive E2E testing with Supertest.
                   </p>
                 </div>
                 <div className="p-4 bg-secondary/10 border border-secondary/30 rounded-lg">
                   <h4 className="text-sm font-semibold mb-2">Frontend (Next.js 15.5)</h4>
                   <p className="text-xs text-muted-foreground">
-                    App Router with React 19, server components, optimistic UI updates, 
+                    App Router with React 19, server components, optimistic UI updates,
                     client-side image compression, and next-intl for internationalization.
                   </p>
                 </div>
                 <div className="p-4 bg-secondary/10 border border-secondary/30 rounded-lg">
                   <h4 className="text-sm font-semibold mb-2">Database Schema</h4>
                   <p className="text-xs text-muted-foreground">
-                    PostgreSQL with Prisma: User → Business → Menu → Category → MenuItem 
+                    PostgreSQL with Prisma: User → Business → Menu → Category → MenuItem
                     relationships with strategic indexing for query optimization.
                   </p>
                 </div>
@@ -353,7 +347,7 @@ export default function MenuQRProjectPage() {
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative group block w-full px-8 py-4 overflow-hidden rounded-xl bg-gradient-to-r from-primary via-primary/95 to-primary text-primary-foreground font-semibold text-center shadow-2xl hover:shadow-primary/60"
+                className="relative group block w-full px-8 py-4 overflow-hidden rounded-xl bg-linear-to-r from-primary via-primary/95 to-primary text-primary-foreground font-semibold text-center shadow-2xl hover:shadow-primary/60"
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 animate={{
@@ -372,10 +366,10 @@ export default function MenuQRProjectPage() {
                 }}
               >
                 {/* Animated background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/50 via-primary to-primary/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-linear-to-r from-primary/50 via-primary to-primary/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                 {/* Shimmer effect */}
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-linear-to-r from-transparent via-white/40 to-transparent" />
 
                 {/* Pulse rings */}
                 <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100">
@@ -408,9 +402,9 @@ export default function MenuQRProjectPage() {
                 Next Project
                 <ArrowLeft className="w-4 h-4 rotate-180" />
               </div>
-              <h4 className="text-lg font-light text-right">{otherProject.title}</h4>
+              <h4 className="text-lg font-light text-right">{tNext('title')}</h4>
               <p className="text-sm text-muted-foreground mt-2 text-right line-clamp-2">
-                {otherProject.description}
+                {tNext('description')}
               </p>
             </Link>
           </motion.div>
