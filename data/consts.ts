@@ -25,7 +25,7 @@ export const SOCIAL_LINKS = [
 export const STATS = [
   { value: "3+", label: "Years Experience" },
   { value: "15+", label: "Projects Shipped" },
-  { value: "100%", label: "Client Satisfaction" },
+  { value: "60%", label: "Repeat Clients" },
 ];
 
 export const SKILLS = {
@@ -172,9 +172,9 @@ export const WORK_EXPERIENCE = [
     role: "Full-Stack Developer",
     company: "D-TALK Startup",
     description:
-      "Architecting the frontend for a Series-seed fashion-tech platform processing monthly design transactions.",
+      "Building the frontend for a fashion-tech marketplace with multi-role dashboards and a real-time product customizer.",
     details:
-      "Led implementation of advanced canvas-based product customization with Konva.js achieving high-performance render performance. Established component library reducing development time by 40%. Achieved Lighthouse scores >90 across all metrics while managing complex multi-role state with Zustand and TanStack Query. Translated Figma designs into accessible, performant UIs with pixel-perfect accuracy.",
+      "Built canvas-based product customization with Konva.js. Set up a reusable component library. Managed complex multi-role state with Zustand and TanStack Query. Translated Figma designs into accessible, responsive UIs.",
     tech: [
       "Next.js 15",
       "React 19",
@@ -190,9 +190,9 @@ export const WORK_EXPERIENCE = [
     role: "Full-Stack Developer (Contract)",
     company: "Tactix – Software Agency",
     description:
-      "Delivered a high-performance e-commerce platform in an aggressive 8-week sprint.",
+      "Built an e-commerce platform in an 8-week sprint as part of a 4-person team.",
     details:
-      "Built RESTful APIs with Nest.js handling daily requests. Implemented Framer Motion animations improving perceived performance by 35%. Collaborated in a 4-person Agile team with 95% sprint completion rate. The project was recognized internally as a model for efficient delivery.",
+      "Built RESTful APIs with Nest.js. Added page transition animations with Framer Motion. Worked in a small Agile team with weekly sprints and shipped ahead of schedule.",
     tech: ["React", "Nest.js", "MongoDB", "Framer Motion"],
   },
   {
@@ -201,9 +201,9 @@ export const WORK_EXPERIENCE = [
     role: "Full-Stack Development Instructor",
     company: "NGB Professional",
     description:
-      "Led comprehensive MERN stack training programs.",
+      "Taught a MERN stack training program for aspiring developers.",
     details:
-      "Designed and delivered curriculum covering MongoDB, Express, React, and Node.js to aspiring developers. Created hands-on projects simulating real-world scenarios. Mentored students through portfolio development.",
+      "Designed and delivered a curriculum covering MongoDB, Express, React, and Node.js. Built hands-on projects simulating real-world scenarios. Mentored students through portfolio development.",
     tech: ["MongoDB", "Express", "React", "Node.js", "PostgreSQL"],
   },
   {
@@ -212,9 +212,9 @@ export const WORK_EXPERIENCE = [
     role: "Independent Software Consultant",
     company: "Self-Employed",
     description:
-      "Delivered projects from MVP to production.",
+      "Freelance developer building MVPs and production apps for clients.",
     details:
-      "Specialized in transforming startup ideas into scalable products. Built applications serving combined users across e-commerce, SaaS, and productivity domains. Maintained 100% client satisfaction with repeat business from 60% of clients. Notable projects include full e-commerce platforms, SaaS tools, and mobile applications.",
+      "Worked with startups and small businesses to build web apps across e-commerce, SaaS, and productivity. Projects range from MVPs to production deployments. Most clients are repeat customers.",
     tech: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL", "MySQL"],
   },
 ];
