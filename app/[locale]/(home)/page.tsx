@@ -68,7 +68,7 @@ export default async function Home({ params }: Props) {
         <footer className="py-8 border-t border-secondary/30">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div className="text-sm text-muted-foreground">
-              &copy; 2025 Hamza Benarfa.
+              &copy; 2026 Hamza Benarfa.
             </div>
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <a
