@@ -242,8 +242,10 @@ export default function DTalkProjectPage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  onClick={() => setIsLandingPageScrolling(prev => !prev)}
-                  className="relative rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 shadow-xl group h-[500px] w-full cursor-pointer md:cursor-auto"
+                  onTouchStart={() => setIsLandingPageScrolling(true)}
+                  onTouchEnd={() => setIsLandingPageScrolling(false)}
+                  onTouchCancel={() => setIsLandingPageScrolling(false)}
+                  className="relative rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 shadow-xl group h-[500px] w-full md:cursor-auto select-none"
                 >
                   <div className="absolute inset-0 bg-zinc-900 overflow-hidden">
                     <div className={`relative w-full h-[3000px] transition-transform duration-15000 ease-linear md:group-hover:-translate-y-[calc(100%-500px)] ${isLandingPageScrolling ? '-translate-y-[calc(100%-500px)]' : ''}`}>
@@ -251,17 +253,17 @@ export default function DTalkProjectPage() {
                         src="/dtalk-landing-full.webp"
                         alt="D-Talk Ecosystem - Full Landing Page"
                         fill
-                        className="object-cover object-top pointer-events-none"
+                        className="object-contain md:object-cover object-top pointer-events-none"
                         onError={() => setImageError(true)}
                         sizes="(max-width: 1200px) 100vw, 1200px"
                       />
                     </div>
                   </div>
                   <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/90 via-black/40 to-transparent p-6 pointer-events-none">
-                    <p className="text-white font-medium text-lg flex items-center gap-2">
+                    <p className="text-white font-medium text-sm md:text-lg flex items-center gap-2">
                       Ecosystem Landing Page
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-white/20 hidden md:inline-block">Hover to scroll</span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-white/20 md:hidden">{isLandingPageScrolling ? 'Press to stop' : 'Press to scroll'}</span>
+                      <span className="text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 rounded-full bg-white/20 hidden md:inline-block whitespace-nowrap">Hover to scroll</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-white/20 md:hidden whitespace-nowrap">Hold to scroll</span>
                     </p>
                   </div>
                 </motion.div>
@@ -296,39 +298,7 @@ export default function DTalkProjectPage() {
                   ))}
                 </div>
 
-                {/* 3. Mobile View Showcase */}
-                <div className="flex flex-col items-center mt-12 space-y-6">
-                  <div className="text-center space-y-2">
-                    <h3 className="text-xl font-medium text-white">Responsive Mobile Experience</h3>
-                    <p className="text-zinc-500 text-sm hidden md:block">Hover the device to scroll.</p>
-                    <p className="text-zinc-500 text-sm md:hidden">{isMobileViewScrolling ? 'Press the device to stop.' : 'Press the device to scroll.'}</p>
-                  </div>
 
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    onClick={() => setIsMobileViewScrolling(prev => !prev)}
-                    className="relative w-[300px] h-[600px] rounded-[3rem] border-8 border-zinc-800 bg-zinc-900 shadow-2xl overflow-hidden p-[2px] shadow-blue-500/10 cursor-pointer md:cursor-auto"
-                  >
-                    {/* Dynamic Notch */}
-                    <div className="absolute top-0 inset-x-0 h-6 flex justify-center z-10">
-                      <div className="w-32 h-6 bg-zinc-800 rounded-b-3xl"></div>
-                    </div>
-                    <div className="absolute inset-x-0 inset-y-0 overflow-hidden rounded-[2.5rem] bg-zinc-950 group">
-                      <div className={`relative w-full h-[3000px] transition-transform duration-15000 ease-linear md:group-hover:-translate-y-[calc(100%-600px)] ${isMobileViewScrolling ? '-translate-y-[calc(100%-600px)]' : ''}`}>
-                        <Image
-                          src="/dtalk-mobile-full.webp"
-                          alt="Mobile App Showcase"
-                          fill
-                          className="object-cover object-top pointer-events-none"
-                          sizes="(max-width: 400px) 100vw, 400px"
-                          onError={() => setImageError(true)}
-                        />
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
               </div>
             </section>
 
@@ -688,10 +658,10 @@ export default function DTalkProjectPage() {
             </section>
 
           </article>
-        </div>
-      </main>
+        </div >
+      </main >
 
-    </div>
+    </div >
   );
 }
 
