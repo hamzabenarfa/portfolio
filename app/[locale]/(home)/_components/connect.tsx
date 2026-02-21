@@ -5,32 +5,8 @@ import { motion } from "framer-motion";
 import { SOCIAL_LINKS } from "@/data/consts";
 import { SocialLink } from "./social-links";
 import { ArrowRight } from "lucide-react";
-
-const Section = ({
-    id,
-    children,
-    className = "",
-    ...props
-}: React.HTMLAttributes<HTMLElement> & { id: string }) => (
-    <section id={id} className={`min-h-screen py-10 ${className}`} {...props}>
-        {children}
-    </section>
-);
-
-const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-};
-
-const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1,
-        },
-    },
-};
+import { Section } from "@/components/section";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 export function Connect() {
     const t = useTranslations();
@@ -63,7 +39,7 @@ export function Connect() {
                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:rotate-180 transition-transform" />
                             </a>
                             <a
-                                href="/benarfa-hamza-en.pdf"
+                                href={"/benarfa-hamza-en.pdf"}
                                 download
                                 className="inline-flex items-center gap-2 px-6 py-3 border border-secondary/40 rounded-lg font-medium hover:border-primary/60 hover:bg-primary/5 transition-all duration-300"
                             >

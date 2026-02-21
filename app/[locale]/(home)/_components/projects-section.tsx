@@ -2,36 +2,13 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { PROJECTS } from "@/data/consts";
 import ProjectShowcase from "@/components/project-showcase";
 import { ArrowRight } from "lucide-react";
-
-const Section = ({
-    id,
-    children,
-    className = "",
-    ...props
-}: React.HTMLAttributes<HTMLElement> & { id: string }) => (
-    <section id={id} className={`min-h-screen py-10 ${className}`} {...props}>
-        {children}
-    </section>
-);
-
-const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-};
-
-const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1,
-        },
-    },
-};
+import { Section } from "@/components/section";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 export function ProjectsSection() {
     const t = useTranslations();
@@ -65,10 +42,12 @@ export function ProjectsSection() {
                             >
                                 {/* Image */}
                                 <div className="relative h-64 sm:h-80 lg:h-full min-h-[300px] rounded-xl overflow-hidden bg-linear-to-br from-secondary/20 to-primary/10">
-                                    <img
+                                    <Image
                                         src={featuredProject.image}
                                         alt={t(`projectsItems.${featuredProject.slug}.title`)}
-                                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                        sizes="(max-width: 1024px) 100vw, 50vw"
                                     />
                                 </div>
 
@@ -90,20 +69,6 @@ export function ProjectsSection() {
                                         {t(`projectsItems.${featuredProject.slug}.description`)}
                                     </p>
 
-                                    {/* Impact Metrics */}
-                                    {featuredProject.impact && (
-                                        <div className="grid grid-cols-2 gap-4">
-                                            {/* We iterate over the structure but fetch content from translations */}
-                                            {featuredProject.impact.slice(0, 4).map((_, i) => (
-                                                <div
-                                                    key={i}
-                                                    className="text-sm p-3 bg-secondary/20 rounded-lg"
-                                                >
-                                                    {t(`projectsItems.${featuredProject.slug}.impact.${i}`)}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
 
                                     {/* Tech preview */}
                                     <div className="flex flex-wrap gap-2">

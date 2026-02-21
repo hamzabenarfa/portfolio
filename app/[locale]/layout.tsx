@@ -43,6 +43,16 @@ export async function generateMetadata({
     fr: "Développeur full-stack freelance & ingénieur DevOps de Tunisie. Je construis des applications web et mobiles rapides, accessibles et évolutives avec Next.js, TypeScript, React, NestJS et l'infrastructure cloud.",
   };
 
+  const ogTitles: Record<string, string> = {
+    en: "Hamza Benarfa — Full-Stack Developer",
+    fr: "Hamza Benarfa — Développeur Full-Stack",
+  };
+
+  const ogDescriptions: Record<string, string> = {
+    en: "Building performant, accessible web apps with modern stacks.",
+    fr: "Création d'applications web performantes et accessibles avec des technologies modernes.",
+  };
+
   return {
     metadataBase: new URL("https://benarfa.com"),
     title: {
@@ -67,16 +77,15 @@ export async function generateMetadata({
     authors: [{ name: "Hamza Benarfa", url: "https://benarfa.com" }],
     creator: "Hamza Benarfa",
     openGraph: {
-      title: "Hamza Benarfa — Full-Stack Developer",
-      description:
-        "Building pixel-perfect, performant web apps with modern stacks.",
+      title: ogTitles[locale] || ogTitles.en,
+      description: ogDescriptions[locale] || ogDescriptions.en,
       url: "https://benarfa.com",
       siteName: "Hamza Benarfa",
       locale: locale === "fr" ? "fr_FR" : "en_US",
       type: "website",
       images: [
         {
-          url: "/og-image.png",
+          url: "/api/og",
           width: 1200,
           height: 630,
           alt: "Hamza Benarfa - Full-Stack Developer",
@@ -85,11 +94,10 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: "Hamza Benarfa — Full-Stack Developer",
-      description:
-        "Building pixel-perfect, performant web apps with modern stacks.",
+      title: ogTitles[locale] || ogTitles.en,
+      description: ogDescriptions[locale] || ogDescriptions.en,
       creator: "@benarfa",
-      images: ["/og-image.png"],
+      images: ["/api/og"],
     },
     robots: {
       index: true,
@@ -104,6 +112,10 @@ export async function generateMetadata({
     },
     alternates: {
       canonical: "https://benarfa.com",
+      languages: {
+        en: "https://benarfa.com",
+        fr: "https://benarfa.com/fr",
+      },
     },
     icons: {
       icon: "/favicon.ico",
@@ -135,6 +147,13 @@ export default async function LocaleLayout({ children, params }: Props) {
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">
+        {/* Skip to content link for keyboard accessibility */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-10000 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-lg focus:text-sm focus:font-medium"
+        >
+          Skip to content
+        </a>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -152,4 +171,3 @@ export default async function LocaleLayout({ children, params }: Props) {
     </html>
   );
 }
-

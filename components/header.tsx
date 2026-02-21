@@ -34,7 +34,7 @@ const Header = () => {
       if (element) {
         const headerOffset = 120;
         const elementPosition =
-          element.getBoundingClientRect().top + window.pageYOffset;
+          element.getBoundingClientRect().top + window.scrollY;
         const offsetPosition = elementPosition - headerOffset;
 
         window.scrollTo({
@@ -72,7 +72,7 @@ const Header = () => {
           </span>
         </Link>
 
-        <div className="hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-muted-foreground transition duration-200 hover:text-foreground md:flex md:space-x-2 rtl:space-x-reverse">
+        <nav aria-label="Main navigation" className="hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-muted-foreground transition duration-200 hover:text-foreground md:flex md:space-x-2 rtl:space-x-reverse">
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -84,7 +84,7 @@ const Header = () => {
                 if (element) {
                   const headerOffset = 120;
                   const elementPosition =
-                    element.getBoundingClientRect().top + window.pageYOffset;
+                    element.getBoundingClientRect().top + window.scrollY;
                   const offsetPosition = elementPosition - headerOffset;
 
                   window.scrollTo({
@@ -98,7 +98,7 @@ const Header = () => {
               <span className="relative z-20">{item.label}</span>
             </button>
           ))}
-        </div>
+        </nav>
 
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
@@ -133,7 +133,7 @@ const Header = () => {
       </header>
 
       {/* Mobile Header */}
-      <header className="sticky top-4 z-[9999] mx-4 flex w-auto flex-row items-center justify-between rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg md:hidden px-4 py-3">
+      <header className="sticky top-4 z-9999 mx-4 flex w-auto flex-row items-center justify-between rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg md:hidden px-4 py-3">
         {/* Mobile Brand/Title */}
         <Link href="/" className="flex items-center gap-2 group">
           <Image
@@ -159,19 +159,16 @@ const Header = () => {
           >
             <div className="flex flex-col items-center justify-center w-5 h-5 space-y-1">
               <span
-                className={`block w-4 h-0.5 bg-foreground transition-all duration-300 ${
-                  isMobileMenuOpen ? "rotate-45 translate-y-1.5" : ""
-                }`}
+                className={`block w-4 h-0.5 bg-foreground transition-all duration-300 ${isMobileMenuOpen ? "rotate-45 translate-y-1.5" : ""
+                  }`}
               ></span>
               <span
-                className={`block w-4 h-0.5 bg-foreground transition-all duration-300 ${
-                  isMobileMenuOpen ? "opacity-0" : ""
-                }`}
+                className={`block w-4 h-0.5 bg-foreground transition-all duration-300 ${isMobileMenuOpen ? "opacity-0" : ""
+                  }`}
               ></span>
               <span
-                className={`block w-4 h-0.5 bg-foreground transition-all duration-300 ${
-                  isMobileMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
-                }`}
+                className={`block w-4 h-0.5 bg-foreground transition-all duration-300 ${isMobileMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
+                  }`}
               ></span>
             </div>
           </button>
@@ -180,7 +177,7 @@ const Header = () => {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[9998] bg-black/50 backdrop-blur-sm md:hidden">
+        <div className="fixed inset-0 z-9998 bg-black/50 backdrop-blur-sm md:hidden">
           <div className="absolute top-20 left-4 right-4 bg-background/95 backdrop-blur-md border border-border/50 rounded-2xl shadow-2xl p-6">
             <nav className="flex flex-col space-y-4">
               {navItems.map((item) => (

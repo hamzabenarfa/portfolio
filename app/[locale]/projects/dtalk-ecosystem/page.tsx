@@ -9,7 +9,7 @@ export const metadata: Metadata = {
         description: 'A comprehensive fashion e-commerce platform enabling designers to create and sell, brands to customize products, and admins to manage the ecosystem.',
         images: [
             {
-                url: '/dtalk.png',
+                url: '/dtalk.webp',
                 width: 1200,
                 height: 630,
                 alt: 'D-Talk Ecosystem - Multi-Role Fashion Platform',

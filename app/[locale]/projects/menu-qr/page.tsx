@@ -9,7 +9,7 @@ export const metadata: Metadata = {
         description: 'A comprehensive digital menu platform enabling restaurants to create, manage, and publish QR-accessible menus with AI digitization, real-time updates, and multilingual support.',
         images: [
             {
-                url: '/menu-qr.png',
+                url: '/menu-qr.webp',
                 width: 1200,
                 height: 630,
                 alt: 'Menu QR - Digital Restaurant Menu Platform',

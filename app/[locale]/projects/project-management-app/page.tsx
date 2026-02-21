@@ -9,7 +9,7 @@ export const metadata: Metadata = {
         description: 'A comprehensive project management tool for teams to organize tasks, manage projects, and visualize ideas with Kanban boards and charts.',
         images: [
             {
-                url: '/planner.png',
+                url: '/planner.webp',
                 width: 1200,
                 height: 630,
                 alt: 'Project Management & Planning Application',

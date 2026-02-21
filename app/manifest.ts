@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "benarfa.com",
-    short_name: "benarfa.com",
-    description: "benarfa.com",
+    name: "Hamza Benarfa — Full-Stack Developer",
+    short_name: "H. Benarfa",
+    description: "Portfolio of Hamza Benarfa — Full-Stack Developer & DevOps Engineer from Tunisia. Building fast, accessible web & mobile apps.",
     start_url: "/",
     display: "standalone",
     theme_color: "#ffffff",

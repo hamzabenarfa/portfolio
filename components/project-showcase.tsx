@@ -10,17 +10,14 @@ import { useTranslations } from "next-intl";
 interface ProjectShowcaseProps {
   project: {
     id: number;
-    title: string;
-    subtitle?: string;
+    slug: string;
+    featured?: boolean;
     category?: string;
-    description: string;
-    longDescription: string;
+    subtitle?: string;
     tech: string[];
     year: string;
     image: string;
     url?: string;
-    slug: string;
-    featured?: boolean;
     impact?: string[];
   };
 }

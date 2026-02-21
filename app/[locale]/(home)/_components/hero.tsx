@@ -5,28 +5,14 @@ import { useTranslations } from "next-intl";
 import { SOCIAL_LINKS } from "@/data/consts";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Rocket } from "lucide-react";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
 
-// Animation variants
-const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-};
-
-const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1,
-        },
-    },
-};
 
 export function Hero() {
     const t = useTranslations();
 
     return (
-        <header id="intro" className="min-h-screen flex items-center relative">
+        <section id="intro" aria-label="Introduction" className="min-h-screen flex items-center relative">
             <div className="gap-12 sm:gap-16 w-full relative z-10">
                 <motion.div
                     className="lg:col-span-3 space-y-8 sm:space-y-10"
@@ -144,6 +130,6 @@ export function Hero() {
                     </motion.div>
                 </motion.div>
             </div>
-        </header>
+        </section>
     );
 }

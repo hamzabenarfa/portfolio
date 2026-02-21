@@ -15,14 +15,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const routes = ["", ...projects.map((project) => `/projects/${project}`)];
 
+  // With localePrefix: "never", the default locale (en) uses root URLs
+  // and non-default locales get prefixed (e.g. /fr/...)
   const sitemapEntries = routes.flatMap((route) => {
     return routing.locales.map((locale) => {
-      // Based on layout.tsx alternates, both /en and /fr exist.
-      // However, routing.ts says 'never' for prefix, which is contradictory.
-      // Given layout.tsx has alternates for both, I will generate both to be safe and explicit.
-      
+      const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+
       return {
-        url: `${baseUrl}/${locale}${route}`,
+        url: `${baseUrl}${prefix}${route}`,
         priority: route === "" ? 1.0 : 0.8,
         lastModified: currentDate,
         changeFrequency: "monthly" as const,
@@ -32,3 +32,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return sitemapEntries;
 }
+

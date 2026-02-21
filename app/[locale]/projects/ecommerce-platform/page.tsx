@@ -9,7 +9,7 @@ export const metadata: Metadata = {
         description: 'A production-ready e-commerce platform for tech gadgets with a modern storefront, comprehensive admin dashboard, and Stripe integration.',
         images: [
             {
-                url: '/vertex.png',
+                url: '/vertex.webp',
                 width: 1200,
                 height: 630,
                 alt: 'Vertex - E-Commerce Platform',

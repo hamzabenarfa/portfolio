@@ -22,57 +22,27 @@ export const SOCIAL_LINKS = [
   },
 ];
 
-export const STATS = [
-  { value: "3+", label: "Years Experience" },
-  { value: "15+", label: "Projects Shipped" },
-  { value: "60%", label: "Repeat Clients" },
-];
 
-export const SKILLS = {
-  frontend: [
-    { name: "React / Next.js", level: 5 },
-    { name: "TypeScript", level: 5 },
-    { name: "Tailwind CSS", level: 5 },
-    { name: "Framer Motion", level: 4 },
-    { name: "React Native", level: 3 },
-  ],
-  backend: [
-    { name: "Node.js", level: 4 },
-    { name: "NestJS", level: 4 },
-    { name: "PostgreSQL", level: 4 },
-    { name: "Prisma / Drizzle", level: 4 },
-    { name: "REST / GraphQL", level: 4 },
-  ],
-  tools: [
-    { name: "Git / GitHub", level: 5 },
-    { name: "Docker", level: 4 },
-    { name: "Vercel / AWS", level: 4 },
-    { name: "Stripe", level: 4 },
-    { name: "Figma", level: 3 },
-  ],
-};
 
 export const PROJECTS = [
   {
     id: 1,
     slug: "dtalk-ecosystem",
-    featured: true,
+    featured: false,
     tech: [
-      "Next.js 15",
-      "React 19",
+      "Next.js",
+      "React",
       "TypeScript",
       "Tailwind CSS",
       "Zustand",
       "TanStack Query",
-      "Fabric.js",
       "Konva",
-      "Radix UI",
+      "Shadcn UI",
       "next-intl",
-      "Zod",
-      "Server Actions",
+      "Zod"
     ],
     year: "2024",
-    image: "/dtalk.png",
+    image: "/dtalk.webp",
     url: "https://d-talk-ecosytem-front-three.vercel.app",
   },
   {
@@ -94,7 +64,7 @@ export const PROJECTS = [
       "Zod",
     ],
     year: "2024",
-    image: "/vertex.png",
+    image: "/vertex.webp",
     url: "https://vertex.benarfa.com/",
   },
   {
@@ -115,7 +85,7 @@ export const PROJECTS = [
       "@dnd-kit",
     ],
     year: "2024",
-    image: "/planner.png",
+    image: "/planner.webp",
     url: "https://planner.benarfa.com/",
   },
   {
@@ -139,7 +109,7 @@ export const PROJECTS = [
       "next-intl",
     ],
     year: "2025",
-    image: "/menu-qr.png",
+    image: "/menu-qr.webp",
     url: "https://www.menu-qr.tn/",
   },
   {
@@ -160,7 +130,7 @@ export const PROJECTS = [
       "Zod",
     ],
     year: "2024",
-    image: "/kindra-hero.png",
+    image: "/kindra-hero.webp",
     url: "https://kindra.benarfa.com/",
   },
 ];
