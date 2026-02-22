@@ -213,24 +213,28 @@
   },
   "experienceItems": {
     "job_1": {
+      "year": "Nov 2024 – Présent",
       "role": "Développeur Full-Stack",
       "company": "Startup D-TALK",
       "description": "Construction du frontend pour une marketplace fashion-tech avec dashboards multi-rôles et personnalisation produit temps réel.",
       "details": "Personnalisation produit canvas avec Konva.js. Bibliothèque de composants réutilisables. Gestion d'état multi-rôles avec Zustand et TanStack Query. Intégration des maquettes Figma en UIs accessibles et responsives."
     },
     "job_2": {
+      "year": "Juin 2025 – Août 2025",
       "role": "Développeur Full-Stack (Contrat)",
       "company": "Tactix – Agence Logicielle",
       "description": "Construction d'une plateforme e-commerce en sprint de 8 semaines dans une équipe de 4.",
       "details": "APIs RESTful avec Nest.js. Animations de transition avec Framer Motion. Équipe Agile avec sprints hebdomadaires, livraison en avance."
     },
     "job_3": {
+      "year": "Août 2024 – Oct 2024",
       "role": "Instructeur Développement Full-Stack",
       "company": "NGB Professional",
       "description": "Formation MERN stack pour développeurs débutants.",
       "details": "Conception et livraison de curriculum couvrant MongoDB, Express, React et Node.js. Projets pratiques simulant des scénarios réels. Mentorat des étudiants pour le développement de leur portfolio."
     },
     "job_4": {
+      "year": "Juin 2022 – Présent",
       "role": "Consultant Logiciel Indépendant",
       "company": "Auto-Entrepreneur",
       "description": "Développeur freelance construisant des MVPs et apps de production pour des clients.",

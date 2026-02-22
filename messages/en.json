@@ -213,9 +213,9 @@
   },
   "experienceItems": {
     "job_1": {
+      "year": "Nov 2024 – Present",
       "role": "Full-Stack Developer",
       "company": "D-TALK Startup",
-      "year": "Nov 2024 – Present",
       "description": "Building the frontend for a fashion-tech marketplace with multi-role dashboards and a real-time product customizer.",
       "details": "Built canvas-based product customization with Konva.js. Set up a reusable component library. Managed complex multi-role state with Zustand and TanStack Query. Translated Figma designs into accessible, responsive UIs."
     },

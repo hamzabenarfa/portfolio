@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -12,38 +13,39 @@ interface JobModalProps {
   isOpen: boolean;
   onClose: (open: boolean) => void;
   job: {
-    role: string;
-    company: string;
-    year: string;
-    description: string;
-    details?: string;
+    id: number;
+    key: string;
     tech: string[];
   } | null;
 }
 
 export default function JobModal({ isOpen, onClose, job }: JobModalProps) {
+  const t = useTranslations(job ? `experienceItems.${job.key}` : "experienceItems");
+
   if (!job) return null;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl">{job.role}</DialogTitle>
+          <DialogTitle className="text-2xl">{t("role")}</DialogTitle>
           <DialogDescription className="text-base">
-            {job.company} • {job.year}
+            {t("company")} • {t("year")}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6 py-4">
           <div>
             <h4 className="font-semibold text-foreground mb-2">Overview</h4>
-            <p className="text-muted-foreground leading-relaxed">{job.description}</p>
+            <p className="text-muted-foreground leading-relaxed">
+              {t("description")}
+            </p>
           </div>
 
           <div>
             <h4 className="font-semibold text-foreground mb-2">Details</h4>
             <p className="text-muted-foreground leading-relaxed">
-              {job.details || job.description}
+              {t("details")}
             </p>
           </div>
 

@@ -37,16 +37,37 @@ export const PROJECTS = [
       "Zustand",
       "TanStack Query",
       "Konva",
-      "Shadcn UI",
+      "shadcn/ui",
       "next-intl",
-      "Zod"
+      "Zod",
     ],
     year: "2024",
     image: "/dtalk.webp",
     url: "https://d-talk-ecosytem-front-three.vercel.app",
   },
-  {
+    {
     id: 2,
+    slug: "menu-qr",
+    featured: false,
+    tech: [
+      "Next.js",
+      "React",
+      "PostgreSQL",
+      "shadcn/ui",
+      "Redis",
+      "Cloudflare",
+      "Zod",
+      "@dnd-kit",
+      "Framer Motion",
+      "next-intl",
+      "Docker",
+    ],
+    year: "2025",
+    image: "/menu-qr.webp",
+    url: "https://www.menu-qr.tn/",
+  },
+  {
+    id: 3,
     slug: "ecommerce-platform",
     featured: false,
     tech: [
@@ -56,7 +77,7 @@ export const PROJECTS = [
       "PostgreSQL",
       "Prisma",
       "Tailwind CSS",
-      "Shadcn/ui",
+      "shadcn/ui",
       "NextAuth.js",
       "Zustand",
       "Stripe",
@@ -68,7 +89,7 @@ export const PROJECTS = [
     url: "https://vertex.benarfa.com/",
   },
   {
-    id: 3,
+    id: 4,
     slug: "project-management-app",
     featured: false,
     tech: [
@@ -88,30 +109,7 @@ export const PROJECTS = [
     image: "/planner.webp",
     url: "https://planner.benarfa.com/",
   },
-  {
-    id: 4,
-    slug: "menu-qr",
-    featured: false,
-    tech: [
-      "Next.js 15.5",
-      "React 19",
-      "NestJS 10",
-      "PostgreSQL",
-      "Prisma 6.3",
-      "TypeScript 5",
-      "Tailwind CSS 4",
-      "shadcn/ui",
-      "Redis",
-      "JWT",
-      "Zod",
-      "@dnd-kit",
-      "Framer Motion",
-      "next-intl",
-    ],
-    year: "2025",
-    image: "/menu-qr.webp",
-    url: "https://www.menu-qr.tn/",
-  },
+
   {
     id: 5,
     slug: "kindra-ecommerce",
@@ -135,16 +133,15 @@ export const PROJECTS = [
   },
 ];
 
+/**
+ * Work experience — non-translatable data only.
+ * Translatable text (role, company, year, description, details)
+ * lives in messages/en.json and messages/fr.json under `experienceItems.{key}`.
+ */
 export const WORK_EXPERIENCE = [
   {
     id: 1,
-    year: "Nov 2024 – Present",
-    role: "Full-Stack Developer",
-    company: "D-TALK Startup",
-    description:
-      "Building the frontend for a fashion-tech marketplace with multi-role dashboards and a real-time product customizer.",
-    details:
-      "Built canvas-based product customization with Konva.js. Set up a reusable component library. Managed complex multi-role state with Zustand and TanStack Query. Translated Figma designs into accessible, responsive UIs.",
+    key: "job_1",
     tech: [
       "Next.js 15",
       "React 19",
@@ -156,35 +153,17 @@ export const WORK_EXPERIENCE = [
   },
   {
     id: 2,
-    year: "Jun 2025 – Aug 2025",
-    role: "Full-Stack Developer (Contract)",
-    company: "Tactix – Software Agency",
-    description:
-      "Built an e-commerce platform in an 8-week sprint as part of a 4-person team.",
-    details:
-      "Built RESTful APIs with Nest.js. Added page transition animations with Framer Motion. Worked in a small Agile team with weekly sprints and shipped ahead of schedule.",
+    key: "job_2",
     tech: ["React", "Nest.js", "MongoDB", "Framer Motion"],
   },
   {
     id: 3,
-    year: "Aug 2024 – Oct 2024",
-    role: "Full-Stack Development Instructor",
-    company: "NGB Professional",
-    description:
-      "Taught a MERN stack training program for aspiring developers.",
-    details:
-      "Designed and delivered a curriculum covering MongoDB, Express, React, and Node.js. Built hands-on projects simulating real-world scenarios. Mentored students through portfolio development.",
+    key: "job_3",
     tech: ["MongoDB", "Express", "React", "Node.js", "PostgreSQL"],
   },
   {
     id: 4,
-    year: "Jun 2022 – Present",
-    role: "Independent Software Consultant",
-    company: "Self-Employed",
-    description:
-      "Freelance developer building MVPs and production apps for clients.",
-    details:
-      "Worked with startups and small businesses to build web apps across e-commerce, SaaS, and productivity. Projects range from MVPs to production deployments. Most clients are repeat customers.",
+    key: "job_4",
     tech: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL", "MySQL"],
   },
 ];

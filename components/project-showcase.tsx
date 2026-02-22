@@ -12,19 +12,25 @@ interface ProjectShowcaseProps {
     id: number;
     slug: string;
     featured?: boolean;
-    category?: string;
-    subtitle?: string;
     tech: string[];
     year: string;
     image: string;
     url?: string;
-    impact?: string[];
   };
 }
 
 export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
   const [imageError, setImageError] = useState(false);
   const t = useTranslations(`projectsItems.${project.slug}`);
+
+  // Safely get impact array from translations
+  let impactItems: string[] = [];
+  try {
+    const raw = t.raw("impact");
+    if (Array.isArray(raw)) impactItems = raw;
+  } catch {
+    // impact key may not exist for some projects
+  }
 
   return (
     <Link href={`/projects/${project.slug}`}>
@@ -35,13 +41,11 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
       >
         <div className="relative overflow-hidden rounded-xl border border-secondary/30 bg-secondary/5 transition-all duration-300 h-full flex flex-col">
           {/* Category Badge */}
-          {project.category && (
-            <div className="absolute top-4 start-4 z-10">
-              <span className="text-xs px-2.5 py-1 rounded-full bg-background/80 backdrop-blur-sm text-primary border border-primary/20 font-medium">
-                {t('category')}
-              </span>
-            </div>
-          )}
+          <div className="absolute top-4 start-4 z-10">
+            <span className="text-xs px-2.5 py-1 rounded-full bg-background/80 backdrop-blur-sm text-primary border border-primary/20 font-medium">
+              {t("category")}
+            </span>
+          </div>
 
           {/* Year Badge */}
           <div className="absolute top-4 end-4 z-10">
@@ -54,7 +58,7 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
             {!imageError ? (
               <Image
                 src={project.image || "/placeholder.svg"}
-                alt={t('title')}
+                alt={t("title")}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -66,7 +70,7 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
               <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-primary/20 to-secondary/20">
                 <div className="text-center">
                   <div className="text-4xl mb-2">📦</div>
-                  <p className="text-sm text-muted-foreground">{t('title')}</p>
+                  <p className="text-sm text-muted-foreground">{t("title")}</p>
                 </div>
               </div>
             )}
@@ -81,13 +85,11 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <h3 className="text-lg sm:text-xl font-medium text-foreground group-hover:text-primary transition-colors duration-300">
-                    {t('title')}
+                    {t("title")}
                   </h3>
-                  {project.subtitle && (
-                    <p className="text-sm text-muted-foreground mt-0.5">
-                      {t('subtitle')}
-                    </p>
-                  )}
+                  <p className="text-sm text-muted-foreground mt-0.5">
+                    {t("subtitle")}
+                  </p>
                 </div>
                 <div className="group-hover:translate-x-1 rtl:group-hover:-translate-x-1 group-hover:-translate-y-1 transition-transform duration-300">
                   <MoveUpRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors duration-300 rtl:-scale-x-100" />
@@ -95,23 +97,13 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
               </div>
 
               <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3 group-hover:text-foreground/80 transition-colors duration-300">
-                {t('description')}
+                {t("description")}
               </p>
 
-              {/* Impact preview (if available) - Getting array from translation is tricky in basic next-intl, 
-                  checking if impact exists in data first. 
-                  Actually, consts.ts had impact array. 
-                  Does next-intl support array return? Yes via t.raw() if configured, or keys.
-                  For strictly safe assumption, I will leave impact as is from props OR try to fetch it.
-                  Wait, impact is text.
-                  Let's use t.raw('impact') if possible, or just index.
-               */}
-              {project.impact && project.impact.length > 0 && (
+              {impactItems.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   <span className="text-xs px-2 py-1 rounded bg-primary/5 text-primary border border-primary/10">
-                    {/* Try to get first impact item from translation if possible, else fallback */}
-                    {/* @ts-ignore */}
-                    {t.raw('impact')?.[0] || project.impact[0]}
+                    {impactItems[0]}
                   </span>
                 </div>
               )}
