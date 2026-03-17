@@ -74,6 +74,20 @@ export function Hero() {
                             </a>
                         </div>
 
+                        {/* Stats Badges */}
+                        <div className="flex flex-wrap gap-6 pt-2">
+                            {(["yearsExperience", "projectsShipped", "clientSatisfaction"] as const).map((key) => (
+                                <div key={key} className="flex flex-col">
+                                    <span className="text-2xl sm:text-3xl font-semibold text-primary">
+                                        {t(`stats.${key}Value`)}
+                                    </span>
+                                    <span className="text-xs text-muted-foreground uppercase tracking-wider">
+                                        {t(`stats.${key}`)}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+
                         {/* Social Media Icons */}
                         <div className="flex items-center gap-3 pt-2">
                             {SOCIAL_LINKS.filter(

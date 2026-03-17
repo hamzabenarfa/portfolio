@@ -5,6 +5,8 @@ import { Hero } from "./_components/hero";
 import { ProjectsSection } from "./_components/projects-section";
 import { Capabilities } from "./_components/capabilities";
 import { Experience } from "./_components/experience";
+import { Methodology } from "./_components/methodology";
+import { FAQ } from "./_components/faq";
 import { Connect } from "./_components/connect";
 
 type Props = {
@@ -26,6 +28,8 @@ export default async function Home({ params }: Props) {
         <ProjectsSection />
         <Capabilities />
         <Experience />
+        <Methodology />
+        <FAQ />
         <Connect />
       </main>
 

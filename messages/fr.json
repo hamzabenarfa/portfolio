@@ -12,8 +12,8 @@
   "hero": {
     "tagline": "Disponible pour de nouveaux projets",
     "title": {
-      "line1": "Je crée des apps",
-      "line2": "de l'idée au lancement"
+      "line1": "Développeur Full-Stack",
+      "line2": "qui transforme les idées en production"
     },
     "description": "Développeur full-stack de <country>Tunisie</country>. Je travaille avec des startups et petites équipes pour <highlight>livrer des produits rapidement</highlight> avec Next.js, TypeScript et des outils modernes.",
     "country": "Tunisie",
@@ -25,8 +25,11 @@
   },
   "stats": {
     "yearsExperience": "Années d'Expérience",
+    "yearsExperienceValue": "3+",
     "projectsShipped": "Projets Livrés",
-    "clientSatisfaction": "Clients Fidèles"
+    "projectsShippedValue": "12+",
+    "clientSatisfaction": "Clients Fidèles",
+    "clientSatisfactionValue": "90%"
   },
   "featured": {
     "label": "PROJET VEDETTE",
@@ -62,6 +65,53 @@
     "impact": "Résultats",
     "year": "Année",
     "role": "Rôle"
+  },
+  "methodology": {
+    "title": "Comment Je Travaille",
+    "description": "Une approche structurée et transparente pour construire des logiciels — du premier appel au déploiement en production.",
+    "steps": [
+      {
+        "title": "Découverte & Planification",
+        "description": "Chaque projet commence par comprendre le problème business. Je cartographie les parcours utilisateur, définis la stack technique et crée une feuille de route claire avant d'écrire une seule ligne de code."
+      },
+      {
+        "title": "Développement Itératif",
+        "description": "Je travaille en sprints hebdomadaires avec des frameworks modernes comme Next.js et TypeScript. Chaque sprint se termine par une démo sur un environnement de staging."
+      },
+      {
+        "title": "Qualité & Performance",
+        "description": "Chaque fonctionnalité inclut des tests, des vérifications responsive et des audits Lighthouse. Mes projets obtiennent régulièrement des scores Core Web Vitals de 90+."
+      },
+      {
+        "title": "Lancement & Support",
+        "description": "Je gère le pipeline de déploiement complet — conteneurs Docker, CI/CD via GitHub Actions et monitoring avec Vercel Analytics. Après le lancement, je fournis documentation et support."
+      }
+    ]
+  },
+  "faq": {
+    "title": "Questions Fréquentes",
+    "items": [
+      {
+        "question": "Quelles technologies utilisez-vous ?",
+        "answer": "Je me spécialise en Next.js, React, TypeScript, NestJS, Node.js, PostgreSQL, MongoDB et Docker. Côté DevOps, j'utilise GitHub Actions, Vercel et l'infrastructure cloud pour le CI/CD."
+      },
+      {
+        "question": "Travaillez-vous avec des clients internationaux ?",
+        "answer": "Oui. Je travaille à distance avec des startups et entreprises en Europe, Afrique du Nord et Moyen-Orient. Je communique en anglais et français."
+      },
+      {
+        "question": "Quels types de projets construisez-vous ?",
+        "answer": "Je construis des plateformes SaaS, boutiques e-commerce, apps marketplace, solutions restaurant, outils de gestion de projet et MVPs."
+      },
+      {
+        "question": "Comment gérez-vous la communication projet ?",
+        "answer": "Je suis une approche agile avec des sprints itératifs et une communication transparente. J'utilise GitHub, Figma et Slack pour collaborer."
+      },
+      {
+        "question": "Pouvez-vous gérer le frontend et le backend ?",
+        "answer": "Oui. Je suis développeur full-stack — je construis tout, de l'UI avec React et Next.js aux APIs backend avec NestJS, la base de données avec PostgreSQL et le déploiement avec Docker."
+      }
+    ]
   },
   "experience": {
     "title": "Expérience"

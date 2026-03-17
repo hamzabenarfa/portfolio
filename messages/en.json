@@ -12,8 +12,8 @@
   "hero": {
     "tagline": "Available for new projects",
     "title": {
-      "line1": "I build apps",
-      "line2": "from idea to launch"
+      "line1": "Full-Stack Developer",
+      "line2": "who ships ideas to production"
     },
     "description": "Full-stack developer from <country>Tunisia</country>. I work with startups and small teams to <highlight>ship products quickly</highlight> using Next.js, TypeScript, and modern tooling.",
     "country": "Tunisia",
@@ -25,8 +25,11 @@
   },
   "stats": {
     "yearsExperience": "Years Experience",
+    "yearsExperienceValue": "3+",
     "projectsShipped": "Projects Shipped",
-    "clientSatisfaction": "Repeat Clients"
+    "projectsShippedValue": "12+",
+    "clientSatisfaction": "Repeat Clients",
+    "clientSatisfactionValue": "90%"
   },
   "featured": {
     "label": "FEATURED PROJECT",
@@ -62,6 +65,53 @@
     "impact": "Results",
     "year": "Year",
     "role": "Role"
+  },
+  "methodology": {
+    "title": "How I Work",
+    "description": "A structured, transparent approach to building software — from first call to production deployment.",
+    "steps": [
+      {
+        "title": "Discovery & Planning",
+        "description": "Every project starts with understanding the business problem. I map user flows, define the tech stack, and create a clear roadmap before writing a single line of code. This reduces scope creep and aligns expectations from day one."
+      },
+      {
+        "title": "Iterative Development",
+        "description": "I work in weekly sprints using modern frameworks like Next.js and TypeScript — chosen for their type safety, performance, and developer experience. Each sprint ends with a deployable demo on a staging environment so you can track progress in real time."
+      },
+      {
+        "title": "Quality & Performance",
+        "description": "Every feature includes automated testing, responsive design checks, and Lighthouse audits. My projects consistently score 90+ on Core Web Vitals, ensuring fast load times and excellent user experience across devices."
+      },
+      {
+        "title": "Launch & Support",
+        "description": "I handle the full deployment pipeline — Docker containers, CI/CD via GitHub Actions, and monitoring with Vercel Analytics. Post-launch, I provide documentation and ongoing support to keep things running smoothly."
+      }
+    ]
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "What technologies do you specialize in?",
+        "answer": "I specialize in Next.js, React, TypeScript, NestJS, Node.js, PostgreSQL, MongoDB, and Docker. On the DevOps side, I work with GitHub Actions, Vercel, and cloud infrastructure for CI/CD and deployment."
+      },
+      {
+        "question": "Do you work with international clients?",
+        "answer": "Yes. I work remotely with startups and businesses across Europe, North Africa, and the Middle East. I communicate in English and French, and most projects are managed asynchronously with weekly video check-ins."
+      },
+      {
+        "question": "What types of projects do you build?",
+        "answer": "I build SaaS platforms, e-commerce stores, marketplace apps, restaurant tech solutions, project management tools, and MVPs. Projects range from initial prototypes to production-grade applications serving real users."
+      },
+      {
+        "question": "How do you handle project communication?",
+        "answer": "I follow an agile approach with iterative sprints and transparent communication. I use GitHub for code, Figma for design, and Slack or WhatsApp for daily updates. You get weekly demo deployments on a staging environment."
+      },
+      {
+        "question": "Can you handle both frontend and backend?",
+        "answer": "Yes. I'm a full-stack developer — I build everything from the UI with React and Next.js, to backend APIs with NestJS, database design with PostgreSQL, and deployment with Docker and cloud providers."
+      }
+    ]
   },
   "experience": {
     "title": "Experience"

@@ -39,8 +39,8 @@ export async function generateMetadata({
   };
 
   const descriptions: Record<string, string> = {
-    en: "Freelance full-stack developer & DevOps engineer from Tunisia. I build fast, accessible, and scalable web & mobile apps with Next.js, TypeScript, React, NestJS, and cloud infrastructure.",
-    fr: "Développeur full-stack freelance & ingénieur DevOps de Tunisie. Je construis des applications web et mobiles rapides, accessibles et évolutives avec Next.js, TypeScript, React, NestJS et l'infrastructure cloud.",
+    en: "Freelance full-stack developer & DevOps engineer from Tunisia. I build fast, accessible, scalable apps with Next.js, TypeScript, React, and cloud infrastructure.",
+    fr: "Développeur full-stack freelance & ingénieur DevOps de Tunisie. Je crée des apps rapides et scalables avec Next.js, TypeScript, React et le cloud.",
   };
 
   const ogTitles: Record<string, string> = {
