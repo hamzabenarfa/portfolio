@@ -141,6 +141,7 @@ export const WORK_EXPERIENCE = [
   {
     id: 1,
     key: "job_1",
+    logo: "/companies/dtalk.png",
     tech: [
       "Next.js 15",
       "React 19",
@@ -153,16 +154,19 @@ export const WORK_EXPERIENCE = [
   {
     id: 2,
     key: "job_2",
+    logo: "/companies/tactix.png",
     tech: ["React", "Nest.js", "MongoDB", "Framer Motion"],
   },
   {
     id: 3,
     key: "job_3",
+    logo: "/companies/ngb.png",
     tech: ["MongoDB", "Express", "React", "Node.js", "PostgreSQL"],
   },
   {
     id: 4,
     key: "job_4",
+    logo: "/companies/freelance.png",
     tech: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL", "MySQL"],
   },
 ];
