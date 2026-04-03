@@ -25,9 +25,9 @@ export default async function Home({ params }: Props) {
 
       <main id="main-content" className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-16 pt-16">
         <Hero />
+        <Experience />
         <ProjectsSection />
         <Capabilities />
-        <Experience />
         <Methodology />
         <FAQ />
         <Connect />
