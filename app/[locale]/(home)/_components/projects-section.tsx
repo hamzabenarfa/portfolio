@@ -1,138 +1,89 @@
-"use client";
+import type { ReactNode } from "react";
 
-import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { PROJECTS } from "@/data/consts";
-import ProjectShowcase from "@/components/project-showcase";
-import { ArrowRight } from "lucide-react";
-import { Section } from "@/components/section";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
+interface Project {
+  label: string;
+  year: string;
+  type: string;
+  title: ReactNode;
+  desc: string;
+  stack: string[];
+  mock: string;
+  glyph: string;
+  href: string;
+}
+
+const projects: Project[] = [
+  {
+    label: "D‑Talk Ecosystem",
+    year: "2024",
+    type: "E‑Commerce / SaaS",
+    title: (<>Fashion <em>marketplace</em></>),
+    desc: "Frontend for a fashion‑tech platform connecting designers, brands, and buyers. Canvas‑based product customizer with role‑specific dashboards for four user types.",
+    stack: ["Next.js", "React", "TypeScript", "Konva.js", "Zustand"],
+    mock: "mock-1",
+    glyph: "D‑T",
+    href: "/projects/dtalk-ecosystem",
+  },
+  {
+    label: "Menu QR",
+    year: "2025",
+    type: "SaaS / Restaurant",
+    title: (<>Digital <em>restaurant</em> menu</>),
+    desc: "SaaS platform for restaurants to create QR‑accessible menus. Eight‑step onboarding wizard, drag‑and‑drop editor, analytics dashboard.",
+    stack: ["Next.js", "PostgreSQL", "Tailwind", "Prisma", "Stripe"],
+    mock: "mock-2",
+    glyph: "MQR",
+    href: "/projects/menu-qr",
+  },
+  {
+    label: "Kindra Fashion",
+    year: "2025",
+    type: "E-Commerce / Starter Kit",
+    title: (<>Kindra <em>Fashion</em> </>),
+    desc: "Production-ready e-commerce starter kit for fashion. Separate Men's and Women's storefronts, multi-variant products, Stripe payments, and full admin dashboard.",
+    stack: ["Next.js", "PostgreSQL", "Tailwind", "Drizzle", "Stripe"],
+    mock: "mock-3",
+    glyph: "KIN",
+    href: "/projects/kindra",
+  }
+
+];
 
 export function ProjectsSection() {
-    const t = useTranslations();
+  return (
+    <section id="work" className="container projects">
+      <div className="section-header reveal">
+        <span className="num">[ 02 / Selected Work ]</span>
+        <h2 className="title">
+          Selected <em>work</em>
+        </h2>
+        <span className="meta">
+          04 of 12 projects
+          <br />
+          Showing 2024 — 2025
+        </span>
+      </div>
 
-    // Get featured project
-    const featuredProject = PROJECTS.find((p) => p.featured);
-    const otherProjects = PROJECTS.filter((p) => !p.featured);
-
-    return (
-        <>
-            {/* Featured Project Section */}
-            {featuredProject && (
-                <Section id="featured" className="py-20">
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={staggerContainer}
-                        className="space-y-8"
-                    >
-                        <motion.div variants={fadeInUp} className="flex items-center gap-3">
-                            <div className="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-xs font-medium text-primary">
-                                {t("featured.label")}
-                            </div>
-                        </motion.div>
-
-                        <Link href={`/projects/${featuredProject.slug}`}>
-                            <motion.div
-                                variants={fadeInUp}
-                                className="group grid lg:grid-cols-2 gap-8 p-6 sm:p-8 border border-secondary/30 rounded-2xl hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 cursor-pointer"
-                            >
-                                {/* Image */}
-                                <div className="relative h-64 sm:h-80 lg:h-full min-h-[300px] rounded-xl overflow-hidden bg-linear-to-br from-secondary/20 to-primary/10">
-                                    <Image
-                                        src={featuredProject.image}
-                                        alt={t(`projectsItems.${featuredProject.slug}.title`)}
-                                        fill
-                                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                                        sizes="(max-width: 1024px) 100vw, 50vw"
-                                    />
-                                </div>
-
-                                {/* Content */}
-                                <div className="space-y-6 flex flex-col justify-center">
-                                    <div className="space-y-2">
-                                        <div className="text-sm text-primary font-medium">
-                                            {t(`projectsItems.${featuredProject.slug}.category`)}
-                                        </div>
-                                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light group-hover:text-primary transition-colors">
-                                            {t(`projectsItems.${featuredProject.slug}.title`)}
-                                        </h2>
-                                        <p className="text-base text-muted-foreground">
-                                            {t(`projectsItems.${featuredProject.slug}.subtitle`)}
-                                        </p>
-                                    </div>
-
-                                    <p className="text-muted-foreground leading-relaxed">
-                                        {t(`projectsItems.${featuredProject.slug}.description`)}
-                                    </p>
-
-
-                                    {/* Tech preview */}
-                                    <div className="flex flex-wrap gap-2">
-                                        {featuredProject.tech.slice(0, 5).map((tech) => (
-                                            <span
-                                                key={tech}
-                                                className="text-xs px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20"
-                                            >
-                                                {tech}
-                                            </span>
-                                        ))}
-                                        {featuredProject.tech.length > 5 && (
-                                            <span className="text-xs px-2.5 py-1 text-muted-foreground">
-                                                +{featuredProject.tech.length - 5} more
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    <div className="flex items-center gap-2 text-primary group-hover:gap-3 transition-all">
-                                        <span className="font-medium">
-                                            {t("featured.viewCaseStudy")}
-                                        </span>
-                                        <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-                                    </div>
-                                </div>
-                            </motion.div>
-                        </Link>
-                    </motion.div>
-                </Section>
-            )}
-
-            {/* Other Projects Section */}
-            <Section id="projects">
-                <motion.div
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={staggerContainer}
-                    className="space-y-12 sm:space-y-16"
-                >
-                    <motion.div
-                        variants={fadeInUp}
-                        className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4"
-                    >
-                        <div>
-                            <h2 className="text-3xl sm:text-4xl font-light">
-                                {t("projects.title")}
-                            </h2>
-                            <p className="text-muted-foreground mt-2">
-                                {t("projects.description")}
-                            </p>
-                        </div>
-                    </motion.div>
-
-                    <motion.div
-                        variants={fadeInUp}
-                        className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
-                    >
-                        {otherProjects.map((project) => (
-                            <ProjectShowcase key={project.id} project={project} />
-                        ))}
-                    </motion.div>
-                </motion.div>
-            </Section>
-        </>
-    );
+      <div className="project-grid">
+        {projects.map((p) => (
+          <a key={p.label} href={p.href} className="project-card reveal">
+            <div className="project-thumb">
+              <div className={`mock ${p.mock}`}>{p.glyph}</div>
+            </div>
+            <div className="project-meta">
+              <span>{p.type}</span>
+              <span>{p.year}</span>
+            </div>
+            <h3 className="project-title">{p.title}</h3>
+            <p className="project-desc">{p.desc}</p>
+            <div className="project-stack">
+              {p.stack.map((s) => (
+                <span key={s}>{s}</span>
+              ))}
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  );
 }

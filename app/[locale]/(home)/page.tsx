@@ -1,10 +1,12 @@
-
-import Header from "@/components/header";
 import { setRequestLocale } from "next-intl/server";
+import Header from "@/components/header";
+import { CustomCursor } from "./_components/custom-cursor";
+import { ScrollReveal } from "./_components/scroll-reveal";
 import { Hero } from "./_components/hero";
+import { MarqueeTape } from "./_components/marquee-tape";
+import { Experience } from "./_components/experience";
 import { ProjectsSection } from "./_components/projects-section";
 import { Capabilities } from "./_components/capabilities";
-import { Experience } from "./_components/experience";
 import { Methodology } from "./_components/methodology";
 import { FAQ } from "./_components/faq";
 import { Connect } from "./_components/connect";
@@ -15,16 +17,18 @@ type Props = {
 
 export default async function Home({ params }: Props) {
   const { locale } = await params;
-
-  // Enable static rendering
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <div className="home-page">
+      <div className="grain-overlay" />
+      <div className="cursor-spotlight" />
+      <CustomCursor />
+      <ScrollReveal />
       <Header />
-
-      <main id="main-content" className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-16 pt-16">
+      <main>
         <Hero />
+        <MarqueeTape />
         <Experience />
         <ProjectsSection />
         <Capabilities />
@@ -32,24 +36,11 @@ export default async function Home({ params }: Props) {
         <FAQ />
         <Connect />
       </main>
-
-      {/* Footer */}
-      <footer className="max-w-5xl mx-auto px-6 sm:px-8 lg:px-16 py-8 border-t border-secondary/30">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="text-sm text-muted-foreground">
-            &copy; 2026 Hamza Benarfa.
-          </div>
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <a
-              href="#intro"
-              className="hover:text-primary transition-colors"
-            >
-              Back to Top &uarr;
-            </a>
-          </div>
-        </div>
+      <footer className="site-footer">
+        <span>© 2026 — Hamza Benarfa</span>
+        <span>Edition v.04 — Built &amp; deployed by hand</span>
+        <a href="#top">Back to top ↑</a>
       </footer>
     </div>
   );
 }
-

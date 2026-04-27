@@ -1,6 +1,5 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -8,14 +7,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import "../globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SEO } from "@/components/seo/seo";
-import { ThemeProvider } from "@/components/theme-provider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-
-const geist = Geist({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-geist",
-});
 
 type Props = {
   children: React.ReactNode;
@@ -34,23 +26,13 @@ export async function generateMetadata({
   const { locale } = await params;
 
   const titles: Record<string, string> = {
-    en: "Hamza Benarfa | Full-Stack Developer & DevOps Engineer",
-    fr: "Hamza Benarfa | Développeur Full-Stack & Ingénieur DevOps",
+    en: "Hamza Benarfa | Full-Stack Developer",
+    fr: "Hamza Benarfa | Développeur Full-Stack",
   };
 
   const descriptions: Record<string, string> = {
-    en: "Freelance full-stack developer & DevOps engineer from Tunisia. I build fast, accessible, scalable apps with Next.js, TypeScript, React, and cloud infrastructure.",
-    fr: "Développeur full-stack freelance & ingénieur DevOps de Tunisie. Je crée des apps rapides et scalables avec Next.js, TypeScript, React et le cloud.",
-  };
-
-  const ogTitles: Record<string, string> = {
-    en: "Hamza Benarfa — Full-Stack Developer",
-    fr: "Hamza Benarfa — Développeur Full-Stack",
-  };
-
-  const ogDescriptions: Record<string, string> = {
-    en: "Building performant, accessible web apps with modern stacks.",
-    fr: "Création d'applications web performantes et accessibles avec des technologies modernes.",
+    en: "Independent full-stack developer based in Tunisia. I partner with founders and small teams to take ideas from blank Figma to deployed product, in weeks not quarters.",
+    fr: "Développeur full-stack indépendant basé en Tunisie. Je transforme vos idées en produits déployés, en semaines et non en trimestres.",
   };
 
   return {
@@ -63,110 +45,63 @@ export async function generateMetadata({
     keywords: [
       "Hamza Benarfa",
       "Full-Stack Developer",
-      "DevOps Engineer",
-      "Web Development",
-      "Mobile App Development",
       "Next.js",
       "React",
       "TypeScript",
       "NestJS",
-      "Cloud Infrastructure",
       "Freelance Developer Tunisia",
       "Software Engineer",
     ],
     authors: [{ name: "Hamza Benarfa", url: "https://benarfa.com" }],
     creator: "Hamza Benarfa",
     openGraph: {
-      title: ogTitles[locale] || ogTitles.en,
-      description: ogDescriptions[locale] || ogDescriptions.en,
+      title: titles[locale] || titles.en,
+      description: descriptions[locale] || descriptions.en,
       url: "https://benarfa.com",
       siteName: "Hamza Benarfa",
       locale: locale === "fr" ? "fr_FR" : "en_US",
       type: "website",
-      images: [
-        {
-          url: "/api/og",
-          width: 1200,
-          height: 630,
-          alt: "Hamza Benarfa - Full-Stack Developer",
-        },
-      ],
+      images: [{ url: "/api/og", width: 1200, height: 630, alt: "Hamza Benarfa" }],
     },
     twitter: {
       card: "summary_large_image",
-      title: ogTitles[locale] || ogTitles.en,
-      description: ogDescriptions[locale] || ogDescriptions.en,
+      title: titles[locale] || titles.en,
+      description: descriptions[locale] || descriptions.en,
       creator: "@benarfa",
       images: ["/api/og"],
     },
     robots: {
       index: true,
       follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
+      googleBot: { index: true, follow: true, "max-image-preview": "large" },
     },
     alternates: {
       canonical: "https://benarfa.com",
-      languages: {
-        en: "https://benarfa.com",
-        fr: "https://benarfa.com/fr",
-      },
+      languages: { en: "https://benarfa.com", fr: "https://benarfa.com/fr" },
     },
-    icons: {
-      icon: "/favicon.ico",
-      shortcut: "/favicon.ico",
-      apple: "/apple-icon.png",
-    },
+    icons: { icon: "/favicon.ico", shortcut: "/favicon.ico", apple: "/apple-icon.png" },
   };
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
 
-  // Ensure the locale is valid
   if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
 
-  // Enable static rendering
   setRequestLocale(locale);
-
-  // Fetch messages for the current locale
   const messages = await getMessages();
 
   return (
-    <html
-      lang={locale}
-      dir="ltr"
-      className={`${geist.variable}`}
-      suppressHydrationWarning
-    >
-      <body className="font-sans antialiased">
-        {/* Skip to content link for keyboard accessibility */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-10000 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-lg focus:text-sm focus:font-medium"
-        >
-          Skip to content
-        </a>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <NextIntlClientProvider messages={messages}>
-            {children}
-            <SEO />
-            <Analytics />
-            <SpeedInsights />
-          </NextIntlClientProvider>
-        </ThemeProvider>
+    <html lang={locale} dir="ltr" suppressHydrationWarning>
+      <body>
+        <NextIntlClientProvider messages={messages}>
+          {children}
+          <SEO />
+          <Analytics />
+          <SpeedInsights />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

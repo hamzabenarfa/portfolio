@@ -1,79 +1,71 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
-import { motion, AnimatePresence } from "framer-motion";
-import { Section } from "@/components/section";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
-import { ChevronDown } from "lucide-react";
+
+interface FaqItem {
+  q: string;
+  a: string;
+}
+
+const faqs: FaqItem[] = [
+  {
+    q: "What technologies do you specialize in?",
+    a: "Next.js, TypeScript, React, and React Native on the frontend. Node, NestJS, PostgreSQL, and Prisma on the backend. I optimize for the boring, well‑supported choices that ship fast and don't break in two years.",
+  },
+  {
+    q: "Do you work with international clients?",
+    a: "Yes. I work remotely across timezones — most of my clients are in Europe and North America. I overlap with EU mornings and US mornings comfortably.",
+  },
+  {
+    q: "What types of projects do you build?",
+    a: "MVPs, internal tools, dashboards, marketplaces, restaurant/retail SaaS, and the occasional mobile app. If it's a typed full‑stack app with real users, I'm a good fit.",
+  },
+  {
+    q: "How do you handle communication?",
+    a: "Weekly demos, async daily updates in Slack or your tool of choice, and a shared Notion/Linear for everything else. No surprises, no week‑long radio silence.",
+  },
+  {
+    q: "Can you handle frontend AND backend?",
+    a: "Yes — that's the whole point. I take ownership of the full stack so founders aren't coordinating between two contractors. For larger work I plug into existing teams as a senior IC.",
+  },
+];
 
 export function FAQ() {
-    const t = useTranslations();
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [open, setOpen] = useState<number>(-1);
 
-    const items = [0, 1, 2, 3, 4].map((i) => ({
-        question: t(`faq.items.${i}.question`),
-        answer: t(`faq.items.${i}.answer`),
-    }));
+  const toggle = (i: number) => setOpen(open === i ? -1 : i);
 
-    return (
-        <Section id="faq" className="py-20 border-t border-secondary/30">
-            <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={staggerContainer}
-                className="space-y-10"
-            >
-                <motion.div variants={fadeInUp}>
-                    <h2 className="text-3xl sm:text-4xl font-semibold">
-                        {t("faq.title")}
-                    </h2>
-                </motion.div>
+  return (
+    <section className="container faq">
+      <div className="section-header reveal">
+        <span className="num">[ 05 / FAQ ]</span>
+        <h2 className="title">
+          Common <em>questions</em>
+        </h2>
+        <span className="meta">Tap to expand</span>
+      </div>
 
-                <motion.div variants={fadeInUp} className="space-y-3 max-w-3xl">
-                    {items.map((item, i) => {
-                        const isOpen = openIndex === i;
-                        return (
-                            <div
-                                key={i}
-                                className="border border-secondary/30 rounded-xl overflow-hidden transition-colors hover:border-primary/30"
-                            >
-                                <button
-                                    type="button"
-                                    onClick={() => setOpenIndex(isOpen ? null : i)}
-                                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left cursor-pointer"
-                                    aria-expanded={isOpen}
-                                >
-                                    <span className="font-medium text-foreground">
-                                        {item.question}
-                                    </span>
-                                    <ChevronDown
-                                        className={`w-5 h-5 shrink-0 text-muted-foreground transition-transform duration-300 ${
-                                            isOpen ? "rotate-180" : ""
-                                        }`}
-                                    />
-                                </button>
-                                <AnimatePresence initial={false}>
-                                    {isOpen && (
-                                        <motion.div
-                                            initial={{ height: 0, opacity: 0 }}
-                                            animate={{ height: "auto", opacity: 1 }}
-                                            exit={{ height: 0, opacity: 0 }}
-                                            transition={{ duration: 0.3, ease: "easeInOut" }}
-                                            className="overflow-hidden"
-                                        >
-                                            <p className="px-5 pb-4 text-muted-foreground leading-relaxed">
-                                                {item.answer}
-                                            </p>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
-                        );
-                    })}
-                </motion.div>
-            </motion.div>
-        </Section>
-    );
+      <div className="faq-list reveal">
+        {faqs.map((f, i) => (
+          <div
+            key={i}
+            className={`faq-item${open === i ? " open" : ""}`}
+            onClick={() => toggle(i)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && toggle(i)}
+          >
+            <div className="faq-q">
+              <span className="num">{String(i + 1).padStart(2, "0")}</span>
+              <span>{f.q}</span>
+              <span className="toggle">+</span>
+            </div>
+            <div className="faq-a">
+              <div className="faq-a-inner">{f.a}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }

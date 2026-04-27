@@ -1,65 +1,56 @@
-"use client";
-
-import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
-import { SOCIAL_LINKS } from "@/data/consts";
-import { SocialLink } from "./social-links";
-import { ArrowRight } from "lucide-react";
-import { Section } from "@/components/section";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
-
 export function Connect() {
-    const t = useTranslations();
+  return (
+    <section id="contact" className="contact ">
+      <div className="container">
+        <span
+          className="eyebrow eyebrow-dot reveal"
+          style={{ display: "inline-block", marginBottom: 24 }}
+        >
+          [ 06 / Let&rsquo;s talk ]
+        </span>
 
-    return (
-        <Section id="connect" className="flex items-center py-20">
-            <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={staggerContainer}
-                className="grid lg:grid-cols-2 gap-12 sm:gap-16 w-full"
-            >
-                <motion.div variants={fadeInUp} className="space-y-6 sm:space-y-8">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light">
-                        {t("connect.title")}
-                        <br />
-                        <span className="text-primary">{t("connect.titleHighlight")}</span>
-                    </h2>
-                    <div className="space-y-6">
-                        <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-[65ch]">
-                            {t("connect.description")}
-                        </p>
-                        <div className="flex flex-wrap gap-4">
-                            <a
-                                href="mailto:contact@benarfa.com"
-                                className="group inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-300"
-                            >
-                                {t("connect.cta")}
-                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:rotate-180 transition-transform" />
-                            </a>
-                            <a
-                                href={"/benarfa-hamza-en.pdf"}
-                                download
-                                className="inline-flex items-center gap-2 px-6 py-3 border border-secondary/40 rounded-lg font-medium hover:border-primary/60 hover:bg-primary/5 transition-all duration-300"
-                            >
-                                {t("connect.downloadCV")}
-                            </a>
-                        </div>
-                    </div>
-                </motion.div>
+        <h2 className="contact-display reveal">
+          Have an <em>idea?</em>
+          <br />
+          Let&rsquo;s ship it.
+        </h2>
 
-                <motion.div variants={fadeInUp} className="space-y-6 sm:space-y-8">
-                    <div className="text-sm text-muted-foreground font-mono">
-                        {t("connect.connectLabel")}
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {SOCIAL_LINKS.map((social) => (
-                            <SocialLink key={social.name} social={social} />
-                        ))}
-                    </div>
-                </motion.div>
-            </motion.div>
-        </Section>
-    );
+        <a
+          href="mailto:contact@benarfa.com"
+          className="contact-mail reveal"
+          data-cursor-hover
+        >
+          <span className="icon">→</span>
+          contact@benarfa.com
+        </a>
+
+        <div className="contact-grid">
+          <div>
+            <h4>[ Direct ]</h4>
+            <a href="mailto:contact@benarfa.com">contact@benarfa.com</a>
+            <a href="https://wa.me/21622633345">+216 22 633 345</a>
+          </div>
+          <div>
+            <h4>[ Elsewhere ]</h4>
+            <a href="https://github.com/hamzabenarfa/" target="_blank" rel="noreferrer">
+              GitHub ↗
+            </a>
+            <a href="https://www.linkedin.com/in/hamzabenarfa/" target="_blank" rel="noreferrer">
+              LinkedIn ↗
+            </a>
+          </div>
+          <div>
+            <h4>[ Documents ]</h4>
+            <a href="/benarfa-hamza-en.pdf" download>Résumé / CV ↓</a>
+            <a href="#">Selected case studies ↓</a>
+          </div>
+          <div>
+            <h4>[ Working hours ]</h4>
+            <p>Mon — Fri</p>
+            <p>09:00 — 19:00 GMT+1</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

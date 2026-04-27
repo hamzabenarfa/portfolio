@@ -1,64 +1,56 @@
-"use client";
+interface Step {
+  num: string;
+  title: string;
+  desc: string;
+}
 
-import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
-import { Section } from "@/components/section";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
-import { Search, Code2, Gauge, Rocket } from "lucide-react";
-
-const STEP_ICONS = [Search, Code2, Gauge, Rocket];
+const steps: Step[] = [
+  {
+    num: "01",
+    title: "Discovery & planning",
+    desc: "Every project starts with the business problem. I map user flows, define the stack, and create a clear roadmap before any code. Reduces scope creep, aligns expectations.",
+  },
+  {
+    num: "02",
+    title: "Iterative builds",
+    desc: "Weekly sprints in Next.js and TypeScript — chosen for type safety and performance. Each sprint ends with a deployable demo on staging so you watch progress in real time.",
+  },
+  {
+    num: "03",
+    title: "Quality & speed",
+    desc: "Every feature ships with automated tests, responsive checks, and Lighthouse audits. Projects consistently score 90+ on Core Web Vitals.",
+  },
+  {
+    num: "04",
+    title: "Launch & support",
+    desc: "I handle the full deploy pipeline — Docker, GitHub Actions CI/CD, monitoring. Post‑launch documentation and ongoing support keep things running.",
+  },
+];
 
 export function Methodology() {
-    const t = useTranslations();
+  return (
+    <section id="process" className="container process">
+      <div className="section-header reveal">
+        <span className="num">[ 04 / Process ]</span>
+        <h2 className="title">
+          How I <em>work</em>
+        </h2>
+        <span className="meta">
+          First call → production
+          <br />
+          Transparent at each step
+        </span>
+      </div>
 
-    const steps = [0, 1, 2, 3].map((i) => ({
-        title: t(`methodology.steps.${i}.title`),
-        description: t(`methodology.steps.${i}.description`),
-        Icon: STEP_ICONS[i],
-    }));
-
-    return (
-        <Section id="methodology" className="py-20 border-t border-secondary/30">
-            <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={staggerContainer}
-                className="space-y-12"
-            >
-                <motion.div variants={fadeInUp} className="space-y-3">
-                    <h2 className="text-3xl sm:text-4xl font-semibold">
-                        {t("methodology.title")}
-                    </h2>
-                    <p className="text-muted-foreground text-lg max-w-[65ch]">
-                        {t("methodology.description")}
-                    </p>
-                </motion.div>
-
-                <motion.div
-                    variants={fadeInUp}
-                    className="grid md:grid-cols-2 gap-8"
-                >
-                    {steps.map((step, i) => (
-                        <div
-                            key={i}
-                            className="group flex gap-4 p-5 rounded-xl border border-secondary/30 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300"
-                        >
-                            <div className="shrink-0 w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-colors">
-                                <step.Icon className="w-5 h-5" />
-                            </div>
-                            <div className="space-y-2">
-                                <h3 className="text-lg font-semibold text-foreground">
-                                    {step.title}
-                                </h3>
-                                <p className="text-muted-foreground leading-relaxed text-sm">
-                                    {step.description}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
-                </motion.div>
-            </motion.div>
-        </Section>
-    );
+      <div className="process-grid">
+        {steps.map((s) => (
+          <div key={s.num} className="process-step reveal">
+            <span className="num">{s.num}</span>
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }

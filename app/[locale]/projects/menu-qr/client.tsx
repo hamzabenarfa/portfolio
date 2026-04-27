@@ -163,24 +163,7 @@ export default function MenuQRProjectPage() {
               </motion.p>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="w-full md:w-1/3"
-            >
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm p-6 overflow-hidden relative group">
-                <div className="absolute inset-0 bg-linear-to-br from-orange-500/5 to-rose-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <h3 className="text-sm font-mono text-zinc-500 mb-4 tracking-wider uppercase">Tech Stack Overview</h3>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((t, i) => (
-                    <span key={i} className="px-3 py-1.5 bg-zinc-950 border border-zinc-800 rounded-lg text-xs font-medium text-zinc-300 shadow-sm">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+
           </div>
         </motion.div>
       </header>

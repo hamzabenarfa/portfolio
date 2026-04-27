@@ -1,68 +1,60 @@
-"use client";
+interface ServiceItem {
+  num: string;
+  glyph: string;
+  title: string;
+  desc: string;
+}
 
-import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
-
-// Capability item component
-const CapabilityItem = ({
-    title,
-    description,
-}: {
-    title: string;
-    description: string;
-}) => (
-    <div className="flex gap-4">
-        <div className="w-1 bg-primary rounded-full shrink-0" />
-        <div className="space-y-2">
-            <h3 className="text-lg font-semibold text-primary">{title}</h3>
-            <p className="text-muted-foreground leading-relaxed">{description}</p>
-        </div>
-    </div>
-);
-
-import { Section } from "@/components/section";
-import { fadeInUp, staggerContainer } from "@/lib/animations";
+const services: ServiceItem[] = [
+  {
+    num: "01",
+    glyph: "W",
+    title: "Web Apps",
+    desc: "Full‑stack web apps with Next.js — from marketing pages to complex dashboards with auth, payments, and real‑time features.",
+  },
+  {
+    num: "02",
+    glyph: "M",
+    title: "Mobile Apps",
+    desc: "Cross‑platform iOS and Android apps using React Native and Expo, sharing logic with the web wherever it makes sense.",
+  },
+  {
+    num: "03",
+    glyph: "A",
+    title: "APIs & Backend",
+    desc: "REST and GraphQL APIs in Node and NestJS, backed by PostgreSQL or MongoDB. Tested, typed, documented.",
+  },
+  {
+    num: "04",
+    glyph: "V",
+    title: "MVPs end‑to‑end",
+    desc: "Turning ideas into working products. I handle the full stack so founders can focus on customers, not architecture decisions.",
+  },
+];
 
 export function Capabilities() {
-    const t = useTranslations();
+  return (
+    <section className="container services">
+      <div className="section-header reveal">
+        <span className="num">[ 03 / Services ]</span>
+        <h2 className="title">
+          What I <em>build</em>
+        </h2>
+        <span className="meta">04 areas of practice</span>
+      </div>
 
-    return (
-        <Section id="capabilities" className="py-20 border-t border-secondary/30">
-            <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={staggerContainer}
-                className="space-y-12"
-            >
-                <motion.div variants={fadeInUp}>
-                    <h2 className="text-3xl sm:text-4xl font-semibold">
-                        {t("capabilities.title")}
-                    </h2>
-                </motion.div>
-
-                <motion.div
-                    variants={fadeInUp}
-                    className="grid md:grid-cols-2 gap-x-16 gap-y-10"
-                >
-                    <CapabilityItem
-                        title={t("capabilities.webDev.title")}
-                        description={t("capabilities.webDev.description")}
-                    />
-                    <CapabilityItem
-                        title={t("capabilities.mobileDev.title")}
-                        description={t("capabilities.mobileDev.description")}
-                    />
-                    <CapabilityItem
-                        title={t("capabilities.backendDev.title")}
-                        description={t("capabilities.backendDev.description")}
-                    />
-                    <CapabilityItem
-                        title={t("capabilities.productMgmt.title")}
-                        description={t("capabilities.productMgmt.description")}
-                    />
-                </motion.div>
-            </motion.div>
-        </Section>
-    );
+      <div className="services-grid">
+        {services.map((s) => (
+          <div key={s.num} className="service reveal">
+            <span className="num">{s.num}</span>
+            <div>
+              <h3>{s.title}</h3>
+              <p>{s.desc}</p>
+            </div>
+            <span className="glyph">{s.glyph}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }
