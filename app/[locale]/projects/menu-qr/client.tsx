@@ -306,6 +306,16 @@ export default function MenuQRProjectPage() {
                     title: "Frictionless Onboarding",
                     desc: "Features a streamlined, multi-step onboarding flow with secure OTP and social authentication, allowing businesses to create a branded digital presence in minutes.",
                     icon: <Smartphone className="w-6 h-6 text-pink-400" />
+                  },
+                  {
+                    title: "AI Menu Digitization",
+                    desc: "Integrates a Python FastAPI microservice utilizing Vision LLMs and OCR to instantly transform photos of physical menus into structured digital data.",
+                    icon: <Cpu className="w-6 h-6 text-purple-400" />
+                  },
+                  {
+                    title: "Actionable Analytics",
+                    desc: "Leverages Cloudflare KV and Postgres to process high-volume table scans, providing businesses with real-time insights into customer engagement and menu performance.",
+                    icon: <TrendingUp className="w-6 h-6 text-yellow-400" />
                   }
                 ].map((feature, idx) => (
                   <motion.div
@@ -342,9 +352,9 @@ export default function MenuQRProjectPage() {
                   <div className="flex items-start gap-6">
                     <Server className="w-8 h-8 text-zinc-300 shrink-0" />
                     <div>
-                      <h3 className="text-xl font-medium text-zinc-200 mb-3">Core Stack</h3>
+                      <h3 className="text-xl font-medium text-zinc-200 mb-3">Core Stack & Microservices</h3>
                       <p className="text-zinc-400 text-base leading-relaxed mb-4">
-                        Next.js 15 (React 19), Tailwind CSS, Hono.js, Drizzle ORM, and Neon Serverless Postgres.
+                        A decoupled microservice ecosystem featuring a Next.js 15 (React 19) frontend, an edge-native Hono.js core API, and a Python FastAPI AI processing engine. Data is anchored by Neon Serverless Postgres via Drizzle ORM.
                       </p>
                     </div>
                   </div>
@@ -369,6 +379,18 @@ export default function MenuQRProjectPage() {
                       <h3 className="text-xl font-medium text-zinc-200 mb-3">Optimization & Security</h3>
                       <p className="text-zinc-400 text-base leading-relaxed mb-4">
                         Implemented secure direct-to-Cloudflare-R2 presigned URLs for image uploads to bypass server processing bottlenecks, while utilizing Zod for rigorous end-to-end type safety and API validation.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-[#09090b] border border-zinc-800/80 rounded-2xl p-6 md:p-8 relative overflow-hidden group hover:border-zinc-700/80 transition-colors">
+                  <div className="flex items-start gap-6">
+                    <Database className="w-8 h-8 text-purple-400 shrink-0" />
+                    <div>
+                      <h3 className="text-xl font-medium text-zinc-200 mb-3">Hybrid AI Parsing Strategy</h3>
+                      <p className="text-zinc-400 text-base leading-relaxed mb-4">
+                        The AI microservice orchestrates a smart fallback strategy, prioritizing advanced Vision LLMs (via OpenRouter) for complex menu layouts, while seamlessly downgrading to local OCR models (EasyOCR) to balance cost and performance.
                       </p>
                     </div>
                   </div>
@@ -425,7 +447,8 @@ export default function MenuQRProjectPage() {
                   "B2B SaaS Architecture",
                   "Edge Computing",
                   "Full-Stack TypeScript",
-                  "UI/UX Engineering",
+                  "AI/LLM Integration",
+                  "Computer Vision (OCR)",
                   "Relational Database Modeling",
                   "API Integration"
                 ].map((skill, index) => (

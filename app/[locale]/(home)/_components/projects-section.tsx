@@ -30,7 +30,7 @@ const projects: Project[] = [
     type: "SaaS / Restaurant",
     title: (<>Digital <em>restaurant</em> menu</>),
     desc: "SaaS platform for restaurants to create QR‑accessible menus. Eight‑step onboarding wizard, drag‑and‑drop editor, analytics dashboard.",
-    stack: ["Next.js", "PostgreSQL", "Tailwind", "Prisma", "Stripe"],
+    stack: ["Next.js", "Hono.js", "Cloudflare", "Python", "PostgreSQL"],
     mock: "mock-2",
     glyph: "MQR",
     href: "/projects/menu-qr",
