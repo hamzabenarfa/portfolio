@@ -1,10 +1,14 @@
 "use client";
 
+import Image from "next/image";
+
 export default function Header() {
   return (
     <nav className="nav">
       <a href="#top" className="nav-brand">
-        <span className="nav-mark">H</span>
+        <span className="nav-mark" style={{ overflow: "hidden" }}>
+          <Image src="/avatar.jpeg" width={28} height={28} alt="B" className="w-full h-full object-cover" />
+        </span>
         <span>
           Benarfa<span style={{ opacity: 0.5 }}>/</span>Hamza
         </span>
