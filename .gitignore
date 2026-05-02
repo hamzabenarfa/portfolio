@@ -6,7 +6,7 @@
 .agents
 .agent
 skills-lock.json
-
+.omx
 # next.js
 /.next/
 /out/
