@@ -1,29 +1,3 @@
-export const SOCIAL_LINKS = [
-  {
-    name: "GitHub",
-    handle: "@hamzabenarfa",
-    url: "https://github.com/hamzabenarfa/",
-  },
-  {
-    name: "LinkedIn",
-    handle: "hamzabenarfa",
-    url: "https://www.linkedin.com/in/hamzabenarfa/",
-  },
-  {
-    name: "WhatsApp",
-    handle: "+216 22 633 345",
-    url: "https://wa.me/21622633345",
-  },
-  {
-    name: "Download CV",
-    handle: "Resume / Portfolio",
-    url: "/benarfa-hamza-en.pdf",
-    download: true,
-  },
-];
-
-
-
 export const PROJECTS = [
   {
     id: 1,
@@ -45,7 +19,7 @@ export const PROJECTS = [
     image: "/dtalk.webp",
     url: "https://d-talk-ecosytem-front-three.vercel.app",
   },
-    {
+  {
     id: 2,
     slug: "menu-qr",
     featured: false,
@@ -68,50 +42,7 @@ export const PROJECTS = [
   },
   {
     id: 3,
-    slug: "ecommerce-platform",
-    featured: false,
-    tech: [
-      "Next.js",
-      "React 19",
-      "TypeScript",
-      "PostgreSQL",
-      "Prisma",
-      "Tailwind CSS",
-      "shadcn/ui",
-      "NextAuth.js",
-      "Zustand",
-      "Stripe",
-      "React Hook Form",
-      "Zod",
-    ],
-    year: "2024",
-    image: "/vertex.webp",
-    url: "https://vertex.benarfa.com/",
-  },
-  {
-    id: 4,
-    slug: "project-management-app",
-    featured: false,
-    tech: [
-      "Next.js 14",
-      "MySQL",
-      "Prisma",
-      "Tailwind CSS",
-      "Framer Motion",
-      "shadcn/ui",
-      "Zustand",
-      "React Query",
-      "Chart.js",
-      "Mermaid.js",
-      "@dnd-kit",
-    ],
-    year: "2024",
-    image: "/planner.webp",
-    url: "https://planner.benarfa.com/",
-  },
-  {
-    id: 5,
-    slug: "kindra-ecommerce",
+    slug: "kindra",
     featured: false,
     tech: [
       "Next.js 15",
@@ -131,43 +62,3 @@ export const PROJECTS = [
     url: "https://kindra.benarfa.com/",
   },
 ];
-
-/**
- * Work experience — non-translatable data only.
- * Translatable text (role, company, year, description, details)
- * lives in messages/en.json and messages/fr.json under `experienceItems.{key}`.
- */
-export const WORK_EXPERIENCE = [
-  {
-    id: 1,
-    key: "job_1",
-    logo: "/companies/dtalk.png",
-    tech: [
-      "Next.js 15",
-      "React 19",
-      "TypeScript",
-      "Zustand",
-      "TanStack Query",
-      "Konva.js",
-    ],
-  },
-  {
-    id: 2,
-    key: "job_2",
-    logo: "/companies/tactix.png",
-    tech: ["React", "Nest.js", "MongoDB", "Framer Motion"],
-  },
-  {
-    id: 3,
-    key: "job_3",
-    logo: "/companies/ngb.png",
-    tech: ["MongoDB", "Express", "React", "Node.js", "PostgreSQL"],
-  },
-  {
-    id: 4,
-    key: "job_4",
-    logo: "/companies/freelance.png",
-    tech: ["Next.js", "React", "TypeScript", "Node.js", "PostgreSQL", "MySQL"],
-  },
-];
-

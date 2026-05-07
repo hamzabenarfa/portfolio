@@ -21,10 +21,8 @@ import {
 
 export default function DTalkProjectPage() {
   const project = PROJECTS.find((p) => p.slug === 'dtalk-ecosystem');
-  const [imageError, setImageError] = useState(false);
   const [activeSection, setActiveSection] = useState('executive-overview');
   const [isLandingPageScrolling, setIsLandingPageScrolling] = useState(false);
-  const [isMobileViewScrolling, setIsMobileViewScrolling] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -93,7 +91,7 @@ export default function DTalkProjectPage() {
       <nav className="fixed top-0 w-full z-40 bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <Link
-            href="/#projects"
+            href="/#work"
             className="group flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300"
           >
             <div className="p-1.5 rounded-full bg-zinc-900 group-hover:bg-zinc-800 transition-colors">
@@ -120,8 +118,6 @@ export default function DTalkProjectPage() {
 
       {/* Hero Header */}
       <header className="relative pt-40 pb-20 overflow-hidden border-b border-zinc-900/50 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-zinc-900 via-zinc-950 to-zinc-950">
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay pointer-events-none" />
-
         <motion.div
           className="max-w-7xl mx-auto px-6 relative z-10"
           style={{ y: heroY, opacity: heroOpacity }}
@@ -209,7 +205,7 @@ export default function DTalkProjectPage() {
                   The D-Talk Ecosystem is a full-stack, cloud-native web application encompassing a modern, high-performance frontend canvas/dashboard and a robust Java Spring Boot backend. The system provides secure and highly scalable services backed by an optimized PostgreSQL database.
                 </p>
                 <p>
-                  This case study details the system's architectural evolution, highlighting my strategic interventions to refactor and optimize the backend foundation, my end-to-end design and implementation of the Next.js frontend, and my complete ownership of the Azure cloud infrastructure and CI/CD pipelines.
+                  This case study details the system&rsquo;s architectural evolution, highlighting my strategic interventions to refactor and optimize the backend foundation, my end-to-end design and implementation of the Next.js frontend, and my complete ownership of the Azure cloud infrastructure and CI/CD pipelines.
                 </p>
               </div>
 
@@ -232,7 +228,6 @@ export default function DTalkProjectPage() {
                         alt="D-Talk Ecosystem - Full Landing Page"
                         fill
                         className="object-contain md:object-cover object-top pointer-events-none"
-                        onError={() => setImageError(true)}
                         sizes="(max-width: 1200px) 100vw, 1200px"
                       />
                     </div>
@@ -267,7 +262,6 @@ export default function DTalkProjectPage() {
                         alt={`D-Talk Ecosystem - ${img.caption}`}
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        onError={() => setImageError(true)}
                       />
                       <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 to-transparent p-6 pointer-events-none">
                         <p className="text-white/90 font-medium text-sm">{img.caption}</p>
@@ -530,7 +524,7 @@ export default function DTalkProjectPage() {
 
               <div className="mb-12">
                 <p className="text-lg text-zinc-400 leading-relaxed max-w-3xl">
-                  Designed a professional-grade, cloud-native DevOps workflow adhering strictly to "Infrastructure as Code" principles, built entirely from scratch.
+                  Designed a professional-grade, cloud-native DevOps workflow adhering strictly to &quot;Infrastructure as Code&quot; principles, built entirely from scratch.
                 </p>
               </div>
 
@@ -642,5 +636,3 @@ export default function DTalkProjectPage() {
     </div >
   );
 }
-
-

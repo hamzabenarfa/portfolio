@@ -106,10 +106,10 @@ const architectureLayers = [
 ];
 
 export default function KindraProjectPage() {
-  const t = useTranslations('projectsItems.kindra-ecommerce');
-  const tNext = useTranslations('projectsItems.ecommerce-platform');
-  const project = PROJECTS.find((p) => p.slug === 'kindra-ecommerce');
-  const otherProject = PROJECTS.find((p) => p.slug === 'ecommerce-platform');
+  const t = useTranslations('projectsItems.kindra');
+  const tNext = useTranslations('projectsItems.menu-qr');
+  const project = PROJECTS.find((p) => p.slug === 'kindra');
+  const otherProject = PROJECTS.find((p) => p.slug === 'menu-qr');
   const keyFeatures = (t.raw('keyFeatures') as string[]) || [];
   const [imageError, setImageError] = useState(false);
   const [activeSection, setActiveSection] = useState(navItems[0].id);
@@ -182,7 +182,7 @@ export default function KindraProjectPage() {
       <nav className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-[#100c0d]/75 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
           <Link
-            href="/#projects"
+            href="/#work"
             className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 text-xs font-medium text-stone-300 transition hover:border-rose-300/40 hover:text-white"
           >
             <ArrowLeft className="h-4 w-4 transition group-hover:-translate-x-0.5" />

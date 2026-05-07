@@ -133,7 +133,7 @@ export function StructuredData({
     <Script
       id={`structured-data-${type}`}
       type="application/ld+json"
-      strategy="beforeInteractive"
+      strategy="afterInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   ) : null;

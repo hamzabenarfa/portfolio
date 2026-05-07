@@ -61,7 +61,7 @@ export function Hero() {
           I&rsquo;m <strong>Hamza Benarfa</strong> — an independent full‑stack
           developer based in Tunisia. I partner with founders and small teams to
           take ideas from{" "}
-          <em style={{ fontFamily: "'Instrument Serif', serif" }}>blank Figma</em>{" "}
+          <em style={{ fontFamily: "var(--font-instrument-serif), serif" }}>blank Figma</em>{" "}
           to deployed product, in weeks not quarters.
         </p>
         <div className="hero-cta-row">

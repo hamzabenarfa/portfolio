@@ -1,14 +1,14 @@
 import { MetadataRoute } from "next";
 
-export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_WEB_URL as string;
+const SITE_URL = process.env.NEXT_PUBLIC_WEB_URL || "https://benarfa.com";
+const baseUrl = SITE_URL.replace(/\/$/, "");
 
+export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
         userAgent: "*",
-        allow: ["/","/api/og/*"]
-       
+        allow: ["/", "/api/og/*"],
       },
       {
         userAgent: ["AhrefsBot", "SemrushBot", "DotBot", "MJ12bot", "BLEXBot"],

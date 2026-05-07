@@ -159,56 +159,6 @@
         "Azure Blob Storage for image management"
       ]
     },
-    "ecommerce-platform": {
-      "title": "Vertex",
-      "subtitle": "Tech Gadgets Store",
-      "category": "E-Commerce",
-      "description": "Full-stack e-commerce platform with product catalog, flash sales, persistent cart, Stripe payments, and an admin dashboard for inventory management.",
-      "longDescription": "End-to-end e-commerce app for tech gadgets. Includes a customer-facing storefront with filtering, flash sales with countdown timers, and persistent shopping carts. Admin dashboard handles product CRUD, order tracking, and inventory. Built with Domain-Driven Design architecture.",
-      "problem": "Needed a modern, full-featured e-commerce platform that could handle product variants, flash sales, and integrated payments without relying on third-party platforms.",
-      "solution": "Built a complete storefront and admin dashboard with Stripe integration, persistent carts, and flash sale support.",
-      "impact": [
-        "Lighthouse performance 95+",
-        "Fast page loads with edge caching",
-        "Persistent cart across sessions"
-      ],
-      "content": "Vertex is a full-stack e-commerce platform for tech products, built with Next.js and clean architecture principles.\n\n## The Challenge\n\nSmall retailers need modern storefronts without the cost and lock-in of enterprise platforms. They want product management, payments, and analytics under their control.\n\n## The Solution\n\n### Storefront\n\nProduct catalog with filtering across Audio, Camera, Gaming, Smartphones, and SmartWatches. Flash sales with live countdown timers. Persistent cart state across sessions. Stripe Checkout for payments.\n\n### Admin Dashboard\n\nProduct CRUD with inventory tracking, dynamic categories, order management, and role-based access control.\n\n## Technical Stack\n\nBuilt on Next.js 14 with App Router, React 19, Domain-Driven Design. Authentication via NextAuth.js v5 with Google Provider. Stripe webhooks for payment fulfillment.",
-      "keyFeatures": [
-        "Product catalog with multi-category filtering",
-        "Flash sales with live countdown timers",
-        "Persistent shopping cart across sessions",
-        "Stripe Checkout with webhook-based fulfillment",
-        "Admin dashboard with product and order management",
-        "Inventory tracking and category management",
-        "Role-based access control",
-        "Analytics-ready with Google Analytics integration"
-      ]
-    },
-    "project-management-app": {
-      "title": "Planner",
-      "subtitle": "Project Management App",
-      "category": "Productivity / SaaS",
-      "description": "Project management tool with Kanban boards, burn-down charts, team calendars, and a collaborative whiteboard. Built as a full-featured productivity suite.",
-      "longDescription": "A productivity app combining project management, calendar scheduling, and visual collaboration tools. Features drag-and-drop Kanban boards, recurring events, role-based teams, and an integrated whiteboard and diagramming tool with Mermaid.js.",
-      "problem": "Teams use separate tools for tasks, scheduling, and brainstorming — Trello, Google Calendar, Miro. Switching between them wastes time.",
-      "solution": "Combined Kanban boards, calendars, whiteboards, and diagram tools into a single app with team management and permissions.",
-      "impact": [
-        "Kanban + Calendar + Whiteboard in one app",
-        "Drag-and-drop with @dnd-kit",
-        "Built-in diagramming with Mermaid.js"
-      ],
-      "content": "Planner is a project management and planning app built with Next.js.\n\n## The Challenge\n\nTeams juggle multiple tools — Trello, Google Calendar, Miro, docs. Context switching between them reduces productivity.\n\n## The Solution\n\n### Project Management\n\n- **Kanban Boards**: Drag-and-drop with @dnd-kit and custom columns\n- **Burn Down Charts**: Sprint tracking with Chart.js\n- **Multiple Views**: Toggle between text and board views\n\n### Team & Calendar\n\n- **Teams**: Create teams, assign roles (Admin, Manager, Member)\n- **Calendar**: Monthly/Weekly/Daily views with recurring events\n- **Quick Capture**: Sparks widget for fast idea capture\n\n### Visual Collaboration\n\n- **Whiteboard**: Built with perfect-freehand and roughjs\n- **Diagrams**: Mermaid.js with live preview",
-      "keyFeatures": [
-        "Kanban boards with drag-and-drop via @dnd-kit",
-        "Burn-down charts for sprint tracking",
-        "Team management with role-based permissions",
-        "Full calendar with recurring events",
-        "Integrated whiteboard for brainstorming",
-        "Mermaid.js diagram editor with live preview",
-        "Dashboard with project status overview",
-        "NextAuth.js authentication"
-      ]
-    },
     "menu-qr": {
       "title": "Menu QR",
       "subtitle": "Digital Restaurant Menu",
@@ -235,7 +185,7 @@
         "JWT and OAuth 2.0 authentication with role-based access"
       ]
     },
-    "kindra-ecommerce": {
+    "kindra": {
       "title": "KINDRA",
       "subtitle": "Fashion E-Commerce Starter",
       "category": "E-Commerce / Starter Kit",

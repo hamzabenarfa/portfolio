@@ -1,22 +1,14 @@
 import { routing } from "@/i18n/routing";
+import { PROJECTS } from "@/data/consts";
 import type { MetadataRoute } from "next";
 
+const SITE_URL = process.env.NEXT_PUBLIC_WEB_URL || "https://benarfa.com";
+const baseUrl = SITE_URL.replace(/\/$/, "");
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_WEB_URL as string;
   const currentDate = new Date();
+  const routes = ["", ...PROJECTS.map((project) => `/projects/${project.slug}`)];
 
-  const projects = [
-    "dtalk-ecosystem",
-    "ecommerce-platform",
-    "project-management-app",
-    "kindra-ecommerce",
-    "menu-qr",
-  ];
-
-  const routes = ["", ...projects.map((project) => `/projects/${project}`)];
-
-  // With localePrefix: "never", the default locale (en) uses root URLs
-  // and non-default locales get prefixed (e.g. /fr/...)
   const sitemapEntries = routes.flatMap((route) => {
     return routing.locales.map((locale) => {
       const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
@@ -32,4 +24,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return sitemapEntries;
 }
-

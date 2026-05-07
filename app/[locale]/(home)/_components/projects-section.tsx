@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { ReactNode } from "react";
 
 interface Project {
@@ -9,6 +10,7 @@ interface Project {
   stack: string[];
   mock: string;
   glyph: string;
+  image?: string;
   href: string;
 }
 
@@ -33,6 +35,7 @@ const projects: Project[] = [
     stack: ["Next.js", "Hono.js", "Cloudflare", "Python", "PostgreSQL"],
     mock: "mock-2",
     glyph: "MQR",
+    // image: "/menu-qr.webp",
     href: "/projects/menu-qr",
   },
   {
@@ -58,7 +61,7 @@ export function ProjectsSection() {
           Selected <em>work</em>
         </h2>
         <span className="meta">
-          04 of 12 projects
+          03 selected projects
           <br />
           Showing 2024 — 2025
         </span>
@@ -68,7 +71,17 @@ export function ProjectsSection() {
         {projects.map((p) => (
           <a key={p.label} href={p.href} className="project-card reveal">
             <div className="project-thumb">
-              <div className={`mock ${p.mock}`}>{p.glyph}</div>
+              {p.image ? (
+                <Image
+                  src={p.image}
+                  alt={`${p.label} preview`}
+                  fill
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                  className="project-thumb-image"
+                />
+              ) : (
+                <div className={`mock ${p.mock}`}>{p.glyph}</div>
+              )}
             </div>
             <div className="project-meta">
               <span>{p.type}</span>

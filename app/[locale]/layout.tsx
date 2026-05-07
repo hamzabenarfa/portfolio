@@ -1,5 +1,6 @@
 import type React from "react";
 import type { Metadata } from "next";
+import { Instrument_Serif, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -8,6 +9,29 @@ import "../globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SEO } from "@/components/seo/seo";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+
+const SITE_URL = process.env.NEXT_PUBLIC_WEB_URL || "https://benarfa.com";
+const baseUrl = SITE_URL.replace(/\/$/, "");
+
+const interTight = Inter_Tight({
+  subsets: ["latin"],
+  variable: "--font-inter-tight",
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument-serif",
+  display: "swap",
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
 
 type Props = {
   children: React.ReactNode;
@@ -36,7 +60,7 @@ export async function generateMetadata({
   };
 
   return {
-    metadataBase: new URL("https://benarfa.com"),
+    metadataBase: new URL(baseUrl),
     title: {
       default: titles[locale] || titles.en,
       template: "%s | Hamza Benarfa",
@@ -52,12 +76,12 @@ export async function generateMetadata({
       "Freelance Developer Tunisia",
       "Software Engineer",
     ],
-    authors: [{ name: "Hamza Benarfa", url: "https://benarfa.com" }],
+    authors: [{ name: "Hamza Benarfa", url: baseUrl }],
     creator: "Hamza Benarfa",
     openGraph: {
       title: titles[locale] || titles.en,
       description: descriptions[locale] || descriptions.en,
-      url: "https://benarfa.com",
+      url: locale === "fr" ? `${baseUrl}/fr` : baseUrl,
       siteName: "Hamza Benarfa",
       locale: locale === "fr" ? "fr_FR" : "en_US",
       type: "website",
@@ -76,8 +100,8 @@ export async function generateMetadata({
       googleBot: { index: true, follow: true, "max-image-preview": "large" },
     },
     alternates: {
-      canonical: "https://benarfa.com",
-      languages: { en: "https://benarfa.com", fr: "https://benarfa.com/fr" },
+      canonical: locale === "fr" ? `${baseUrl}/fr` : baseUrl,
+      languages: { en: baseUrl, fr: `${baseUrl}/fr` },
     },
     icons: { icon: "/favicon.ico", shortcut: "/favicon.ico", apple: "/apple-icon.png" },
   };
@@ -95,7 +119,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} dir="ltr" suppressHydrationWarning>
-      <body>
+      <body className={`${interTight.variable} ${instrumentSerif.variable} ${jetBrainsMono.variable}`}>
         <NextIntlClientProvider messages={messages}>
           {children}
           <SEO />

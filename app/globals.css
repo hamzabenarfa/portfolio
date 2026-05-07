@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500&display=swap');
-
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
@@ -25,7 +23,7 @@ html,
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: 'Inter Tight', system-ui, sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
@@ -142,7 +140,7 @@ body {
    Typography
    ============================================================ */
 .eyebrow {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -197,7 +195,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-weight: 600;
   font-size: 15px;
   letter-spacing: -0.01em;
@@ -215,14 +213,14 @@ body {
   color: #fff;
   font-weight: 700;
   font-size: 12px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
 }
 
 .nav-links {
   display: flex;
   gap: 28px;
   list-style: none;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -249,7 +247,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -293,7 +291,7 @@ body {
 }
 
 .hero-meta-item .label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.16em;
@@ -303,7 +301,7 @@ body {
 .hero-meta-item .value {
   font-size: 13px;
   color: var(--ink);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
 }
 
 .hero-title {
@@ -311,7 +309,7 @@ body {
   line-height: 0.82;
   letter-spacing: -0.05em;
   font-weight: 800;
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   position: relative;
 }
 
@@ -348,7 +346,7 @@ body {
 .hero-title .accent {
   color: var(--accent);
   font-style: italic;
-  font-family: 'Instrument Serif', serif;
+  font-family: var(--font-instrument-serif), serif;
   font-weight: 400;
   letter-spacing: -0.02em;
 }
@@ -394,7 +392,7 @@ body {
   border: 1px solid var(--line);
   background: transparent;
   color: var(--ink);
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -462,7 +460,7 @@ body {
   gap: 60px;
   white-space: nowrap;
   animation: marquee 40s linear infinite;
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-size: clamp(28px, 4vw, 56px);
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -476,7 +474,7 @@ body {
 
 .marquee-track .star {
   color: var(--accent);
-  font-family: 'Instrument Serif', serif;
+  font-family: var(--font-instrument-serif), serif;
   font-style: italic;
 }
 
@@ -503,7 +501,7 @@ body {
 }
 
 .section-header .num {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
   letter-spacing: 0.16em;
   color: var(--ink-faint);
@@ -511,7 +509,7 @@ body {
 }
 
 .section-header .title {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-size: clamp(48px, 7vw, 96px);
   line-height: 0.9;
   letter-spacing: -0.04em;
@@ -519,14 +517,14 @@ body {
 }
 
 .section-header .title em {
-  font-family: 'Instrument Serif', serif;
+  font-family: var(--font-instrument-serif), serif;
   font-style: italic;
   font-weight: 400;
   color: var(--accent);
 }
 
 .section-header .meta {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -553,14 +551,14 @@ body {
 }
 
 .exp-row .num {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
   color: var(--ink-faint);
   letter-spacing: 0.1em;
 }
 
 .exp-row .company {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-size: clamp(22px, 2.4vw, 32px);
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -568,14 +566,14 @@ body {
 }
 
 .exp-row .role {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-size: 15px;
   color: var(--ink-dim);
   font-weight: 400;
 }
 
 .exp-row .period {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
   color: var(--ink-dim);
   letter-spacing: 0.06em;
@@ -645,7 +643,7 @@ body {
 }
 
 .exp-detail-inner .label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -668,7 +666,7 @@ body {
 }
 
 .exp-detail-inner .stack span {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
   padding: 6px 10px;
   border: 1px solid var(--line);
@@ -710,12 +708,19 @@ body {
   border: 1px solid var(--line);
 }
 
+.project-thumb-image {
+  object-fit: contain;
+  background: #f7efde;
+  padding: 10px;
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
 .mock {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-weight: 800;
   letter-spacing: -0.04em;
   color: rgba(255, 255, 255, 0.95);
@@ -728,6 +733,10 @@ body {
 
 .project-card:hover .mock {
   transform: scale(1.05);
+}
+
+.project-card:hover .project-thumb-image {
+  transform: scale(1.03);
 }
 
 .mock-1 {
@@ -758,7 +767,7 @@ body {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -771,11 +780,11 @@ body {
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1;
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
 }
 
 .project-title em {
-  font-family: 'Instrument Serif', serif;
+  font-family: var(--font-instrument-serif), serif;
   font-style: italic;
   font-weight: 400;
   color: var(--accent);
@@ -798,7 +807,7 @@ body {
 }
 
 .project-stack span {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 10px;
   padding: 5px 10px;
   border: 1px solid var(--line);
@@ -842,14 +851,14 @@ body {
 }
 
 .service .num {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
   letter-spacing: 0.18em;
   color: var(--ink-faint);
 }
 
 .service h3 {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-size: clamp(28px, 3vw, 40px);
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -869,7 +878,7 @@ body {
   position: absolute;
   top: 32px;
   right: 32px;
-  font-family: 'Instrument Serif', serif;
+  font-family: var(--font-instrument-serif), serif;
   font-style: italic;
   font-size: 64px;
   color: var(--accent);
@@ -906,14 +915,14 @@ body {
   position: absolute;
   top: 16px;
   right: 0;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
   color: var(--ink-faint);
   letter-spacing: 0.16em;
 }
 
 .process-step h3 {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-size: 22px;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -951,7 +960,7 @@ body {
   grid-template-columns: 60px 1fr auto;
   gap: 24px;
   align-items: center;
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-size: clamp(20px, 2vw, 28px);
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -964,7 +973,7 @@ body {
 }
 
 .faq-q .num {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
   color: var(--ink-faint);
   letter-spacing: 0.16em;
@@ -1018,7 +1027,7 @@ body {
 }
 
 .contact-display {
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-size: clamp(72px, 14vw, 220px);
   line-height: 0.85;
   letter-spacing: -0.05em;
@@ -1027,7 +1036,7 @@ body {
 }
 
 .contact-display em {
-  font-family: 'Instrument Serif', serif;
+  font-family: var(--font-instrument-serif), serif;
   font-style: italic;
   font-weight: 400;
   color: var(--accent);
@@ -1037,7 +1046,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 20px;
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-size: clamp(32px, 5vw, 64px);
   font-weight: 600;
   letter-spacing: -0.03em;
@@ -1065,7 +1074,7 @@ body {
 }
 
 .contact-mail .icon {
-  font-family: 'Instrument Serif', serif;
+  font-family: var(--font-instrument-serif), serif;
   font-style: italic;
   font-weight: 400;
   color: var(--accent);
@@ -1083,7 +1092,7 @@ body {
 }
 
 .contact-grid h4 {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -1095,7 +1104,7 @@ body {
 .contact-grid a,
 .contact-grid p {
   display: block;
-  font-family: 'Inter Tight', sans-serif;
+  font-family: var(--font-inter-tight), system-ui, sans-serif;
   font-size: 16px;
   color: var(--ink);
   text-decoration: none;
@@ -1118,7 +1127,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains-mono), monospace;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.14em;

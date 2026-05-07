@@ -159,56 +159,6 @@
         "Azure Blob Storage pour la gestion d'images"
       ]
     },
-    "ecommerce-platform": {
-      "title": "Vertex",
-      "subtitle": "Boutique Tech",
-      "category": "E-Commerce",
-      "description": "Plateforme e-commerce full-stack avec catalogue produits, ventes flash, panier persistant, paiements Stripe et dashboard admin pour la gestion des stocks.",
-      "longDescription": "Application e-commerce complète pour produits tech. Vitrine avec filtrage, ventes flash avec compte à rebours et paniers persistants. Dashboard admin pour la gestion des produits, commandes et stocks. Architecture Domain-Driven Design.",
-      "problem": "Besoin d'une plateforme e-commerce moderne et complète avec variantes produits, ventes flash et paiements intégrés.",
-      "solution": "Vitrine et dashboard admin complets avec intégration Stripe, paniers persistants et support ventes flash.",
-      "impact": [
-        "Performance Lighthouse 95+",
-        "Chargement rapide avec cache edge",
-        "Panier persistant entre sessions"
-      ],
-      "content": "Vertex est une plateforme e-commerce full-stack pour produits tech, construite avec Next.js.\n\n## Le Défi\n\nLes petits détaillants ont besoin de vitrines modernes sans le coût des plateformes entreprise.\n\n## La Solution\n\n### Vitrine\n\nCatalogue avec filtrage multi-catégories. Ventes flash avec compte à rebours. Panier persistant. Stripe Checkout.\n\n### Dashboard Admin\n\nGestion produits, stocks, catégories et commandes avec contrôle d'accès par rôle.\n\n## Stack Technique\n\nNext.js 14, React 19, Domain-Driven Design. Auth via NextAuth.js v5. Webhooks Stripe.",
-      "keyFeatures": [
-        "Catalogue produits avec filtrage multi-catégories",
-        "Ventes flash avec compte à rebours en direct",
-        "Panier persistant entre sessions",
-        "Stripe Checkout avec webhooks",
-        "Dashboard admin avec gestion produits et commandes",
-        "Suivi des stocks et gestion de catégories",
-        "Contrôle d'accès par rôle",
-        "Prêt pour Google Analytics"
-      ]
-    },
-    "project-management-app": {
-      "title": "Planner",
-      "subtitle": "App de Gestion de Projet",
-      "category": "Productivité / SaaS",
-      "description": "Outil de gestion de projet avec tableaux Kanban, graphiques burn-down, calendrier d'équipe et tableau blanc collaboratif.",
-      "longDescription": "Application de productivité combinant gestion de projet, calendrier et outils de collaboration visuelle. Kanban drag-and-drop, événements récurrents, équipes avec permissions et diagrammes Mermaid.js.",
-      "problem": "Les équipes utilisent des outils séparés pour les tâches, la planification et le brainstorming — Trello, Google Calendar, Miro. Le changement de contexte fait perdre du temps.",
-      "solution": "Kanban, calendriers, tableaux blancs et diagrammes réunis dans une seule app avec gestion d'équipe et permissions.",
-      "impact": [
-        "Kanban + Calendrier + Tableau blanc dans une app",
-        "Drag-and-drop avec @dnd-kit",
-        "Diagrammes intégrés avec Mermaid.js"
-      ],
-      "content": "Planner est une app de gestion de projet construite avec Next.js.\n\n## Le Défi\n\nLes équipes jonglent entre outils — Trello, Calendar, Miro. Le changement de contexte réduit la productivité.\n\n## La Solution\n\n- **Tableaux Kanban** : Drag-and-drop avec @dnd-kit\n- **Graphiques Burn Down** : Suivi sprint avec Chart.js\n- **Gestion d'Équipe** : Rôles et permissions\n- **Calendrier** : Vues mois/semaine/jour avec événements récurrents\n- **Tableau Blanc** : Construit avec perfect-freehand et roughjs\n- **Diagrammes** : Mermaid.js avec aperçu en direct",
-      "keyFeatures": [
-        "Tableaux Kanban avec drag-and-drop via @dnd-kit",
-        "Graphiques burn-down pour le suivi des sprints",
-        "Gestion d'équipe avec permissions par rôle",
-        "Calendrier complet avec événements récurrents",
-        "Tableau blanc intégré pour brainstorming",
-        "Éditeur de diagrammes Mermaid.js avec aperçu en direct",
-        "Dashboard avec aperçu de l'état des projets",
-        "Authentification NextAuth.js"
-      ]
-    },
     "menu-qr": {
       "title": "Menu QR",
       "subtitle": "Menu Restaurant Numérique",
@@ -235,7 +185,7 @@
         "Auth JWT et OAuth 2.0 avec contrôle d'accès par rôle"
       ]
     },
-    "kindra-ecommerce": {
+    "kindra": {
       "title": "KINDRA",
       "subtitle": "Starter E-Commerce Mode",
       "category": "E-Commerce / Starter Kit",

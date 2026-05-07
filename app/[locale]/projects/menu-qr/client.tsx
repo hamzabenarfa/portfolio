@@ -11,10 +11,7 @@ import {
   Server,
   Database,
   Cloud,
-  Layout,
-  Zap,
   CheckCircle2,
-  TerminalSquare,
   QrCode,
   LayoutDashboard,
   Smartphone,
@@ -30,7 +27,6 @@ export default function MenuQRProjectPage() {
   const project = PROJECTS.find((p) => p.slug === 'menu-qr');
   const [imageError, setImageError] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
-  const [isLandingPageScrolling, setIsLandingPageScrolling] = useState(false);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -98,7 +94,7 @@ export default function MenuQRProjectPage() {
       <nav className="fixed top-0 w-full z-40 bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <Link
-            href="/#projects"
+            href="/#work"
             className="group flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors duration-300"
           >
             <div className="p-1.5 rounded-full bg-zinc-900 group-hover:bg-zinc-800 transition-colors">
@@ -125,8 +121,6 @@ export default function MenuQRProjectPage() {
 
       {/* Hero Header */}
       <header className="relative pt-40 pb-20 overflow-hidden border-b border-zinc-900/50 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-zinc-900 via-zinc-950 to-zinc-950">
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] mix-blend-overlay pointer-events-none" />
-
         <motion.div
           className="max-w-7xl mx-auto px-6 relative z-10"
           style={{ y: heroY, opacity: heroOpacity }}
@@ -224,14 +218,15 @@ export default function MenuQRProjectPage() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  className="relative rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 shadow-xl group aspect-[16/9] md:aspect-[21/9]"
+                  className="relative rounded-2xl overflow-hidden border border-zinc-800 bg-[#f7efde] shadow-xl group aspect-[16/9] md:aspect-[21/9]"
                 >
                   {!imageError ? (
                     <Image
                       src={project.image || '/placeholder.svg'}
                       alt="MenuQR Platform Dashboard"
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 1000px"
+                      className="object-contain transition-transform duration-700 group-hover:scale-[1.02]"
                       onError={() => setImageError(true)}
                     />
                   ) : (
