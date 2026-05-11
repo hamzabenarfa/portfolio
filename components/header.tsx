@@ -16,7 +16,7 @@ export default function Header() {
 
       <ul className="nav-links">
         <li><a href="#work">Work</a></li>
-        <li><a href="#experience">Experience</a></li>
+        <li><a href="#services">Services</a></li>
         <li><a href="#process">Process</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>

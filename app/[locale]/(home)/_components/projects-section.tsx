@@ -5,6 +5,7 @@ interface Project {
   label: string;
   year: string;
   type: string;
+  role: string;
   title: ReactNode;
   desc: string;
   stack: string[];
@@ -18,10 +19,11 @@ const projects: Project[] = [
   {
     label: "D‑Talk Ecosystem",
     year: "2024",
-    type: "E‑Commerce / SaaS",
+    type: "Fashion Tech / SaaS",
+    role: "Full-stack · Frontend architecture",
     title: (<>Fashion <em>marketplace</em></>),
-    desc: "Frontend for a fashion‑tech platform connecting designers, brands, and buyers. Canvas‑based product customizer with role‑specific dashboards for four user types.",
-    stack: ["Next.js", "React", "TypeScript", "Konva.js", "Zustand"],
+    desc: "Multi-role platform connecting designers, brands, and buyers — with a real-time canvas-based product customizer and four distinct user dashboards. Built with full ownership of the frontend architecture.",
+    stack: ["Next.js", "React", "TypeScript", "Konva.js", "Zustand", "TanStack Query"],
     mock: "mock-1",
     glyph: "D‑T",
     href: "/projects/dtalk-ecosystem",
@@ -29,34 +31,34 @@ const projects: Project[] = [
   {
     label: "Menu QR",
     year: "2025",
-    type: "SaaS / Restaurant",
+    type: "SaaS / Restaurant Tech",
+    role: "Full-stack · Product build",
     title: (<>Digital <em>restaurant</em> menu</>),
-    desc: "SaaS platform for restaurants to create QR‑accessible menus. Eight‑step onboarding wizard, drag‑and‑drop editor, analytics dashboard.",
-    stack: ["Next.js", "Hono.js", "Cloudflare", "Python", "PostgreSQL"],
+    desc: "B2B SaaS that lets restaurants self-onboard and create QR-accessible menus in minutes. Eight-step wizard, drag-and-drop editor, table-specific QR codes, analytics, and AI-assisted menu digitization.",
+    stack: ["Next.js", "Hono.js", "Cloudflare", "Python", "PostgreSQL", "AI OCR"],
     mock: "mock-2",
     glyph: "MQR",
-    // image: "/menu-qr.webp",
     href: "/projects/menu-qr",
   },
   {
     label: "Kindra Fashion",
     year: "2025",
     type: "E-Commerce / Starter Kit",
-    title: (<>Kindra <em>Fashion</em> </>),
-    desc: "Production-ready e-commerce starter kit for fashion. Separate Men's and Women's storefronts, multi-variant products, Stripe payments, and full admin dashboard.",
+    role: "Full-stack · Architecture & delivery",
+    title: (<>Kindra <em>Fashion</em></>),
+    desc: "Production-ready e-commerce foundation for fashion brands. Separate Men's and Women's storefronts, multi-variant products, Stripe payments, inventory management, and a full admin dashboard — ready to deploy.",
     stack: ["Next.js", "PostgreSQL", "Tailwind", "Drizzle", "Stripe"],
     mock: "mock-3",
     glyph: "KIN",
     href: "/projects/kindra",
-  }
-
+  },
 ];
 
 export function ProjectsSection() {
   return (
     <section id="work" className="container projects">
       <div className="section-header reveal">
-        <span className="num">[ 02 / Selected Work ]</span>
+        <span className="num">[ 01 / Selected Work ]</span>
         <h2 className="title">
           Selected <em>work</em>
         </h2>
@@ -89,6 +91,7 @@ export function ProjectsSection() {
             </div>
             <h3 className="project-title">{p.title}</h3>
             <p className="project-desc">{p.desc}</p>
+            <p className="project-role">{p.role}</p>
             <div className="project-stack">
               {p.stack.map((s) => (
                 <span key={s}>{s}</span>

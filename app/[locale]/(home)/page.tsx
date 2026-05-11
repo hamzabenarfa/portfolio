@@ -29,16 +29,15 @@ export default async function Home({ params }: Props) {
       <main>
         <Hero />
         <MarqueeTape />
-        <Experience />
         <ProjectsSection />
         <Capabilities />
         <Methodology />
+        <Experience />
         <FAQ />
         <Connect />
       </main>
       <footer className="site-footer">
         <span>© 2026 — Hamza Benarfa</span>
-        <span>Edition v.04 — Built &amp; deployed by hand</span>
         <a href="#top">Back to top ↑</a>
       </footer>
     </div>

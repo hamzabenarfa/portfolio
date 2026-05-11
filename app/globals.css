@@ -311,6 +311,7 @@ body {
   font-weight: 800;
   font-family: var(--font-inter-tight), system-ui, sans-serif;
   position: relative;
+  margin-top: clamp(80px, 14vh, 180px);
 }
 
 .hero-title .line {
@@ -799,6 +800,16 @@ body {
   font-weight: 300;
 }
 
+.project-role {
+  margin-top: 10px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+
 .project-stack {
   margin-top: 18px;
   display: flex;
@@ -1206,6 +1217,10 @@ body {
    ============================================================ */
 @media (max-width: 900px) {
   .nav-links {
+    display: none;
+  }
+
+  .nav-status {
     display: none;
   }
 

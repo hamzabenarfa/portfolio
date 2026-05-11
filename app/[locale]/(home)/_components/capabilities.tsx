@@ -8,35 +8,35 @@ interface ServiceItem {
 const services: ServiceItem[] = [
   {
     num: "01",
-    glyph: "W",
-    title: "Web Apps",
-    desc: "Full‑stack web apps with Next.js — from marketing pages to complex dashboards with auth, payments, and real‑time features.",
+    glyph: "MVP",
+    title: "Product MVP Build",
+    desc: "For founders who need a working SaaS, dashboard, marketplace, or internal tool — from idea to launch. I handle scope, architecture, frontend, backend, auth, payments, storage, and deployment.",
   },
   {
     num: "02",
-    glyph: "M",
-    title: "Mobile Apps",
-    desc: "Cross‑platform iOS and Android apps using React Native and Expo, sharing logic with the web wherever it makes sense.",
+    glyph: "SaaS",
+    title: "SaaS Platform Development",
+    desc: "For businesses that need a real multi-user platform. Multi-role access, admin panels, analytics, file storage, billing, and scalable architecture — not just a website.",
   },
   {
     num: "03",
-    glyph: "A",
-    title: "APIs & Backend",
-    desc: "REST and GraphQL APIs in Node and NestJS, backed by PostgreSQL or MongoDB. Tested, typed, documented.",
+    glyph: "CE",
+    title: "Custom Editors & Visual Tools",
+    desc: "Canvas-based product customizers, Canva-style editors, mockup generators, and image manipulation tools. Konva.js and Fabric.js specialist — this is a genuine differentiator.",
   },
   {
     num: "04",
-    glyph: "V",
-    title: "MVPs end‑to‑end",
-    desc: "Turning ideas into working products. I handle the full stack so founders can focus on customers, not architecture decisions.",
+    glyph: "OPS",
+    title: "DevOps & Launch Infrastructure",
+    desc: "Docker, GitHub Actions CI/CD, Nginx, cloud deployment, monitoring, and security hardening. For teams that need production stability handled without a dedicated ops hire.",
   },
 ];
 
 export function Capabilities() {
   return (
-    <section className="container services">
+    <section id="services" className="container services">
       <div className="section-header reveal">
-        <span className="num">[ 03 / Services ]</span>
+        <span className="num">[ 02 / Services ]</span>
         <h2 className="title">
           What I <em>build</em>
         </h2>

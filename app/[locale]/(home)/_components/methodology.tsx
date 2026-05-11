@@ -31,7 +31,7 @@ export function Methodology() {
   return (
     <section id="process" className="container process">
       <div className="section-header reveal">
-        <span className="num">[ 04 / Process ]</span>
+        <span className="num">[ 03 / Process ]</span>
         <h2 className="title">
           How I <em>work</em>
         </h2>

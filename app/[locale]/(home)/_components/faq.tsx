@@ -9,16 +9,16 @@ interface FaqItem {
 
 const faqs: FaqItem[] = [
   {
+    q: "Who do you work best with?",
+    a: "Founders building MVPs, agencies that need a reliable full-stack partner, small businesses launching SaaS or internal platforms, and teams that need frontend, backend, and deployment handled by one person. I'm not the right fit for basic landing pages, pixel-only design work, or projects without a clear scope or budget.",
+  },
+  {
     q: "What technologies do you specialize in?",
     a: "Next.js, TypeScript, React, and React Native on the frontend. Node, NestJS, PostgreSQL, and Prisma on the backend. I optimize for the boring, well‑supported choices that ship fast and don't break in two years.",
   },
   {
     q: "Do you work with international clients?",
     a: "Yes. I work remotely across timezones — most of my clients are in Europe and North America. I overlap with EU mornings and US mornings comfortably.",
-  },
-  {
-    q: "What types of projects do you build?",
-    a: "MVPs, internal tools, dashboards, marketplaces, restaurant/retail SaaS, and the occasional mobile app. If it's a typed full‑stack app with real users, I'm a good fit.",
   },
   {
     q: "How do you handle communication?",

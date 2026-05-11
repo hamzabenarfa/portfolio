@@ -10,9 +10,9 @@ export function Connect() {
         </span>
 
         <h2 className="contact-display reveal">
-          Have an <em>idea?</em>
+          Need a serious <em>technical</em>
           <br />
-          Let&rsquo;s ship it.
+          partner for your product?
         </h2>
 
         <a
@@ -28,7 +28,13 @@ export function Connect() {
           <div>
             <h4>[ Direct ]</h4>
             <a href="mailto:contact@benarfa.com">contact@benarfa.com</a>
-            <a href="https://wa.me/21622633345">+216 22 633 345</a>
+            <a
+              href="https://wa.me/21622633345"
+              target="_blank"
+              rel="noreferrer"
+            >
+              WhatsApp ↗
+            </a>
           </div>
           <div>
             <h4>[ Elsewhere ]</h4>
@@ -41,8 +47,8 @@ export function Connect() {
           </div>
           <div>
             <h4>[ Documents ]</h4>
-            <a href="/benarfa-hamza-en.pdf" download>Résumé / CV ↓</a>
-            <a href="#">Selected case studies ↓</a>
+            <a href="/benarfa-hamza-en.pdf" download>Developer CV ↓</a>
+            <a href="/benarfa-hamza-en.pdf" download>For hiring teams</a>
           </div>
           <div>
             <h4>[ Working hours ]</h4>
