@@ -12,6 +12,7 @@ interface Project {
   mock: string;
   glyph: string;
   image?: string;
+  theme: string;
   href: string;
 }
 
@@ -26,6 +27,8 @@ const projects: Project[] = [
     stack: ["Next.js", "React", "TypeScript", "Konva.js", "Zustand", "TanStack Query"],
     mock: "mock-1",
     glyph: "D‑T",
+    image: "/d-talk.webp",
+    theme: "dtalk",
     href: "/projects/dtalk-ecosystem",
   },
   {
@@ -38,6 +41,8 @@ const projects: Project[] = [
     stack: ["Next.js", "Hono.js", "Cloudflare", "Python", "PostgreSQL", "AI OCR"],
     mock: "mock-2",
     glyph: "MQR",
+    image: "/menu-qr.webp",
+    theme: "menuqr",
     href: "/projects/menu-qr",
   },
   {
@@ -50,6 +55,8 @@ const projects: Project[] = [
     stack: ["Next.js", "PostgreSQL", "Tailwind", "Drizzle", "Stripe"],
     mock: "mock-3",
     glyph: "KIN",
+    image: "/kindra.webp",
+    theme: "kindra",
     href: "/projects/kindra",
   },
 ];
@@ -72,15 +79,26 @@ export function ProjectsSection() {
       <div className="project-grid">
         {projects.map((p) => (
           <a key={p.label} href={p.href} className="project-card reveal">
-            <div className="project-thumb">
+            <div
+              className={`project-thumb project-thumb-${p.theme}`}
+              aria-label={`${p.label} preview`}
+            >
+              <div aria-hidden="true" className="project-thumb-art" />
               {p.image ? (
-                <Image
-                  src={p.image}
-                  alt={`${p.label} preview`}
-                  fill
-                  sizes="(max-width: 900px) 100vw, 50vw"
-                  className="project-thumb-image"
-                />
+                <div className="project-thumb-window">
+                  <div aria-hidden="true" className="project-thumb-chrome">
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                  <Image
+                    src={p.image}
+                    alt={`${p.label} preview`}
+                    fill
+                    sizes="(max-width: 900px) 100vw, 50vw"
+                    className="project-thumb-image"
+                  />
+                </div>
               ) : (
                 <div className={`mock ${p.mock}`}>{p.glyph}</div>
               )}
