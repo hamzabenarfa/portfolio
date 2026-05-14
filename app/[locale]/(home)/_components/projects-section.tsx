@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 interface Project {
   label: string;
@@ -82,8 +82,14 @@ export function ProjectsSection() {
             <div
               className={`project-thumb project-thumb-${p.theme}`}
               aria-label={`${p.label} preview`}
+              style={
+                p.image
+                  ? ({
+                      "--thumb-image": `url(${p.image})`,
+                    } as CSSProperties)
+                  : undefined
+              }
             >
-              <div aria-hidden="true" className="project-thumb-art" />
               {p.image ? (
                 <div className="project-thumb-window">
                   <div aria-hidden="true" className="project-thumb-chrome">
