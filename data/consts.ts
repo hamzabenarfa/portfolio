@@ -2,6 +2,13 @@ export const PROJECTS = [
   {
     id: 1,
     slug: "dtalk-ecosystem",
+    title: "D-Talk Ecosystem — Multi-Role Fashion Platform",
+    summary:
+      "Fashion-tech marketplace case study covering role-specific dashboards, a real-time product customizer, secure auth, and cloud deployment work.",
+    industry: "Fashion technology",
+    category: "Marketplace platform",
+    role: "Full-stack developer and DevOps implementer",
+    outcome: "A multi-role product ecosystem with custom editing, marketplace, and operational flows.",
     featured: false,
     tech: [
       "Next.js",
@@ -16,12 +23,21 @@ export const PROJECTS = [
       "Zod",
     ],
     year: "2024",
+    updatedAt: "2026-05-14",
     image: "/dtalk.webp",
+    ogImage: "/dtalk.webp",
     url: "https://d-talk-ecosytem-front-three.vercel.app",
   },
   {
     id: 2,
     slug: "menu-qr",
+    title: "Menu QR — Digital Restaurant Menu Platform",
+    summary:
+      "Restaurant-tech SaaS case study with QR menus, self-service onboarding, drag-and-drop menu editing, analytics, and AI-assisted menu digitization.",
+    industry: "Restaurant technology",
+    category: "SaaS platform",
+    role: "Full-stack developer",
+    outcome: "A restaurant menu platform with onboarding, editing, publishing, and analytics workflows.",
     featured: false,
     tech: [
       "Next.js",
@@ -37,12 +53,21 @@ export const PROJECTS = [
       "Docker",
     ],
     year: "2025",
+    updatedAt: "2026-05-14",
     image: "/menu-qr.webp",
+    ogImage: "/menu-qr.webp",
     url: "https://www.menu-qr.tn/",
   },
   {
     id: 3,
     slug: "kindra",
+    title: "KINDRA — Fashion E-Commerce Platform",
+    summary:
+      "Fashion e-commerce foundation case study with storefronts, variants, Stripe checkout, admin operations, and image-first infrastructure.",
+    industry: "Fashion e-commerce",
+    category: "E-commerce platform",
+    role: "Full-stack developer",
+    outcome: "A production-ready commerce foundation with catalog, checkout, admin, and media infrastructure.",
     featured: false,
     tech: [
       "Next.js 15",
@@ -58,7 +83,12 @@ export const PROJECTS = [
       "Zod",
     ],
     year: "2024",
+    updatedAt: "2026-05-14",
     image: "/kindra-hero.webp",
+    ogImage: "/kindra-hero.webp",
     url: "https://kindra.benarfa.com/",
   },
-];
+] as const;
+
+export type Project = (typeof PROJECTS)[number];
+export type ProjectSlug = Project["slug"];

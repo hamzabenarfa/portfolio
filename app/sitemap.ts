@@ -1,26 +1,31 @@
-import { routing } from "@/i18n/routing";
 import { PROJECTS } from "@/data/consts";
+import { SERVICES } from "@/data/services";
+import { getAbsoluteUrl } from "@/lib/seo";
 import type { MetadataRoute } from "next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_WEB_URL || "https://benarfa.com";
-const baseUrl = SITE_URL.replace(/\/$/, "");
+const DEFAULT_LAST_MODIFIED = new Date("2026-05-14");
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const currentDate = new Date();
-  const routes = ["", ...PROJECTS.map((project) => `/projects/${project.slug}`)];
+  const staticRoutes: MetadataRoute.Sitemap = [
+    { url: getAbsoluteUrl("/"), priority: 1.0, lastModified: DEFAULT_LAST_MODIFIED, changeFrequency: "monthly" },
+    { url: getAbsoluteUrl("/about"), priority: 0.7, lastModified: DEFAULT_LAST_MODIFIED, changeFrequency: "monthly" },
+    { url: getAbsoluteUrl("/projects"), priority: 0.8, lastModified: DEFAULT_LAST_MODIFIED, changeFrequency: "monthly" },
+    { url: getAbsoluteUrl("/services"), priority: 0.8, lastModified: DEFAULT_LAST_MODIFIED, changeFrequency: "monthly" },
+  ];
 
-  const sitemapEntries = routes.flatMap((route) => {
-    return routing.locales.map((locale) => {
-      const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+  const projectRoutes: MetadataRoute.Sitemap = PROJECTS.map((project) => ({
+    url: getAbsoluteUrl(`/projects/${project.slug}`),
+    priority: 0.8,
+    lastModified: new Date(project.updatedAt),
+    changeFrequency: "monthly" as const,
+  }));
 
-      return {
-        url: `${baseUrl}${prefix}${route}`,
-        priority: route === "" ? 1.0 : 0.8,
-        lastModified: currentDate,
-        changeFrequency: "monthly" as const,
-      };
-    });
-  });
+  const serviceRoutes: MetadataRoute.Sitemap = SERVICES.map((service) => ({
+    url: getAbsoluteUrl(`/services/${service.slug}`),
+    priority: 0.75,
+    lastModified: new Date(service.updatedAt),
+    changeFrequency: "monthly" as const,
+  }));
 
-  return sitemapEntries;
+  return [...staticRoutes, ...projectRoutes, ...serviceRoutes];
 }

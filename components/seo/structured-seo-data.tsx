@@ -1,169 +1,160 @@
-import Script from 'next/script';
+import { PROJECTS } from "@/data/consts";
+import { HOME_FAQS } from "@/data/faqs";
+import { SERVICES, type ServicePage } from "@/data/services";
+import { SITE } from "@/data/site";
+import { baseUrl as defaultBaseUrl } from "@/lib/seo";
 
 interface StructuredDataProps {
-  type?: "Organization" | "WebSite" | "BreadcrumbList" | "FAQPage" | "ProfilePage";
+  type?: "Person" | "WebSite" | "WebPage" | "BreadcrumbList" | "FAQPage" | "ProfilePage" | "Project" | "Service";
   breadcrumbs?: Array<{ name: string; url: string }>;
   faqs?: Array<{ question: string; answer: string }>;
   baseUrl?: string;
+  page?: {
+    name: string;
+    description: string;
+    url: string;
+    dateModified?: string;
+  };
+  projectSlug?: string;
+  service?: ServicePage;
 }
 
-export function StructuredData({
-  type = "Organization",
-  breadcrumbs,
-  faqs,
-  baseUrl = process.env.NEXT_PUBLIC_WEB_URL || "https://benarfa.com",
-}: StructuredDataProps) {
-  const generatePersonSchema = () => ({
+function absoluteUrl(baseUrl: string, pathOrUrl: string) {
+  if (pathOrUrl.startsWith("http://") || pathOrUrl.startsWith("https://")) return pathOrUrl;
+  return `${baseUrl}${pathOrUrl.startsWith("/") ? pathOrUrl : `/${pathOrUrl}`}`;
+}
+
+function personSchema(baseUrl: string) {
+  return {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Hamza Benarfa",
+    name: SITE.name,
     url: baseUrl,
-    sameAs: [
-      "https://www.linkedin.com/in/hamzabenarfa/",
-      "https://github.com/hamzabenarfa",
-    ],
+    sameAs: SITE.sameAs,
     image: `${baseUrl}/avatar.jpeg`,
-    email: "contact@benarfa.com",
+    email: SITE.email,
+    telephone: SITE.phone,
     jobTitle: "Full-Stack Developer & DevOps Engineer",
-    description:
-      "Freelance full-stack developer and DevOps engineer from Tunisia specializing in Next.js, React, TypeScript, NestJS, and cloud infrastructure.",
-    worksFor: {
-      "@type": "Organization",
-      name: "Benarfa Development",
-    },
+    description: SITE.description,
     address: {
       "@type": "PostalAddress",
       addressCountry: "TN",
-      addressLocality: "Tunisia",
+      addressLocality: SITE.location,
     },
-    knowsAbout: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "NestJS",
-      "Node.js",
-      "PostgreSQL",
-      "MongoDB",
-      "Docker",
-      "DevOps",
-      "Cloud Infrastructure",
-      "REST APIs",
-      "GraphQL",
-      "React Native",
-      "Tailwind CSS",
-      "CI/CD",
-    ],
-  });
+    knowsAbout: SITE.stack,
+  };
+}
 
-  const generateWebSiteSchema = () => ({
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Hamza Benarfa — Full-Stack Developer & DevOps Engineer",
-    url: baseUrl,
-    inLanguage: ["en-US", "fr-FR"],
-    author: {
-      "@type": "Person",
-      name: "Hamza Benarfa",
-      url: baseUrl,
-    },
-  });
-
-  const generateBreadcrumbSchema = () => ({
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: breadcrumbs?.map((crumb, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: crumb.name,
-      item: crumb.url.startsWith("http") ? crumb.url : `${baseUrl}${crumb.url}`,
-    })),
-  });
-
-  const generateFAQSchema = () => ({
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: (faqs ?? DEFAULT_FAQS).map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  });
-
-  const generateProfilePageSchema = () => ({
-    "@context": "https://schema.org",
-    "@type": "ProfilePage",
-    mainEntity: {
-      "@type": "Person",
-      name: "Hamza Benarfa",
-      url: baseUrl,
-      image: `${baseUrl}/avatar.jpeg`,
-      jobTitle: "Full-Stack Developer & DevOps Engineer",
-      sameAs: [
-        "https://www.linkedin.com/in/hamzabenarfa/",
-        "https://github.com/hamzabenarfa",
-      ],
-    },
-    dateCreated: "2024-01-01",
-    dateModified: new Date().toISOString().split("T")[0],
-  });
-
+export function StructuredData({
+  type = "Person",
+  breadcrumbs,
+  faqs,
+  baseUrl = defaultBaseUrl,
+  page,
+  projectSlug,
+  service,
+}: StructuredDataProps) {
   const getSchema = () => {
     switch (type) {
-      case "Organization":
-        return generatePersonSchema();
+      case "Person":
+        return personSchema(baseUrl);
       case "WebSite":
-        return generateWebSiteSchema();
+        return {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: `${SITE.name} — Full-Stack Developer`,
+          url: baseUrl,
+          inLanguage: "en-US",
+          author: { "@type": "Person", name: SITE.name, url: baseUrl },
+        };
+      case "WebPage":
+        return page
+          ? {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              name: page.name,
+              description: page.description,
+              url: absoluteUrl(baseUrl, page.url),
+              inLanguage: "en-US",
+              isPartOf: { "@type": "WebSite", name: SITE.name, url: baseUrl },
+              author: { "@type": "Person", name: SITE.name, url: baseUrl },
+              dateModified: page.dateModified ?? "2026-05-14",
+            }
+          : null;
       case "BreadcrumbList":
-        return generateBreadcrumbSchema();
+        return breadcrumbs?.length
+          ? {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: breadcrumbs.map((crumb, index) => ({
+                "@type": "ListItem",
+                position: index + 1,
+                name: crumb.name,
+                item: absoluteUrl(baseUrl, crumb.url),
+              })),
+            }
+          : null;
       case "FAQPage":
-        return generateFAQSchema();
+        return {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: (faqs ?? HOME_FAQS).map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: { "@type": "Answer", text: faq.answer },
+          })),
+        };
       case "ProfilePage":
-        return generateProfilePageSchema();
+        return {
+          "@context": "https://schema.org",
+          "@type": "ProfilePage",
+          mainEntity: personSchema(baseUrl),
+          dateCreated: "2024-01-01",
+          dateModified: "2026-05-14",
+        };
+      case "Project": {
+        const project = PROJECTS.find((item) => item.slug === projectSlug);
+        if (!project) return null;
+        return {
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          name: project.title,
+          description: project.summary,
+          url: absoluteUrl(baseUrl, `/projects/${project.slug}`),
+          image: absoluteUrl(baseUrl, project.image),
+          dateCreated: project.year,
+          dateModified: project.updatedAt,
+          keywords: project.tech,
+          creator: { "@type": "Person", name: SITE.name, url: baseUrl },
+          about: [project.industry, project.category],
+        };
+      }
+      case "Service": {
+        const item = service ?? SERVICES[0];
+        if (!item) return null;
+        return {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: item.title,
+          description: item.description,
+          url: absoluteUrl(baseUrl, `/services/${item.slug}`),
+          provider: { "@type": "Person", name: SITE.name, url: baseUrl },
+          areaServed: "Worldwide",
+          serviceType: item.shortTitle,
+        };
+      }
       default:
-        return generatePersonSchema();
+        return personSchema(baseUrl);
     }
   };
 
   const schema = getSchema();
 
   return schema ? (
-    <Script
-      id={`structured-data-${type}`}
+    <script
+      id={`structured-data-${type}${projectSlug ? `-${projectSlug}` : ""}${service ? `-${service.slug}` : ""}`}
       type="application/ld+json"
-      strategy="afterInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   ) : null;
 }
-
-/** Default FAQ data for JSON-LD when no custom FAQs are provided */
-const DEFAULT_FAQS = [
-  {
-    question: "What technologies does Hamza Benarfa specialize in?",
-    answer:
-      "Hamza specializes in Next.js, React, TypeScript, NestJS, Node.js, PostgreSQL, MongoDB, Docker, and cloud infrastructure. He builds full-stack web and mobile applications using modern tooling and best practices.",
-  },
-  {
-    question: "Does Hamza Benarfa work with international clients?",
-    answer:
-      "Yes. Hamza works remotely with startups and businesses worldwide. He is based in Tunisia and communicates in English and French. Most projects are managed via asynchronous tools with weekly check-ins.",
-  },
-  {
-    question: "What kind of projects does Hamza build?",
-    answer:
-      "Hamza builds SaaS platforms, e-commerce stores, marketplace apps, restaurant tech, project management tools, and MVPs. His projects range from initial prototypes to production-grade applications deployed on cloud infrastructure.",
-  },
-  {
-    question: "How does Hamza handle project communication and delivery?",
-    answer:
-      "Hamza follows an agile approach with iterative sprints, regular updates, and transparent communication. He uses tools like GitHub, Figma, and Slack to collaborate. Clients receive weekly progress demos and have access to staging environments throughout development.",
-  },
-  {
-    question: "Can Hamza handle both frontend and backend development?",
-    answer:
-      "Yes. Hamza is a full-stack developer who handles the entire application lifecycle — from UI/UX implementation with React and Next.js to backend APIs with NestJS and Node.js, database design with PostgreSQL or MongoDB, and deployment with Docker and cloud providers.",
-  },
-];

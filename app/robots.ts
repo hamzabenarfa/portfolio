@@ -1,7 +1,5 @@
+import { baseUrl } from "@/lib/seo";
 import { MetadataRoute } from "next";
-
-const SITE_URL = process.env.NEXT_PUBLIC_WEB_URL || "https://benarfa.com";
-const baseUrl = SITE_URL.replace(/\/$/, "");
 
 export default function robots(): MetadataRoute.Robots {
   return {
