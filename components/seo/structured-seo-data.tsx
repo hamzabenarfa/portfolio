@@ -60,7 +60,7 @@ export function StructuredData({
     "@type": "WebSite",
     name: "Hamza Benarfa — Full-Stack Developer & DevOps Engineer",
     url: baseUrl,
-    inLanguage: ["en-US", "fr-FR"],
+    inLanguage: ["en-US"],
     author: {
       "@type": "Person",
       name: "Hamza Benarfa",
@@ -139,31 +139,35 @@ export function StructuredData({
   ) : null;
 }
 
-/** Default FAQ data for JSON-LD when no custom FAQs are provided */
+/**
+ * Default FAQ data for JSON-LD. Kept in sync with the visible FAQ section
+ * (app/(home)/_components/faq.tsx) — Google requires structured FAQ data to
+ * match on-page content to be eligible for rich results.
+ */
 const DEFAULT_FAQS = [
   {
-    question: "What technologies does Hamza Benarfa specialize in?",
+    question: "Who do you work best with?",
     answer:
-      "Hamza specializes in Next.js, React, TypeScript, NestJS, Node.js, PostgreSQL, MongoDB, Docker, and cloud infrastructure. He builds full-stack web and mobile applications using modern tooling and best practices.",
+      "Founders building MVPs, agencies that need a reliable full-stack partner, small businesses launching SaaS or internal platforms, and teams that need frontend, backend, and deployment handled by one person. I'm not the right fit for basic landing pages, pixel-only design work, or projects without a clear scope or budget.",
   },
   {
-    question: "Does Hamza Benarfa work with international clients?",
+    question: "What technologies do you specialize in?",
     answer:
-      "Yes. Hamza works remotely with startups and businesses worldwide. He is based in Tunisia and communicates in English and French. Most projects are managed via asynchronous tools with weekly check-ins.",
+      "Next.js, TypeScript, React, and React Native on the frontend. Node, NestJS, PostgreSQL, and Prisma on the backend. I optimize for the boring, well-supported choices that ship fast and don't break in two years.",
   },
   {
-    question: "What kind of projects does Hamza build?",
+    question: "Do you work with international clients?",
     answer:
-      "Hamza builds SaaS platforms, e-commerce stores, marketplace apps, restaurant tech, project management tools, and MVPs. His projects range from initial prototypes to production-grade applications deployed on cloud infrastructure.",
+      "Yes. I work remotely across timezones — most of my clients are in Europe and North America. I overlap with EU mornings and US mornings comfortably.",
   },
   {
-    question: "How does Hamza handle project communication and delivery?",
+    question: "How do you handle communication?",
     answer:
-      "Hamza follows an agile approach with iterative sprints, regular updates, and transparent communication. He uses tools like GitHub, Figma, and Slack to collaborate. Clients receive weekly progress demos and have access to staging environments throughout development.",
+      "Weekly demos, async daily updates in Slack or your tool of choice, and a shared Notion/Linear for everything else. No surprises, no week-long radio silence.",
   },
   {
-    question: "Can Hamza handle both frontend and backend development?",
+    question: "Can you handle frontend AND backend?",
     answer:
-      "Yes. Hamza is a full-stack developer who handles the entire application lifecycle — from UI/UX implementation with React and Next.js to backend APIs with NestJS and Node.js, database design with PostgreSQL or MongoDB, and deployment with Docker and cloud providers.",
+      "Yes — that's the whole point. I take ownership of the full stack so founders aren't coordinating between two contractors. For larger work I plug into existing teams as a senior IC.",
   },
 ];

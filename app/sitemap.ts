@@ -1,4 +1,3 @@
-import { routing } from "@/i18n/routing";
 import { PROJECTS } from "@/data/consts";
 import type { MetadataRoute } from "next";
 
@@ -7,20 +6,22 @@ const baseUrl = SITE_URL.replace(/\/$/, "");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const currentDate = new Date();
-  const routes = ["", ...PROJECTS.map((project) => `/projects/${project.slug}`)];
 
-  const sitemapEntries = routes.flatMap((route) => {
-    return routing.locales.map((locale) => {
-      const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+  const staticRoutes = [
+    { path: "", priority: 1.0 },
+    { path: "/work", priority: 0.9 },
+    { path: "/background", priority: 0.6 },
+  ];
 
-      return {
-        url: `${baseUrl}${prefix}${route}`,
-        priority: route === "" ? 1.0 : 0.8,
-        lastModified: currentDate,
-        changeFrequency: "monthly" as const,
-      };
-    });
-  });
+  const projectRoutes = PROJECTS.map((project) => ({
+    path: `/projects/${project.slug}`,
+    priority: 0.8,
+  }));
 
-  return sitemapEntries;
+  return [...staticRoutes, ...projectRoutes].map(({ path, priority }) => ({
+    url: `${baseUrl}${path}`,
+    priority,
+    lastModified: currentDate,
+    changeFrequency: "monthly" as const,
+  }));
 }

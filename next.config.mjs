@@ -1,7 +1,3 @@
-import createNextIntlPlugin from "next-intl/plugin";
-
-const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -44,6 +40,7 @@ const nextConfig = {
               "img-src 'self' data: blob: https:",
               "font-src 'self'",
               "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com https://vercel.live",
+              "frame-src 'self'",
               "frame-ancestors 'self'",
             ].join("; "),
           },
@@ -53,4 +50,4 @@ const nextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+export default nextConfig;
