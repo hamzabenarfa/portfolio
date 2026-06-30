@@ -8,11 +8,11 @@ import { useGSAP } from "@gsap/react";
 import { SectionHead } from "./section-head";
 import { FadeUp } from "@/components/fx/reveal";
 import { Magnetic } from "@/components/fx/magnetic";
+import { PROJECTS } from "@/data/consts";
 
 interface Project {
   label: ReactNode;
   plain: string;
-  year: string;
   type: string;
   role: string;
   desc: string;
@@ -20,50 +20,56 @@ interface Project {
   href: string;
 }
 
-const projects: Project[] = [
-  {
+/**
+ * Home-page display copy, keyed by the canonical project slug in
+ * `data/consts.ts`. Image paths, ordering and years live in that single
+ * source of truth — never duplicate them here (the /work page and sitemap
+ * read the same data, so divergence silently ships mismatched thumbnails).
+ */
+const HOME_CONTENT: Record<
+  string,
+  Pick<Project, "label" | "plain" | "type" | "role" | "desc">
+> = {
+  "dtalk-ecosystem": {
     label: (
       <>
         D‑Talk <em>Ecosystem</em>
       </>
     ),
     plain: "D-Talk Ecosystem",
-    year: "2024",
     type: "Fashion Tech / SaaS",
     role: "Full-stack · Frontend architecture",
     desc: "Multi-role fashion marketplace connecting designers, brands, and buyers — with a real-time canvas-based product customizer and four distinct user dashboards.",
-    image: "/d-talk.webp",
-    href: "/projects/dtalk-ecosystem",
   },
-  {
+  "menu-qr": {
     label: (
       <>
         Menu <em>QR</em>
       </>
     ),
     plain: "Menu QR",
-    year: "2025",
     type: "SaaS / Restaurant Tech",
     role: "Full-stack · Product build",
     desc: "B2B SaaS that lets restaurants self-onboard and publish QR-accessible menus in minutes — wizard onboarding, drag-and-drop editor, analytics, AI menu digitization.",
-    image: "/menu-qr.webp",
-    href: "/projects/menu-qr",
   },
-  {
+  kindra: {
     label: (
       <>
         Kindra <em>Fashion</em>
       </>
     ),
     plain: "Kindra Fashion",
-    year: "2025",
     type: "E-Commerce / Starter Kit",
     role: "Full-stack · Architecture & delivery",
     desc: "Production-ready e-commerce foundation for fashion brands — dual storefronts, multi-variant products, Stripe payments, and a full admin dashboard.",
-    image: "/kindra.webp",
-    href: "/projects/kindra",
   },
-];
+};
+
+const projects: Project[] = PROJECTS.map((p) => ({
+  ...HOME_CONTENT[p.slug],
+  image: p.image,
+  href: `/projects/${p.slug}`,
+}));
 
 /**
  * Editorial work index. Desktop: oversized rows with an ink-sweep hover

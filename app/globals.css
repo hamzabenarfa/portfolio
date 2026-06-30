@@ -11,7 +11,9 @@
   --bg-3: #17140e;
   --ink: #ede7da;
   --ink-dim: #a59c89;
-  --ink-faint: #5d5749;
+  /* WCAG AA on --bg (#0a0907): ~5.6:1. The previous #5d5749 was ~2.6:1 and
+     failed AA for the .mono metadata that uses it across every section. */
+  --ink-faint: #8b8270;
   --line: rgba(237, 231, 218, 0.1);
   --line-strong: rgba(237, 231, 218, 0.22);
   --accent: #ff4d00;
@@ -62,6 +64,15 @@ body {
   color: var(--bg);
 }
 
+/* Keyboard focus. Essential here: the home page sets `cursor: none` and uses a
+   JS custom cursor, so a visible focus ring is the only affordance keyboard and
+   assistive-tech users have. :focus-visible keeps it off mouse clicks. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 em {
   font-family: var(--font-instrument-serif), serif;
   font-style: italic;
@@ -80,7 +91,7 @@ em {
 /* Mono metadata label */
 .mono {
   font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-faint);
