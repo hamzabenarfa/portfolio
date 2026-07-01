@@ -4,7 +4,7 @@ import DTalkProjectPage from './client';
 export const metadata: Metadata = {
     title: 'D-Talk Ecosystem - Multi-Role Fashion Platform | Hamza Benarfa',
     description: 'A comprehensive fashion e-commerce platform enabling designers to create and sell, brands to customize products, and admins to manage the ecosystem.',
-    alternates: { canonical: '/projects/dtalk-ecosystem' },
+    alternates: { canonical: '/work/dtalk-ecosystem' },
     openGraph: {
         title: 'D-Talk Ecosystem - Multi-Role Fashion Platform | Hamza Benarfa',
         description: 'A comprehensive fashion e-commerce platform enabling designers to create and sell, brands to customize products, and admins to manage the ecosystem.',

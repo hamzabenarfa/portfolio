@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Instrument_Serif, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
+import { MotionConfigProvider } from "@/components/fx/motion-config-provider";
 import { SEO } from "@/components/seo/seo";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -87,7 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className={`${interTight.variable} ${instrumentSerif.variable} ${jetBrainsMono.variable}`}
       >
-        {children}
+        <MotionConfigProvider>{children}</MotionConfigProvider>
         <SEO />
         <Analytics />
         <SpeedInsights />

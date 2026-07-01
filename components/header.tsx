@@ -71,7 +71,7 @@ export default function Header() {
           ))}
         </ul>
 
-        <BookCall className="nav-book" data-cursor="hover">
+        <BookCall className="nav-book" data-cursor="hover" source="header">
           <span className="dot" />
           <span className="nav-book-label">Book a call</span>
           <span className="arr">→</span>

@@ -31,7 +31,7 @@ export function SubpageNav() {
         <Link href="/" className="subnav-back mono">
           ← Home
         </Link>
-        <BookCall className="nav-book">
+        <BookCall className="nav-book" source="subnav">
           <span className="dot" />
           <span className="nav-book-label">Book a call</span>
           <span className="arr">→</span>

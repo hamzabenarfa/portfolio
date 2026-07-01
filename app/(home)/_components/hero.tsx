@@ -144,7 +144,7 @@ export function Hero() {
           </p>
           <div className="hero-ctas">
             <Magnetic>
-              <BookCall className="btn btn-solid" data-cursor="hover">
+              <BookCall className="btn btn-solid" data-cursor="hover" source="hero">
                 Book a call <span className="arr">→</span>
               </BookCall>
             </Magnetic>

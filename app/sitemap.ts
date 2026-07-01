@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const projectRoutes = PROJECTS.map((project) => ({
-    path: `/projects/${project.slug}`,
+    path: `/work/${project.slug}`,
     priority: 0.8,
   }));
 

@@ -50,7 +50,7 @@ export default function WorkPage() {
             return (
               <li key={p.slug} className="wi-item">
                 <Link
-                  href={`/projects/${p.slug}`}
+                  href={`/work/${p.slug}`}
                   className="wi-media"
                   aria-label={`${c.title} — case study`}
                 >
@@ -75,7 +75,7 @@ export default function WorkPage() {
                   </ul>
 
                   <div className="wi-links">
-                    <Link href={`/projects/${p.slug}`} className="btn">
+                    <Link href={`/work/${p.slug}`} className="btn">
                       Case study <span className="arr">→</span>
                     </Link>
                     {p.url && (

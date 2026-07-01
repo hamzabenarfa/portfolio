@@ -4,7 +4,7 @@ import MenuQRProjectPage from './client';
 export const metadata: Metadata = {
     title: 'Menu QR - Digital Restaurant Menu Platform | Hamza Benarfa',
     description: 'A comprehensive digital menu platform enabling restaurants to create, manage, and publish QR-accessible menus with AI digitization, real-time updates, and multilingual support.',
-    alternates: { canonical: '/projects/menu-qr' },
+    alternates: { canonical: '/work/menu-qr' },
     openGraph: {
         title: 'Menu QR - Digital Restaurant Menu Platform | Hamza Benarfa',
         description: 'A comprehensive digital menu platform enabling restaurants to create, manage, and publish QR-accessible menus with AI digitization, real-time updates, and multilingual support.',

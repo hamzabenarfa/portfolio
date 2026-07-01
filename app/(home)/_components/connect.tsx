@@ -1,5 +1,6 @@
 import { TextReveal, FadeUp } from "@/components/fx/reveal";
 import { Magnetic } from "@/components/fx/magnetic";
+import { TrackedLink } from "@/components/fx/tracked-link";
 
 export function Connect() {
   return (
@@ -20,46 +21,78 @@ export function Connect() {
 
         <FadeUp delay={0.25}>
           <Magnetic strength={0.25}>
-            <a
+            <TrackedLink
               href="mailto:contact@benarfa.com"
               className="contact-mail"
               data-cursor="hover"
+              event="contact_click"
+              eventData={{ method: "email", source: "contact_primary" }}
             >
               <span className="icon">→</span>
               contact@benarfa.com
-            </a>
+            </TrackedLink>
           </Magnetic>
         </FadeUp>
 
         <FadeUp className="contact-grid" stagger={0.1} y={28}>
           <div>
             <h4 className="mono">[ Direct ]</h4>
-            <a href="mailto:contact@benarfa.com">contact@benarfa.com</a>
-            <a href="https://wa.me/21622633345" target="_blank" rel="noreferrer">
+            <TrackedLink
+              href="mailto:contact@benarfa.com"
+              event="contact_click"
+              eventData={{ method: "email", source: "contact_grid" }}
+            >
+              contact@benarfa.com
+            </TrackedLink>
+            <TrackedLink
+              href="https://wa.me/21622633345"
+              target="_blank"
+              rel="noreferrer"
+              event="contact_click"
+              eventData={{ method: "whatsapp", source: "contact_grid" }}
+            >
               WhatsApp ↗
-            </a>
+            </TrackedLink>
           </div>
           <div>
             <h4 className="mono">[ Elsewhere ]</h4>
-            <a href="https://github.com/hamzabenarfa/" target="_blank" rel="noreferrer">
+            <TrackedLink
+              href="https://github.com/hamzabenarfa/"
+              target="_blank"
+              rel="noreferrer"
+              event="contact_click"
+              eventData={{ method: "github", source: "contact_grid" }}
+            >
               GitHub ↗
-            </a>
-            <a
+            </TrackedLink>
+            <TrackedLink
               href="https://www.linkedin.com/in/hamzabenarfa/"
               target="_blank"
               rel="noreferrer"
+              event="contact_click"
+              eventData={{ method: "linkedin", source: "contact_grid" }}
             >
               LinkedIn ↗
-            </a>
+            </TrackedLink>
           </div>
           <div>
             <h4 className="mono">[ Documents ]</h4>
-            <a href="/benarfa-hamza-en.pdf" download>
+            <TrackedLink
+              href="/benarfa-hamza-en.pdf"
+              download
+              event="contact_click"
+              eventData={{ method: "cv", source: "contact_grid" }}
+            >
               Developer CV ↓
-            </a>
-            <a href="/benarfa-hamza-en.pdf" download>
+            </TrackedLink>
+            <TrackedLink
+              href="/benarfa-hamza-en.pdf"
+              download
+              event="contact_click"
+              eventData={{ method: "cv", source: "contact_grid_hiring" }}
+            >
               For hiring teams
-            </a>
+            </TrackedLink>
           </div>
           <div>
             <h4 className="mono">[ Working hours ]</h4>
