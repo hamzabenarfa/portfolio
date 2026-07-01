@@ -15,7 +15,7 @@ export const PROJECTS = [
       "Zod",
     ],
     year: "2024",
-    image: "/dtalk.webp",
+    image: "/dtalk-hero.webp",
     url: "https://demo.d-talk.co/",
   },
   {
