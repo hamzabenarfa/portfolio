@@ -3,9 +3,8 @@
 # dependencies
 /node_modules
 
-# remotion studio deps + render caches (the rendered video in public/ IS committed)
-/remotion/node_modules
-/remotion/.remotion-cache
+# remotion studio (local only; the rendered video in public/ IS committed)
+/remotion
 
 .agents
 .agent
