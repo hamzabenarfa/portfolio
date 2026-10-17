@@ -3,6 +3,10 @@
 # dependencies
 /node_modules
 
+# remotion studio deps + render caches (the rendered video in public/ IS committed)
+/remotion/node_modules
+/remotion/.remotion-cache
+
 .agents
 .agent
 skills-lock.json

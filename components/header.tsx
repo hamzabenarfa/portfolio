@@ -1,125 +1,72 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { BookCall } from "@/components/fx/book-call";
+import { ArrowUpRight, Asterisk, Menu, X } from "lucide-react";
 
 const links = [
   { href: "#work", label: "Work" },
-  { href: "#services", label: "Services" },
+  { href: "#services", label: "Expertise" },
   { href: "#process", label: "Process" },
-  { href: "/background", label: "Background" },
-  { href: "#contact", label: "Contact" },
+  { href: "/background", label: "About" },
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const lastY = useRef(0);
+  const menu = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 24);
-      // hide on scroll down, reveal on scroll up
-      setHidden(y > lastY.current && y > 240);
-      lastY.current = y;
-    };
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    document.documentElement.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    const triggerElement = trigger.current;
+    const previousOverflow = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    window.__lenis?.stop();
+    menu.current?.querySelector<HTMLButtonElement>("button")?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+      if (event.key !== "Tab") return;
+      const items = menu.current?.querySelectorAll<HTMLElement>("a, button");
+      if (!items?.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    };
+    const onResize = () => { if (window.innerWidth > 760) setOpen(false); };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
     return () => {
-      document.documentElement.style.overflow = "";
+      document.documentElement.style.overflow = previousOverflow;
+      window.__lenis?.start();
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
+      triggerElement?.focus({ preventScroll: true });
     };
   }, [open]);
 
   return (
     <>
-      <nav
-        className={`site-nav${scrolled ? " is-scrolled" : ""}${hidden && !open ? " is-hidden" : ""}`}
-        aria-label="Main navigation"
-      >
-        <a href="#top" className="nav-brand" onClick={() => setOpen(false)}>
-          <span className="nav-mark">
-            <Image
-              src="/avatar.jpeg"
-              width={30}
-              height={30}
-              alt="Hamza Benarfa"
-              className="w-full h-full object-cover"
-            />
-          </span>
-          <span>
-            Benarfa<sup>®</sup>
-          </span>
-        </a>
-
-        <ul className="nav-links">
-          {links.slice(0, 4).map((l) => (
-            <li key={l.href}>
-              <a href={l.href}>
-                <span className="nl">{l.label}</span>
-                <span className="nl nl-ghost" aria-hidden="true">
-                  {l.label}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <BookCall className="nav-book" data-cursor="hover" source="header">
-          <span className="dot" />
-          <span className="nav-book-label">Book a call</span>
-          <span className="arr">→</span>
-        </BookCall>
-
-        <button
-          className="nav-burger"
-          aria-expanded={open}
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span />
-          <span />
-        </button>
-      </nav>
-
-      <div className={`nav-overlay${open ? " open" : ""}`} aria-hidden={!open}>
-        <ul className="nav-overlay-links">
-          {links.map((l, i) => (
-            <li key={l.href}>
-              <a href={l.href} onClick={() => setOpen(false)}>
-                <span className="idx">0{i + 1}</span>
-                {l.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <div className="nav-overlay-foot">
-          <div>
-            <a href="mailto:contact@benarfa.com">contact@benarfa.com</a>
-            <a href="https://wa.me/21622633345" target="_blank" rel="noreferrer">
-              WhatsApp ↗
-            </a>
-          </div>
-          <div style={{ textAlign: "right" }}>
-            <a href="https://github.com/hamzabenarfa/" target="_blank" rel="noreferrer">
-              GitHub ↗
-            </a>
-            <a
-              href="https://www.linkedin.com/in/hamzabenarfa/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              LinkedIn ↗
-            </a>
-          </div>
-        </div>
-      </div>
+      <a className="skip-link" href="#main-content">Skip to content</a>
+      <header className={`portfolio-header${scrolled ? " has-scrolled" : ""}`}>
+        <a href="#top" className="portfolio-brand" aria-label="Hamza Benarfa, home"><Asterisk size={32} strokeWidth={2} aria-hidden="true" /><span>hamza<br /><strong>benarfa.</strong></span></a>
+        <nav className="portfolio-nav" aria-label="Main navigation">{links.map((link) => <a key={link.href} href={link.href}>{link.label}</a>)}</nav>
+        <a href="#contact" className="header-contact">Let’s talk <ArrowUpRight size={17} aria-hidden="true" /></a>
+        <button ref={trigger} type="button" className="menu-trigger" aria-label="Open menu" aria-expanded={open} aria-controls={open ? "mobile-navigation" : undefined} onClick={() => setOpen(true)}><Menu size={24} /></button>
+      </header>
+      {open && <div id="mobile-navigation" className="mobile-navigation" role="dialog" aria-modal="true" aria-label="Navigation" ref={menu}>
+        <div className="mobile-menu-top"><span>Let’s explore.</span><button type="button" aria-label="Close menu" onClick={() => setOpen(false)}><X size={26} /></button></div>
+        <nav aria-label="Mobile navigation">{[...links, { href: "#contact", label: "Let’s talk" }].map((link) => <a key={link.href} href={link.href} onClick={() => { window.__lenis?.start(); setOpen(false); }}>{link.label}<ArrowUpRight size={30} aria-hidden="true" /></a>)}</nav>
+        <a className="mobile-email" href="mailto:contact@benarfa.com">contact@benarfa.com</a>
+        <span className="mobile-location">Based in Tunisia. Building everywhere.</span>
+      </div>}
     </>
   );
 }

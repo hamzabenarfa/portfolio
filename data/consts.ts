@@ -1,8 +1,25 @@
-export const PROJECTS = [
+export interface ProjectMeta {
+  id: number;
+  slug: string;
+  featured: boolean;
+  /**
+   * Whether the project appears in listings (the `/work` index, the sitemap,
+   * and structured data). Defaults to `true`. Set `false` to unlist a project
+   * while keeping its `/work/<slug>` case-study page reachable by direct URL.
+   */
+  listed?: boolean;
+  tech: string[];
+  year: string;
+  image: string;
+  url: string;
+}
+
+export const PROJECTS: ProjectMeta[] = [
   {
     id: 1,
     slug: "dtalk-ecosystem",
     featured: true,
+    listed: false,
     tech: [
       "Next.js",
       "React",
@@ -10,7 +27,10 @@ export const PROJECTS = [
       "Tailwind CSS",
       "Zustand",
       "TanStack Query",
+      "Fabric.js",
       "Konva",
+      "next-intl",
+      "Azure Blob",
       "shadcn/ui",
       "Zod",
     ],
@@ -50,7 +70,7 @@ export const PROJECTS = [
       "TypeScript",
       "Tailwind v4",
       "PostgreSQL",
-      "Prisma 6",
+      "Prisma 7",
       "Zustand",
       "Auth.js",
       "Zod",
@@ -68,13 +88,14 @@ export const PROJECTS = [
       "Next.js",
       "React",
       "PostgreSQL",
+      "Prisma",
+      "Better Auth",
       "shadcn/ui",
-      "Redis",
-      "Cloudflare",
+      "TanStack Query",
+      "react-hook-form",
       "Zod",
-      "@dnd-kit",
-      "Framer Motion",
-      "Docker",
+      "Zustand",
+      "next-intl",
     ],
     year: "2025",
     image: "/menu-qr.webp",
@@ -84,6 +105,7 @@ export const PROJECTS = [
     id: 5,
     slug: "vertex",
     featured: false,
+    listed: false,
     tech: [
       "Next.js 15",
       "React 19",
@@ -96,7 +118,7 @@ export const PROJECTS = [
       "Stripe",
       "Zustand",
       "Zod",
-      "Mailgun",
+      "Vercel Blob",
     ],
     year: "2025",
     image: "/vertex.webp",
@@ -105,19 +127,16 @@ export const PROJECTS = [
   {
     id: 6,
     slug: "kindra",
-    featured: true,
+    featured: false,
+    listed: false,
     tech: [
       "Next.js 15",
       "React 19",
       "TypeScript",
       "Tailwind CSS",
-      "PostgreSQL",
-      "Drizzle ORM",
-      "Stripe",
-      "Cloudflare R2",
-      "Docker",
-      "Oslo",
-      "Zod",
+      "shadcn/ui",
+      "Radix UI",
+      "Framer Motion",
     ],
     year: "2024",
     image: "/kindra.webp",

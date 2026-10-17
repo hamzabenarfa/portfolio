@@ -20,7 +20,8 @@ export function LenisProvider({ children }: { children: ReactNode }) {
     const lenis = new Lenis({
       duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      anchors: { offset: -70 },
+      // Section scroll-margin-top owns the fixed-header clearance.
+      anchors: true,
     });
     window.__lenis = lenis;
 

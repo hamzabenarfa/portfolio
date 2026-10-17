@@ -1,34 +1,55 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Instrument_Serif, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { MotionConfigProvider } from "@/components/fx/motion-config-provider";
 import { SEO } from "@/components/seo/seo";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_WEB_URL || "https://benarfa.com";
-const baseUrl = SITE_URL.replace(/\/$/, "");
 
-const interTight = Inter_Tight({
-  subsets: ["latin"],
+const interTight = localFont({
+  src: [
+    { path: "./fonts/inter-tight-normal-100.ttf", weight: "100", style: "normal" },
+    { path: "./fonts/inter-tight-normal-200.ttf", weight: "200", style: "normal" },
+    { path: "./fonts/inter-tight-normal-300.ttf", weight: "300", style: "normal" },
+    { path: "./fonts/inter-tight-normal-400.ttf", weight: "400", style: "normal" },
+    { path: "./fonts/inter-tight-normal-500.ttf", weight: "500", style: "normal" },
+    { path: "./fonts/inter-tight-normal-600.ttf", weight: "600", style: "normal" },
+    { path: "./fonts/inter-tight-normal-700.ttf", weight: "700", style: "normal" },
+    { path: "./fonts/inter-tight-normal-800.ttf", weight: "800", style: "normal" },
+    { path: "./fonts/inter-tight-normal-900.ttf", weight: "900", style: "normal" },
+  ],
   variable: "--font-inter-tight",
   display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
+const instrumentSerif = localFont({
+  src: [
+    { path: "./fonts/instrument-serif-normal-400.ttf", weight: "400", style: "normal" },
+    { path: "./fonts/instrument-serif-italic-400.ttf", weight: "400", style: "italic" },
+  ],
   variable: "--font-instrument-serif",
   display: "swap",
 });
 
-const jetBrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
+const jetBrainsMono = localFont({
+  src: [
+    { path: "./fonts/jetbrains-mono-normal-100.ttf", weight: "100", style: "normal" },
+    { path: "./fonts/jetbrains-mono-normal-200.ttf", weight: "200", style: "normal" },
+    { path: "./fonts/jetbrains-mono-normal-300.ttf", weight: "300", style: "normal" },
+    { path: "./fonts/jetbrains-mono-normal-400.ttf", weight: "400", style: "normal" },
+    { path: "./fonts/jetbrains-mono-normal-500.ttf", weight: "500", style: "normal" },
+    { path: "./fonts/jetbrains-mono-normal-600.ttf", weight: "600", style: "normal" },
+    { path: "./fonts/jetbrains-mono-normal-700.ttf", weight: "700", style: "normal" },
+    { path: "./fonts/jetbrains-mono-normal-800.ttf", weight: "800", style: "normal" },
+  ],
   variable: "--font-jetbrains-mono",
   display: "swap",
 });
+
+const SITE_URL = process.env.NEXT_PUBLIC_WEB_URL || "https://benarfa.com";
+const baseUrl = SITE_URL.replace(/\/$/, "");
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),

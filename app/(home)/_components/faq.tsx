@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { SectionHead } from "./section-head";
-import { FadeUp } from "@/components/fx/reveal";
 
 const faqs = [
   {
@@ -25,6 +24,14 @@ const faqs = [
     q: "Can you handle frontend AND backend?",
     a: "Yes — that's the whole point. I take ownership of the full stack so founders aren't coordinating between two contractors. For larger work I plug into existing teams as a senior IC.",
   },
+  {
+    q: "How long does an MVP take?",
+    a: "Weeks, not quarters. After a scoping call you get a roadmap with weekly demo milestones, and there's a deployable build on staging from the first sprint — how many sprints it takes depends on the scope we agree on, and you'll know that number before any code is written.",
+  },
+  {
+    q: "What happens after launch?",
+    a: "Launch isn't the end of the engagement. Every project ships with documentation, a clean handover, and the deploy pipeline set up — Docker, CI/CD, monitoring. If you want me to stay involved, ongoing support and iteration retainers are available.",
+  },
 ];
 
 export function FAQ() {
@@ -32,7 +39,8 @@ export function FAQ() {
   const toggle = (i: number) => setOpen(open === i ? -1 : i);
 
   return (
-    <section className="section container">
+    <section className="section container questions-section" aria-label="Frequently asked questions">
+      <div className="faq-layout">
       <SectionHead
         index="04"
         label="FAQ"
@@ -44,29 +52,31 @@ export function FAQ() {
         meta={<>Tap to expand</>}
       />
 
-      <FadeUp className="faq-list" stagger={0.08} y={32}>
+      <div className="faq-list">
         {faqs.map((f, i) => (
           <div key={f.q} className={`faq-item${open === i ? " open" : ""}`}>
             <button
               type="button"
               className="faq-q"
+              id={`faq-question-${i}`}
               aria-expanded={open === i}
+              aria-controls={`faq-answer-${i}`}
               onClick={() => toggle(i)}
             >
-              <span className="mono">/{String(i + 1).padStart(2, "0")}</span>
               <span>{f.q}</span>
               <span className="faq-toggle" aria-hidden="true">
                 +
               </span>
             </button>
-            <div className="faq-a">
+            <div className="faq-a" id={`faq-answer-${i}`} role="region" aria-labelledby={`faq-question-${i}`} aria-hidden={open !== i}>
               <div className="faq-a-clip">
                 <p className="faq-a-inner">{f.a}</p>
               </div>
             </div>
           </div>
         ))}
-      </FadeUp>
+      </div>
+      </div>
     </section>
   );
 }

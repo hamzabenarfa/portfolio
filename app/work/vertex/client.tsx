@@ -1,447 +1,573 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import { useState } from 'react';
 import Link from 'next/link';
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import {
   ArrowLeft,
   ArrowRight,
   ExternalLink,
-  Layers,
-  Boxes,
-  Cpu,
-  Database,
-  ShoppingBag,
-  CreditCard,
-  Heart,
-  LayoutDashboard,
-  Users,
-  Mail,
-  ShieldCheck,
-  Code2,
-  CheckCircle2,
+  MoveRight,
+  MoveLeft,
 } from 'lucide-react';
 
 import { PROJECTS } from '@/data/consts';
 import { PROJECT_CONTENT } from '@/data/project-content';
-import { ProjectContactCTA } from '@/components/fx/project-contact-cta';
+import { trackEvent } from '@/lib/track';
+import { ProductFigure, type MediaTheme } from '@/components/fx/media';
 
-const navItems = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'architecture', label: 'Architecture' },
-  { id: 'storefront', label: 'Storefront' },
-  { id: 'admin', label: 'Admin' },
-  { id: 'stack', label: 'Stack' },
+const EMAIL = 'contact@benarfa.com';
+
+const INK = '#17161c';
+const BLUE = '#2b3cf0';
+const PAPER = '#f7f7f4';
+
+const media: MediaTheme = {
+  accent: BLUE,
+  ink: INK,
+  surface: PAPER,
+  captionClass: 'text-[#8b8a92]',
+};
+
+const sharpFrame = 'rounded-none border border-black/15 bg-white shadow-none hover:shadow-[6px_6px_0_rgba(43,60,240,0.14)]';
+
+interface Layer {
+  id: string;
+  index: string;
+  name: string;
+  dirs: string[];
+  role: string;
+  imports: string;
+  never: string;
+}
+
+const layers: Layer[] = [
+  {
+    id: 'presentation',
+    index: 'L1',
+    name: 'Presentation',
+    dirs: ['app/', 'components/', 'hooks/'],
+    role: 'App Router pages, UI primitives, and view logic. Everything the user sees lives here — and nothing below knows it exists.',
+    imports: 'Application (server actions) and Domain types',
+    never: 'Prisma, Stripe, or any infrastructure client',
+  },
+  {
+    id: 'application',
+    index: 'L2',
+    name: 'Application',
+    dirs: ['actions/'],
+    role: 'Server actions are the app’s verbs — “add to cart”, “place order”, “create product”. The auth/company slice calls a use-case; the commerce actions query Prisma directly.',
+    imports: 'Domain use-cases (auth) or Prisma (commerce)',
+    never: 'React components',
+  },
+  {
+    id: 'domain',
+    index: 'L3',
+    name: 'Domain',
+    dirs: ['domain/user/', 'domain/company/'],
+    role: 'Entities, repository interfaces (ports), and use-cases — a worked ports-and-adapters example on the user and company (auth) contexts, not across the whole app.',
+    imports: 'Its own port interfaces',
+    never: 'Presentation or Application code',
+  },
+  {
+    id: 'infrastructure',
+    index: 'L4',
+    name: 'Infrastructure',
+    dirs: ['infra/', 'prisma/', 'lib/'],
+    role: 'Prisma, Stripe, and Vercel Blob clients. The auth repositories implement their domain ports here; the commerce actions use Prisma directly.',
+    imports: 'Domain ports (auth) it implements',
+    never: 'Presentation or Application code',
+  },
 ];
 
-const layers = [
-  { name: 'Presentation', dirs: 'app/ · components/ · hooks/', copy: 'App Router pages, UI primitives, and view logic.', icon: ShoppingBag },
-  { name: 'Application', dirs: 'actions/ · use-cases/', copy: 'Server actions orchestrate use-cases — the app’s verbs.', icon: Cpu },
-  { name: 'Domain', dirs: 'entities/ · repositories/', copy: 'Business entities and repository interfaces. No framework.', icon: Boxes },
-  { name: 'Infrastructure', dirs: 'infra/ · prisma/ · lib/', copy: 'Prisma, Stripe, and Mailgun — swappable behind interfaces.', icon: Database },
+const fileTree = [
+  { line: 'app/              ', note: 'presentation' },
+  { line: '├─ components/', note: '' },
+  { line: 'actions/          ', note: 'server actions → prisma' },
+  { line: 'domain/user/      ', note: 'entity · port · use-case' },
+  { line: 'domain/company/   ', note: 'DDD worked example' },
+  { line: 'infra/            ', note: 'prisma · stripe · blob' },
+  { line: '└─ prisma/', note: '' },
 ];
 
-const storefront = [
-  { title: 'Catalog & filtering', copy: 'Browse products with advanced filtering and detailed product views.', icon: ShoppingBag },
-  { title: 'Cart & favorites', copy: 'Persistent cart and wishlist backed by Zustand, scoped per user.', icon: Heart },
-  { title: 'Stripe checkout', copy: 'Secure Stripe Checkout with webhook-driven order fulfilment.', icon: CreditCard },
-  { title: 'Billing portal', copy: 'Self-service customer portal for billing and subscriptions.', icon: ShieldCheck },
+const surfaces = [
+  {
+    plate: 'PLATE 01',
+    title: 'Storefront',
+    copy: 'Catalog with filtering, product detail views, a Zustand-persisted cart and favorites, and real Stripe Checkout with webhook-driven order fulfilment.',
+    src: '/vertex-products.webp',
+    alt: 'Vertex storefront product catalogue',
+    caption: 'Fig. 1 — Storefront catalogue with filtering',
+    rows: ['Catalog & filtering', 'Cart & favorites (Zustand)', 'Stripe Checkout + webhooks', 'Order history view'],
+  },
+  {
+    plate: 'PLATE 02',
+    title: 'Admin',
+    copy: 'A back office for products, categories, and brands — create, edit, and image upload via Vercel Blob — plus read-only order and user lists and a revenue chart.',
+    src: '/vertex-product.webp',
+    alt: 'Vertex product management view',
+    caption: 'Fig. 2 — Product detail & management',
+    rows: ['Products, categories & brands', 'Image upload (Vercel Blob)', 'Order & user lists (read-only)', 'Revenue chart'],
+  },
 ];
 
-const admin = [
-  { title: 'Products & categories', copy: 'Create, update, and organise inventory into dynamic categories.', icon: LayoutDashboard },
-  { title: 'Orders', copy: 'View and manage customer orders end to end.', icon: Boxes },
-  { title: 'Users & roles', copy: 'Oversee platform users and role-based access.', icon: Users },
-  { title: 'Email & analytics', copy: 'Mailgun transactional email and analytics-ready hooks.', icon: Mail },
+const bom = [
+  { ref: 'A.1', group: 'Framework', items: 'Next.js 15 · React 19 · TypeScript' },
+  { ref: 'A.2', group: 'Interface', items: 'Tailwind CSS · shadcn/ui · Zustand' },
+  { ref: 'B.1', group: 'Data', items: 'PostgreSQL · Prisma' },
+  { ref: 'B.2', group: 'Auth', items: 'Auth.js v5 · Google provider' },
+  { ref: 'C.1', group: 'Payments', items: 'Stripe Checkout · webhooks' },
+  { ref: 'C.2', group: 'Storage', items: 'Vercel Blob' },
+  { ref: 'D.1', group: 'Validation', items: 'Zod (server-side)' },
 ];
+
+function Cross({ className }: { className: string }) {
+  return (
+    <span aria-hidden="true" className={`pointer-events-none absolute font-mono text-sm text-[#2b3cf0]/70 ${className}`}>
+      +
+    </span>
+  );
+}
+
+function SectionMark({ n, label }: { n: string; label: string }) {
+  return (
+    <div className="flex items-baseline gap-4 font-mono text-xs uppercase tracking-[0.22em]">
+      <span className="text-[#2b3cf0]">§ {n}</span>
+      <span className="text-[#8b8a92]">{label}</span>
+    </div>
+  );
+}
 
 export default function VertexProjectPage() {
   const t = PROJECT_CONTENT.vertex;
   const project = PROJECTS.find((p) => p.slug === 'vertex');
   const nextProject = PROJECTS.find((p) => p.slug === 'kindra');
   const tNext = PROJECT_CONTENT.kindra;
-  const [imageError, setImageError] = useState(false);
-  const [activeSection, setActiveSection] = useState(navItems[0].id);
+  const [activeLayer, setActiveLayer] = useState<Layer>(layers[2]);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 28, restDelta: 0.001 });
-  const heroY = useTransform(scrollYProgress, [0, 0.5], ['0%', '16%']);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.22], [1, 0.35]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      let current = navItems[0].id;
-      for (const item of navItems) {
-        const el = document.getElementById(item.id);
-        if (el && el.getBoundingClientRect().top < 260) current = item.id;
-      }
-      if (window.innerHeight + Math.round(window.scrollY) >= document.body.offsetHeight - 50) {
-        current = navItems[navItems.length - 1].id;
-      }
-      setActiveSection(current);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   if (!project) return null;
 
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const y = el.getBoundingClientRect().top + window.scrollY - 96;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-  };
-
-  const frontendTech = project.tech.filter((x) => ['Next.js', 'React', 'TypeScript', 'Tailwind', 'shadcn'].some((n) => x.includes(n)));
-  const dataTech = project.tech.filter((x) => ['PostgreSQL', 'Prisma', 'Auth.js', 'Zod', 'Zustand'].some((n) => x.includes(n)));
-  const platformTech = project.tech.filter((x) => ['Stripe', 'Mailgun'].some((n) => x.includes(n)));
-
   return (
-    <div className="min-h-screen overflow-hidden bg-[#070b16] text-slate-100 selection:bg-blue-500/30">
-      <motion.div
-        className="fixed inset-x-0 top-0 z-50 h-1 origin-left bg-linear-to-r from-blue-500 via-cyan-400 to-blue-600 shadow-[0_0_24px_rgba(59,130,246,0.6)]"
-        style={{ scaleX }}
+    <div className="min-h-screen bg-[#f7f7f4] text-[#17161c] selection:bg-[#2b3cf0]/15">
+      <motion.div className="fixed inset-x-0 top-0 z-50 h-0.5 origin-left bg-[#2b3cf0]" style={{ scaleX }} />
+
+      {/* grid-paper texture */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.55]"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(23,22,28,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(23,22,28,0.045) 1px, transparent 1px)',
+          backgroundSize: '48px 48px',
+        }}
       />
 
-      <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="absolute -top-40 left-1/3 h-[34rem] w-[34rem] rounded-full bg-blue-600/12 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-[28rem] w-[28rem] rounded-full bg-cyan-500/8 blur-3xl" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(96,165,250,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(96,165,250,0.06)_1px,transparent_1px)] bg-size-[56px_56px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
-      </div>
-
-      <nav className="fixed inset-x-0 top-0 z-40 border-b border-white/5 bg-[#070b16]/80 backdrop-blur-2xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
+      <nav className="fixed inset-x-0 top-0 z-40 border-b border-black/12 bg-[#f7f7f4]/90 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3.5 sm:px-6">
           <Link
             href="/work"
-            className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 text-xs font-medium text-slate-300 transition hover:border-blue-400/40 hover:text-white"
+            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-[#5c5b64] transition hover:text-[#17161c]"
           >
-            <ArrowLeft className="h-4 w-4 transition group-hover:-translate-x-0.5" />
-            <span className="hidden sm:inline">Back to Portfolio</span>
+            <ArrowLeft className="h-3.5 w-3.5 transition group-hover:-translate-x-0.5" />
+            <span className="hidden sm:inline">Index</span>
             <span className="sm:hidden">Back</span>
           </Link>
 
-          <div className="hidden items-center gap-1 rounded-full border border-white/10 bg-black/30 p-1 lg:flex">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollTo(item.id)}
-                className={`rounded-full px-3 py-1.5 text-xs transition ${
-                  activeSection === item.id ? 'bg-blue-500 text-white' : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
+          <span className="font-mono text-xs uppercase tracking-[0.22em] text-[#8b8a92]">
+            Vertex <span className="text-[#2b3cf0]">/</span> case file 05
+          </span>
 
           {project.url && (
             <a
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 rounded-full bg-blue-500 px-3 py-2 text-xs font-semibold text-white transition hover:bg-blue-400 sm:px-4"
+              className="group flex items-center gap-2 border border-[#17161c] bg-[#17161c] px-3 py-2 font-mono text-xs uppercase tracking-[0.14em] text-[#f7f7f4] transition hover:bg-[#2b3cf0] hover:border-[#2b3cf0]"
             >
               <span className="hidden sm:inline">Live demo</span>
               <span className="sm:hidden">Live</span>
-              <ExternalLink className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ExternalLink className="h-3.5 w-3.5" />
             </a>
           )}
         </div>
       </nav>
 
-      <main className="relative z-10">
-        <header className="relative px-4 pt-28 sm:px-6 lg:pt-36">
-          <motion.div
-            className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]"
-            style={{ y: heroY, opacity: heroOpacity }}
-          >
-            <section className="max-w-3xl">
-              <motion.div
+      <main className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+        {/* ============ Masthead — technical document header ============ */}
+        <header className="relative border-x border-black/12 pt-28 lg:pt-32">
+          <Cross className="-left-[7px] top-24" />
+          <Cross className="-right-[7px] top-24" />
+
+          <div className="border-b border-black/12 px-5 pb-4 sm:px-8">
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="font-mono text-xs uppercase tracking-[0.24em] text-[#8b8a92]"
+            >
+              {t.category} · Clean Architecture · {project.year}
+            </motion.p>
+          </div>
+
+          <div className="grid border-b border-black/12 lg:grid-cols-[1.35fr_1fr]">
+            <div className="border-black/12 px-5 py-10 sm:px-8 lg:border-r">
+              <motion.h1
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45 }}
-                className="mb-6 flex flex-wrap items-center gap-3"
+                transition={{ duration: 0.5, delay: 0.06 }}
+                className="text-[17vw] font-black leading-[0.85] tracking-[-0.05em] sm:text-8xl lg:text-[7.5rem]"
               >
-                <span className="rounded-full border border-blue-400/30 bg-blue-500/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.28em] text-blue-300">
-                  {t.category}
-                </span>
-                <span className="font-mono text-xs text-slate-500">Clean Architecture · DDD</span>
-              </motion.div>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.08 }}
-                className="text-6xl font-black tracking-[-0.04em] text-transparent bg-clip-text bg-linear-to-br from-white via-blue-100 to-slate-500 sm:text-8xl"
-              >
-                Vertex<span className="text-blue-500">.</span>
+                Vertex<span className="text-[#2b3cf0]">.</span>
               </motion.h1>
-
               <motion.p
-                initial={{ opacity: 0, y: 22 }}
+                initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.16 }}
-                className="mt-7 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl"
+                transition={{ duration: 0.5, delay: 0.14 }}
+                className="mt-8 max-w-xl text-lg leading-8 text-[#44434c]"
               >
                 {t.description}
               </motion.p>
 
               <motion.div
-                initial={{ opacity: 0, y: 22 }}
+                initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.24 }}
-                className="mt-9 flex flex-col gap-3 sm:flex-row"
+                transition={{ duration: 0.5, delay: 0.22 }}
+                className="mt-10 flex flex-col gap-3 sm:flex-row"
               >
-                <button
-                  onClick={() => scrollTo('architecture')}
-                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-blue-500 px-6 py-3 text-sm font-bold text-white transition hover:bg-blue-400"
+                <a
+                  href="#architecture"
+                  className="group inline-flex items-center justify-center gap-2 bg-[#17161c] px-6 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-[#f7f7f4] transition hover:bg-[#2b3cf0]"
                 >
-                  See the architecture
-                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                </button>
+                  § 02 — The architecture
+                  <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+                </a>
                 {project.url && (
                   <a
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 py-3 text-sm font-semibold text-white transition hover:border-blue-400/50 hover:bg-white/[0.08]"
+                    className="inline-flex items-center justify-center gap-2 border border-black/20 bg-white px-6 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-[#17161c] transition hover:border-[#2b3cf0] hover:text-[#2b3cf0]"
                   >
                     Live demo
-                    <ExternalLink className="h-4 w-4" />
+                    <ExternalLink className="h-3.5 w-3.5" />
                   </a>
                 )}
               </motion.div>
-            </section>
+            </div>
 
-            <motion.section
-              initial={{ opacity: 0, scale: 0.96, y: 24 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.18 }}
-              className="relative"
+            {/* spec table */}
+            <motion.dl
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="flex flex-col justify-end font-mono text-xs"
             >
-              <div className="absolute -inset-6 rounded-[3rem] bg-linear-to-br from-blue-500/25 via-cyan-400/10 to-blue-600/10 blur-2xl" />
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-white/[0.04] p-2.5 shadow-2xl shadow-black/50 backdrop-blur">
-                <div className="relative aspect-[16/10] overflow-hidden rounded-[1.5rem] bg-slate-950">
-                  {!imageError ? (
-                    <Image
-                      src={project.image || '/placeholder.svg'}
-                      alt="Vertex storefront"
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover object-top"
-                      priority
-                      quality={92}
-                      onError={() => setImageError(true)}
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center bg-linear-to-br from-slate-900 to-slate-950">
-                      <Code2 className="h-12 w-12 text-blue-400" />
-                    </div>
-                  )}
+              {[
+                ['PROJECT', 'Vertex — starter kit'],
+                ['TYPE', 'E-commerce + admin codebase'],
+                ['PATTERN', 'Clean Architecture / DDD'],
+                ['LAYERS', '04 — dependencies point inward'],
+                ['SURFACES', 'Storefront · Admin dashboard'],
+                ['YEAR', project.year],
+              ].map(([k, v]) => (
+                <div key={k} className="grid grid-cols-[7rem_1fr] gap-4 border-t border-black/12 px-5 py-3.5 transition-colors hover:bg-[#2b3cf0]/[0.04] sm:px-8 lg:first:border-t-0">
+                  <dt className="uppercase tracking-[0.18em] text-[#8b8a92]">{k}</dt>
+                  <dd className="text-[#17161c]">{v}</dd>
                 </div>
-              </div>
-            </motion.section>
-          </motion.div>
+              ))}
+            </motion.dl>
+          </div>
         </header>
 
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[240px_1fr] lg:gap-20">
-          <aside className="hidden lg:block">
-            <div className="sticky top-28">
-              <div className="mb-5 text-xs uppercase tracking-[0.3em] text-slate-500">Contents</div>
-              <nav className="space-y-2 border-l border-white/10 pl-4">
-                {navItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollTo(item.id)}
-                    className={`block text-left text-sm transition ${
-                      activeSection === item.id ? 'translate-x-1 text-white' : 'text-slate-500 hover:text-slate-200'
-                    }`}
-                  >
-                    {activeSection === item.id && (
-                      <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-blue-400 align-middle shadow-[0_0_12px_rgba(96,165,250,0.9)]" />
-                    )}
-                    {item.label}
-                  </button>
-                ))}
-              </nav>
-            </div>
-          </aside>
-
-          <article className="space-y-28">
-            {/* Overview */}
-            <Section id="overview">
-              <SectionHead n="01" label={t.subtitle} />
-              <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-                <div>
-                  <h2 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                    A foundation that stays clean as it scales.
-                  </h2>
-                  <p className="mt-6 text-lg leading-8 text-slate-300">{t.longDescription}</p>
-                </div>
-                <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
-                  <div className="mb-5 flex items-center gap-3">
-                    <div className="rounded-2xl bg-blue-500/10 p-3 text-blue-300"><Cpu className="h-5 w-5" /></div>
-                    <h3 className="text-lg font-semibold">The problem</h3>
-                  </div>
-                  <p className="text-sm leading-7 text-slate-400">{t.problem}</p>
-                  <div className="my-6 h-px bg-white/10" />
-                  <div className="mb-5 flex items-center gap-3">
-                    <div className="rounded-2xl bg-cyan-400/10 p-3 text-cyan-300"><Layers className="h-5 w-5" /></div>
-                    <h3 className="text-lg font-semibold">The answer</h3>
-                  </div>
-                  <p className="text-sm leading-7 text-slate-400">{t.solution}</p>
-                </div>
+        {/* ============ § 01 Abstract ============ */}
+        <section id="overview" className="relative scroll-mt-24 border-x border-black/12">
+          <div className="border-b border-black/12 px-5 py-5 sm:px-8">
+            <SectionMark n="01" label="Abstract" />
+          </div>
+          <div className="grid border-b border-black/12 lg:grid-cols-2">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5 }}
+              className="border-black/12 px-5 py-10 sm:px-8 lg:border-r"
+            >
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+                A foundation that stays clean as it scales.
+              </h2>
+              <p className="mt-6 text-base leading-8 text-[#44434c]">{t.longDescription}</p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5, delay: 0.08 }}
+              className="flex flex-col"
+            >
+              <div className="flex-1 px-5 py-8 sm:px-8">
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#2b3cf0]">Problem</p>
+                <p className="mt-3 text-sm leading-7 text-[#44434c]">{t.problem}</p>
               </div>
-            </Section>
+              <div className="flex-1 border-t border-black/12 px-5 py-8 sm:px-8">
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#2b3cf0]">Response</p>
+                <p className="mt-3 text-sm leading-7 text-[#44434c]">{t.solution}</p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
-            {/* Architecture — the signature layer diagram */}
-            <Section id="architecture">
-              <SectionHead n="02" label="Layered on purpose" />
-              <h2 className="mb-8 text-3xl font-semibold tracking-tight sm:text-4xl">Clean Architecture</h2>
-              <div className="space-y-3">
-                {layers.map((layer, i) => {
-                  const Icon = layer.icon;
-                  return (
-                    <div
-                      key={layer.name}
-                      className="group relative grid items-center gap-4 overflow-hidden rounded-[1.5rem] border border-white/10 bg-linear-to-r from-white/[0.06] to-white/[0.02] p-6 md:grid-cols-[3.5rem_1fr_1.4fr]"
-                      style={{ marginLeft: `${i * 1.5}rem` }}
+        {/* ============ § 02 Architecture — interactive diagram ============ */}
+        <section id="architecture" className="relative scroll-mt-24 border-x border-black/12">
+          <Cross className="-left-[7px] -top-[9px]" />
+          <Cross className="-right-[7px] -top-[9px]" />
+          <div className="border-b border-black/12 px-5 py-5 sm:px-8">
+            <SectionMark n="02" label="The architecture — select a layer" />
+          </div>
+
+          <div className="border-b border-black/12 px-5 py-10 sm:px-8">
+            {/* dependency flow selector */}
+            <div className="grid gap-2 sm:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] sm:items-stretch sm:gap-0">
+              {layers.map((layer, i) => {
+                const active = activeLayer.id === layer.id;
+                const arrow =
+                  i === 0 || i === 1 ? (
+                    <MoveRight className="h-4 w-4 text-[#2b3cf0]" />
+                  ) : i === 2 ? (
+                    <MoveLeft className="h-4 w-4 text-[#2b3cf0]" />
+                  ) : null;
+                return (
+                  <div key={layer.id} className="contents">
+                    <button
+                      type="button"
+                      onClick={() => setActiveLayer(layer)}
+                      aria-pressed={active}
+                      className={`flex flex-col items-start gap-1.5 border px-4 py-4 text-left transition sm:justify-between ${
+                        active
+                          ? 'border-[#2b3cf0] bg-[#2b3cf0] text-white shadow-[6px_6px_0_rgba(43,60,240,0.18)]'
+                          : 'border-black/15 bg-white text-[#17161c] hover:border-[#2b3cf0]/60 hover:text-[#2b3cf0]'
+                      }`}
                     >
-                      <div className="absolute inset-y-0 left-0 w-1 bg-linear-to-b from-blue-400 to-cyan-400 opacity-70" />
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-blue-400/20 bg-[#070b16] text-blue-300">
-                        <Icon className="h-5 w-5" />
+                      <span className={`font-mono text-[10px] uppercase tracking-[0.2em] ${active ? 'text-white/70' : 'text-[#8b8a92]'}`}>
+                        {layer.index}
+                      </span>
+                      <span className="text-sm font-bold tracking-tight sm:text-base">{layer.name}</span>
+                    </button>
+                    {arrow && (
+                      <div aria-hidden="true" className="hidden items-center justify-center px-2 sm:flex">
+                        {arrow}
                       </div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-white">{layer.name}</h3>
-                        <p className="mt-1 font-mono text-xs text-blue-300/80">{layer.dirs}</p>
-                      </div>
-                      <p className="text-sm leading-7 text-slate-400">{layer.copy}</p>
-                    </div>
-                  );
-                })}
-              </div>
-              <p className="mt-6 flex items-center gap-3 rounded-2xl border border-white/10 bg-black/25 p-5 text-sm text-slate-400">
-                <Layers className="h-5 w-5 shrink-0 text-blue-300" />
-                Dependencies point inward: the domain knows nothing about Prisma, Stripe, or React. Swap an integration without touching business logic.
-              </p>
-            </Section>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            <p className="mt-3 hidden font-mono text-[11px] uppercase tracking-[0.18em] text-[#8b8a92] sm:block">
+              Arrows = compile-time dependencies. Everything points at the domain; the domain points at nothing.
+            </p>
 
-            {/* Storefront */}
-            <Section id="storefront">
-              <SectionHead n="03" label="What customers get" />
-              <h2 className="mb-8 text-3xl font-semibold tracking-tight sm:text-4xl">Storefront</h2>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {storefront.map((c) => {
-                  const Icon = c.icon;
-                  return (
-                    <div key={c.title} className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-6 transition hover:-translate-y-1 hover:border-blue-400/40 hover:bg-white/[0.06]">
-                      <div className="mb-5 inline-flex rounded-xl border border-white/10 bg-black/40 p-2.5 text-blue-300"><Icon className="h-5 w-5" /></div>
-                      <h3 className="text-base font-semibold text-white">{c.title}</h3>
-                      <p className="mt-2 text-sm leading-6 text-slate-400">{c.copy}</p>
-                    </div>
-                  );
-                })}
-              </div>
-              <figure className="mt-6 overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/30">
-                <div className="relative aspect-[16/9]">
-                  <Image src="/vertex-products.webp" alt="Vertex product catalogue" fill sizes="(max-width: 1024px) 100vw, 75vw" className="object-cover object-top" />
+            {/* detail panel */}
+            <motion.div
+              key={activeLayer.id}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.28 }}
+              className="mt-6 grid border border-black/15 bg-white md:grid-cols-[1.4fr_1fr]"
+            >
+              <div className="border-black/12 p-6 sm:p-8 md:border-r">
+                <div className="flex items-baseline gap-3">
+                  <span className="font-mono text-xs text-[#2b3cf0]">{activeLayer.index}</span>
+                  <h3 className="text-2xl font-bold tracking-tight">{activeLayer.name}</h3>
                 </div>
-                <figcaption className="px-5 py-3 font-mono text-xs text-slate-500">Storefront — product catalogue with filtering</figcaption>
-              </figure>
-            </Section>
-
-            {/* Admin */}
-            <Section id="admin">
-              <SectionHead n="04" label="What operators get" />
-              <h2 className="mb-8 text-3xl font-semibold tracking-tight sm:text-4xl">Admin dashboard</h2>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {admin.map((c) => {
-                  const Icon = c.icon;
-                  return (
-                    <div key={c.title} className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-6 transition hover:-translate-y-1 hover:border-cyan-400/40 hover:bg-white/[0.06]">
-                      <div className="mb-5 inline-flex rounded-xl border border-white/10 bg-black/40 p-2.5 text-cyan-300"><Icon className="h-5 w-5" /></div>
-                      <h3 className="text-base font-semibold text-white">{c.title}</h3>
-                      <p className="mt-2 text-sm leading-6 text-slate-400">{c.copy}</p>
-                    </div>
-                  );
-                })}
+                <p className="mt-4 text-sm leading-7 text-[#44434c]">{activeLayer.role}</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {activeLayer.dirs.map((d) => (
+                    <code key={d} className="border border-[#2b3cf0]/25 bg-[#2b3cf0]/[0.06] px-2.5 py-1 font-mono text-xs text-[#2b3cf0]">
+                      {d}
+                    </code>
+                  ))}
+                </div>
               </div>
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                {t.keyFeatures.map((feat) => (
-                  <div key={feat} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-black/20 p-4">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" />
-                    <span className="text-sm leading-6 text-slate-300">{feat}</span>
+              <dl className="font-mono text-xs">
+                <div className="border-b border-black/12 p-6 sm:px-8">
+                  <dt className="uppercase tracking-[0.18em] text-[#8b8a92]">Imports</dt>
+                  <dd className="mt-2 leading-6 text-[#17161c]">{activeLayer.imports}</dd>
+                </div>
+                <div className="p-6 sm:px-8">
+                  <dt className="uppercase tracking-[0.18em] text-[#8b8a92]">Never imports</dt>
+                  <dd className="mt-2 leading-6 text-[#17161c]">{activeLayer.never}</dd>
+                </div>
+              </dl>
+            </motion.div>
+          </div>
+
+          {/* file tree */}
+          <div className="grid border-b border-black/12 lg:grid-cols-2">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5 }}
+              className="min-w-0 border-black/12 bg-[#17161c] px-5 py-8 text-[#e8e8ef] sm:px-8 lg:border-r"
+            >
+              <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.24em] text-[#8b8a92]">
+                Repository layout
+              </p>
+              <div className="overflow-x-auto whitespace-pre font-mono text-[13px] leading-7">
+                {fileTree.map((row) => (
+                  <div key={row.line} className="flex justify-between gap-6">
+                    <span>{row.line}</span>
+                    {row.note && <span className="shrink-0 text-[#6d7cff]">← {row.note}</span>}
                   </div>
                 ))}
               </div>
-            </Section>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5, delay: 0.08 }}
+              className="flex flex-col justify-center px-5 py-8 sm:px-8"
+            >
+              <h3 className="text-xl font-bold tracking-tight">Why it&rsquo;s cut this way</h3>
+              <p className="mt-4 text-sm leading-7 text-[#44434c]">
+                Most starters tangle UI, data access, and vendor calls in the same files, so every change ripples.
+                Here the domain is pure TypeScript &mdash; swap Prisma for another ORM, or Stripe for another
+                processor, and the change stays inside <code className="font-mono text-xs text-[#2b3cf0]">infra/</code>.
+                Business rules never move.
+              </p>
+              <p className="mt-4 text-sm leading-7 text-[#44434c]">
+                In plain terms: &ldquo;Domain-Driven Design&rdquo; just means the business rules live at the centre,
+                written in the business&rsquo;s own vocabulary, and everything else plugs into them.
+              </p>
+            </motion.div>
+          </div>
+        </section>
 
-            {/* Stack */}
-            <Section id="stack">
-              <SectionHead n="05" label="What it's built on" />
-              <h2 className="mb-8 text-3xl font-semibold tracking-tight sm:text-4xl">Technology stack</h2>
-              <div className="grid gap-5 md:grid-cols-3">
-                <TechColumn title="Frontend" icon={<Layers className="h-5 w-5" />} items={frontendTech} />
-                <TechColumn title="Data & Auth" icon={<Database className="h-5 w-5" />} items={dataTech} />
-                <TechColumn title="Services" icon={<CreditCard className="h-5 w-5" />} items={platformTech} />
+        {/* ============ § 03 What ships ============ */}
+        <section id="surfaces" className="relative scroll-mt-24 border-x border-black/12">
+          <div className="border-b border-black/12 px-5 py-5 sm:px-8">
+            <SectionMark n="03" label="What ships — two surfaces" />
+          </div>
+
+          {surfaces.map((s, i) => (
+            <motion.div
+              key={s.plate}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5 }}
+              className={`grid border-b border-black/12 lg:grid-cols-[1fr_1.25fr] ${i % 2 === 1 ? 'lg:[&>*:first-child]:order-2' : ''}`}
+            >
+              <div className="flex flex-col justify-between border-black/12 px-5 py-8 sm:px-8 lg:border-r">
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#2b3cf0]">{s.plate}</p>
+                  <h3 className="mt-3 text-3xl font-bold tracking-tight">{s.title}</h3>
+                  <p className="mt-4 text-sm leading-7 text-[#44434c]">{s.copy}</p>
+                </div>
+                <ul className="mt-8 font-mono text-xs">
+                  {s.rows.map((row, ri) => (
+                    <li key={row} className="flex items-baseline gap-4 border-t border-black/12 py-3 transition-colors hover:bg-[#2b3cf0]/[0.04]">
+                      <span className="text-[#8b8a92]">{String(ri + 1).padStart(2, '0')}</span>
+                      <span className="uppercase tracking-[0.12em] text-[#17161c]">{row}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </Section>
+              <div className={`px-5 py-8 sm:px-8 ${i % 2 === 1 ? 'lg:border-r lg:border-black/12' : ''}`}>
+                <ProductFigure
+                  src={s.src}
+                  alt={s.alt}
+                  dims={{ width: 1440, height: 900 }}
+                  caption={s.caption}
+                  theme={media}
+                  frameClassName={sharpFrame}
+                  sizes="(max-width: 1024px) 100vw, 55vw"
+                />
+              </div>
+            </motion.div>
+          ))}
+        </section>
 
-            <ProjectContactCTA
-              project="vertex"
-              projectTitle="Vertex"
-              accentText="text-blue-300"
-              accentBg="bg-blue-500"
-              accentBgHover="hover:bg-blue-400"
-              accentGlow="bg-blue-500/20"
-              next={nextProject ? { href: `/work/${nextProject.slug}`, title: tNext.title } : undefined}
-            />
-          </article>
-        </div>
+        {/* ============ § 04 Bill of materials ============ */}
+        <section id="stack" className="relative scroll-mt-24 border-x border-black/12">
+          <Cross className="-left-[7px] -top-[9px]" />
+          <Cross className="-right-[7px] -top-[9px]" />
+          <div className="border-b border-black/12 px-5 py-5 sm:px-8">
+            <SectionMark n="04" label="Bill of materials" />
+          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.5 }}
+          >
+            {bom.map((row) => (
+              <div
+                key={row.ref}
+                className="grid grid-cols-[3rem_8rem_1fr] items-baseline gap-4 border-b border-black/12 px-5 py-4 font-mono text-xs transition-colors hover:bg-[#2b3cf0]/[0.04] sm:grid-cols-[4rem_10rem_1fr] sm:px-8"
+              >
+                <span className="text-[#2b3cf0]">{row.ref}</span>
+                <span className="uppercase tracking-[0.18em] text-[#8b8a92]">{row.group}</span>
+                <span className="text-sm text-[#17161c]">{row.items}</span>
+              </div>
+            ))}
+          </motion.div>
+        </section>
+
+        {/* ============ Footer CTA ============ */}
+        <section className="relative border-x border-b border-black/12">
+          <div className="bg-[#17161c] px-5 py-12 text-[#f7f7f4] sm:px-8 sm:py-16">
+            <p className="font-mono text-xs uppercase tracking-[0.3em] text-[#6d7cff]">§ 05 — Work with me</p>
+            <h2 className="mt-5 max-w-2xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+              Need a codebase that won&rsquo;t rot as it grows?
+            </h2>
+            <p className="mt-4 max-w-xl text-base leading-7 text-[#b9b8c4]">
+              I partner with founders and small teams to ship production software, start to finish. Tell me
+              what you&rsquo;re building.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <Link
+                href="/#contact"
+                onClick={() => trackEvent('project_cta_click', { project: 'vertex', action: 'contact' })}
+                className="group inline-flex items-center justify-center gap-2 bg-[#2b3cf0] px-6 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:bg-[#f7f7f4] hover:text-[#17161c]"
+              >
+                Start a project
+                <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+              </Link>
+              <a
+                href={`mailto:${EMAIL}`}
+                onClick={() => trackEvent('contact_click', { project: 'vertex', method: 'email' })}
+                className="inline-flex items-center justify-center gap-2 border border-white/20 px-6 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:border-white/50 hover:bg-white/[0.06]"
+              >
+                Email me
+              </a>
+            </div>
+
+            {nextProject && (
+              <div className="mt-10 border-t border-white/15 pt-6">
+                <Link
+                  href={`/work/${nextProject.slug}`}
+                  onClick={() => trackEvent('project_cta_click', { project: 'vertex', action: 'next_project' })}
+                  className="group inline-flex flex-wrap items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[#b9b8c4] transition hover:text-white"
+                >
+                  <span className="text-[#6d7cff]">Next case file</span>
+                  <span className="font-bold text-white">{tNext.title}</span>
+                  <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+                </Link>
+              </div>
+            )}
+          </div>
+        </section>
+
+        <footer className="flex items-center justify-between border-x border-b border-black/12 px-5 py-4 font-mono text-[10px] uppercase tracking-[0.22em] text-[#8b8a92] sm:px-8">
+          <span>Vertex — case file 05 / 06</span>
+          <span>benarfa.com</span>
+        </footer>
+        <div className="h-16" />
       </main>
-    </div>
-  );
-}
-
-function Section({ id, children }: { id: string; children: React.ReactNode }) {
-  return (
-    <motion.section
-      id={id}
-      className="scroll-mt-32"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-120px' }}
-      transition={{ duration: 0.5 }}
-    >
-      {children}
-    </motion.section>
-  );
-}
-
-function SectionHead({ n, label }: { n: string; label: string }) {
-  return (
-    <div className="mb-8 flex items-center gap-3">
-      <span className="rounded-md bg-blue-500 px-2.5 py-1 font-mono text-xs font-bold text-white">{n}</span>
-      <p className="text-xs uppercase tracking-[0.3em] text-slate-500">{label}</p>
-    </div>
-  );
-}
-
-function TechColumn({ title, icon, items }: { title: string; icon: React.ReactNode; items: string[] }) {
-  return (
-    <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-5">
-      <div className="mb-5 flex items-center gap-3 text-blue-300">
-        <div className="rounded-2xl bg-blue-500/10 p-3">{icon}</div>
-        <h3 className="font-semibold text-white">{title}</h3>
-      </div>
-      <div className="space-y-2">
-        {items.map((item) => (
-          <div key={item} className="rounded-2xl border border-white/10 bg-black/25 px-4 py-3 text-sm text-slate-300">{item}</div>
-        ))}
-      </div>
     </div>
   );
 }

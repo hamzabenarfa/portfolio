@@ -1,24 +1,38 @@
 import type { Metadata } from 'next';
+import { StructuredData } from '@/components/seo/structured-seo-data';
 import KindraProjectPage from './client';
 
 export const metadata: Metadata = {
-    title: 'Kindra — Fashion E-Commerce Starter Kit | Hamza Benarfa',
-    description: 'A production-ready e-commerce starter kit for fashion brands — separate Men\'s and Women\'s storefronts, multi-variant products, Stripe payments, and a full admin dashboard.',
+    title: 'KINDRA — Editorial Fashion Storefront Example | Hamza Benarfa',
+    description: 'An editorial fashion storefront concept/example with separate Men\'s and Women\'s collections, lookbook-style landing sections, variant-aware product pages, and a static cart-to-payment UI flow.',
     alternates: { canonical: '/work/kindra' },
+    robots: { index: false, follow: false },
     openGraph: {
-        title: 'Kindra — Fashion E-Commerce Starter Kit | Hamza Benarfa',
-        description: 'A production-ready e-commerce starter kit for fashion brands — separate Men\'s and Women\'s storefronts, multi-variant products, Stripe payments, and a full admin dashboard.',
+        title: 'KINDRA — Editorial Fashion Storefront Example | Hamza Benarfa',
+        description: 'An editorial fashion storefront concept/example with separate Men\'s and Women\'s collections, lookbook-style landing sections, variant-aware product pages, and a static cart-to-payment UI flow.',
         images: [
             {
                 url: '/kindra.webp',
                 width: 1200,
                 height: 630,
-                alt: 'Kindra — fashion e-commerce starter kit',
+                alt: 'KINDRA — editorial fashion storefront',
             },
         ],
     },
 };
 
 export default function Page() {
-    return <KindraProjectPage />;
+    return (
+        <>
+            <StructuredData
+                type="BreadcrumbList"
+                breadcrumbs={[
+                    { name: 'Home', url: '/' },
+                    { name: 'Work', url: '/work' },
+                    { name: 'KINDRA', url: '/work/kindra' },
+                ]}
+            />
+            <KindraProjectPage />
+        </>
+    );
 }

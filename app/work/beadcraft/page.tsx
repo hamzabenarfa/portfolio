@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { StructuredData } from '@/components/seo/structured-seo-data';
 import BeadCraftProjectPage from './client';
 
 export const metadata: Metadata = {
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'BeadCraft Studio — Made-to-Order Bracelet Commerce | Hamza Benarfa',
     description:
-      'Made-to-order bracelet commerce for a Tunisian artisan — a tactile visual configurator, bilingual storefront, and a crafter dashboard for inventory, orders, and per-wilaya shipping.',
+      'Made-to-order jewelry commerce for a Tunisian artisan — a tactile visual configurator, bilingual storefront, and a crafter dashboard for inventory, orders, and a New → Delivered production pipeline.',
     images: [
       {
         url: '/beadcraft.webp',
@@ -22,5 +23,17 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <BeadCraftProjectPage />;
+  return (
+    <>
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Work', url: '/work' },
+          { name: 'BeadCraft Studio', url: '/work/beadcraft' },
+        ]}
+      />
+      <BeadCraftProjectPage />
+    </>
+  );
 }

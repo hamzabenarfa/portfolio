@@ -13,10 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/background", priority: 0.6 },
   ];
 
-  const projectRoutes = PROJECTS.map((project) => ({
-    path: `/work/${project.slug}`,
-    priority: 0.8,
-  }));
+  const projectRoutes = PROJECTS.filter((project) => project.listed !== false).map(
+    (project) => ({
+      path: `/work/${project.slug}`,
+      priority: 0.8,
+    }),
+  );
 
   return [...staticRoutes, ...projectRoutes].map(({ path, priority }) => ({
     url: `${baseUrl}${path}`,

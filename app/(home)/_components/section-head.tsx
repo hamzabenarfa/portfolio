@@ -1,35 +1,15 @@
 import type { ReactNode } from "react";
-import { TextReveal, FadeUp } from "@/components/fx/reveal";
 
-export function SectionHead({
-  index,
-  label,
-  title,
-  meta,
-}: {
-  index: string;
+export function SectionHead({ label, title, meta }: {
+  index?: string;
   label: string;
   title: ReactNode;
   meta?: ReactNode;
 }) {
   return (
     <div className="sec-head">
-      <div>
-        <FadeUp className="sec-index" y={0}>
-          <span className="rule" />
-          <span className="mono">
-            <span className="mono-accent">{index}</span> / {label}
-          </span>
-        </FadeUp>
-        <TextReveal as="h2" className="sec-title">
-          {title}
-        </TextReveal>
-      </div>
-      {meta ? (
-        <FadeUp className="sec-meta mono" y={20} delay={0.15}>
-          {meta}
-        </FadeUp>
-      ) : null}
+      <div><div className="sec-index"><span className="section-label">{label}</span></div><h2 className="sec-title">{title}</h2></div>
+      {meta ? <div className="sec-meta">{meta}</div> : null}
     </div>
   );
 }

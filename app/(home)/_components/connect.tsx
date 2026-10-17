@@ -1,105 +1,51 @@
-import { TextReveal, FadeUp } from "@/components/fx/reveal";
-import { Magnetic } from "@/components/fx/magnetic";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import { TrackedLink } from "@/components/fx/tracked-link";
 
 export function Connect() {
   return (
-    <section id="contact" className="contact">
+    <section id="contact" className="contact support-contact">
       <div className="container">
-        <FadeUp className="sec-index" y={0}>
-          <span className="rule" />
-          <span className="mono">
-            <span className="mono-accent">05</span> / Let&rsquo;s talk
-          </span>
-        </FadeUp>
+        <div className="contact-intro">
+          <div className="support-eyebrow">Your next chapter</div>
+          <h2 className="contact-display">Have a good idea?<br />Let’s make it real.</h2>
+          <p className="contact-lede">Have a product in mind? Tell me what you&rsquo;re trying to build.</p>
+          <TrackedLink
+            href="mailto:contact@benarfa.com"
+            className="contact-mail"
+            event="contact_click"
+            eventData={{ method: "email", source: "contact_primary" }}
+          >
+            <span>contact@benarfa.com</span><ArrowUpRight size={20} aria-hidden="true" />
+          </TrackedLink>
+          <div className="contact-author">
+            <Image src="/avatar.jpeg" alt="Hamza Benarfa" width={48} height={48} />
+            <span><strong>Hamza Benarfa</strong><small>Full-stack developer · Tunis, Tunisia</small></span>
+            <span className="contact-availability"><i aria-hidden="true" /> Usually replies within one business day</span>
+          </div>
+        </div>
 
-        <TextReveal as="h2" className="contact-display">
-          Need a serious
-          <br />
-          <em>technical</em> partner?
-        </TextReveal>
-
-        <FadeUp delay={0.25}>
-          <Magnetic strength={0.25}>
-            <TrackedLink
-              href="mailto:contact@benarfa.com"
-              className="contact-mail"
-              data-cursor="hover"
-              event="contact_click"
-              eventData={{ method: "email", source: "contact_primary" }}
-            >
-              <span className="icon">→</span>
-              contact@benarfa.com
-            </TrackedLink>
-          </Magnetic>
-        </FadeUp>
-
-        <FadeUp className="contact-grid" stagger={0.1} y={28}>
+        <div className="contact-grid">
           <div>
-            <h4 className="mono">[ Direct ]</h4>
-            <TrackedLink
-              href="mailto:contact@benarfa.com"
-              event="contact_click"
-              eventData={{ method: "email", source: "contact_grid" }}
-            >
-              contact@benarfa.com
-            </TrackedLink>
-            <TrackedLink
-              href="https://wa.me/21622633345"
-              target="_blank"
-              rel="noreferrer"
-              event="contact_click"
-              eventData={{ method: "whatsapp", source: "contact_grid" }}
-            >
-              WhatsApp ↗
-            </TrackedLink>
+            <h3>Direct</h3>
+            <TrackedLink href="mailto:contact@benarfa.com" event="contact_click" eventData={{ method: "email", source: "contact_grid" }}>Email me</TrackedLink>
           </div>
           <div>
-            <h4 className="mono">[ Elsewhere ]</h4>
-            <TrackedLink
-              href="https://github.com/hamzabenarfa/"
-              target="_blank"
-              rel="noreferrer"
-              event="contact_click"
-              eventData={{ method: "github", source: "contact_grid" }}
-            >
-              GitHub ↗
-            </TrackedLink>
-            <TrackedLink
-              href="https://www.linkedin.com/in/hamzabenarfa/"
-              target="_blank"
-              rel="noreferrer"
-              event="contact_click"
-              eventData={{ method: "linkedin", source: "contact_grid" }}
-            >
-              LinkedIn ↗
-            </TrackedLink>
+            <h3>Elsewhere</h3>
+            <TrackedLink href="https://github.com/hamzabenarfa/" target="_blank" rel="noreferrer" event="contact_click" eventData={{ method: "github", source: "contact_grid" }}>GitHub ↗</TrackedLink>
+            <TrackedLink href="https://www.linkedin.com/in/hamzabenarfa/" target="_blank" rel="noreferrer" event="contact_click" eventData={{ method: "linkedin", source: "contact_grid" }}>LinkedIn ↗</TrackedLink>
           </div>
           <div>
-            <h4 className="mono">[ Documents ]</h4>
-            <TrackedLink
-              href="/benarfa-hamza-en.pdf"
-              download
-              event="contact_click"
-              eventData={{ method: "cv", source: "contact_grid" }}
-            >
-              Developer CV ↓
-            </TrackedLink>
-            <TrackedLink
-              href="/benarfa-hamza-en.pdf"
-              download
-              event="contact_click"
-              eventData={{ method: "cv", source: "contact_grid_hiring" }}
-            >
-              For hiring teams
-            </TrackedLink>
+            <h3>Documents</h3>
+            <TrackedLink href="/benarfa-hamza-en.pdf" download event="contact_click" eventData={{ method: "cv", source: "contact_grid" }}>Developer CV ↓</TrackedLink>
+            <TrackedLink href="/benarfa-hamza-en.pdf" download event="contact_click" eventData={{ method: "cv", source: "contact_grid_hiring" }}>For hiring teams</TrackedLink>
           </div>
           <div>
-            <h4 className="mono">[ Working hours ]</h4>
+            <h3>Working hours</h3>
             <p>Mon — Fri</p>
             <p>09:00 — 19:00 GMT+1</p>
           </div>
-        </FadeUp>
+        </div>
       </div>
     </section>
   );

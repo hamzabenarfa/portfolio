@@ -15,15 +15,37 @@ import {
 import type { AnimationPlaybackControls } from 'framer-motion';
 import { Maximize2, MousePointer2, Smartphone, X } from 'lucide-react';
 
-interface Dimensions {
+export interface MediaDimensions {
   width: number;
   height: number;
 }
 
-const ACCENT = '#c41e6b';
-const INK = '#1c1917';
+/**
+ * Per-case-study theming so every page gets the same image interactions
+ * (hover motion, lightbox, scrub) without sharing a visual identity.
+ */
+export interface MediaTheme {
+  /** Accent color (hex) — scroll thumb, hover hints. */
+  accent: string;
+  /** Ink color (hex) — expand-pill background. */
+  ink: string;
+  /** Page surface color (hex) — scrub fade gradient base. */
+  surface: string;
+  /** Muted text class for captions and hint rows, e.g. 'text-[#9a948b]'. */
+  captionClass?: string;
+  /** Scrub track color (any CSS color). Defaults to a soft black. */
+  trackColor?: string;
+}
 
-function Lightbox({
+const DEFAULT_THEME: MediaTheme = {
+  accent: '#c41e6b',
+  ink: '#1c1917',
+  surface: '#ffffff',
+  captionClass: 'text-[#9a948b]',
+  trackColor: 'rgba(0,0,0,0.08)',
+};
+
+export function Lightbox({
   src,
   alt,
   dims,
@@ -31,7 +53,7 @@ function Lightbox({
 }: {
   src: string;
   alt: string;
-  dims: Dimensions;
+  dims: MediaDimensions;
   onClose: () => void;
 }) {
   useEffect(() => {
@@ -53,7 +75,7 @@ function Lightbox({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#1c1917]/90 p-4 backdrop-blur-md sm:p-10"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#100e0d]/90 p-4 backdrop-blur-md sm:p-10"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -89,14 +111,17 @@ function Lightbox({
   );
 }
 
-interface ProductFigureProps {
+export interface ProductFigureProps {
   src: string;
   alt: string;
-  dims: Dimensions;
+  dims: MediaDimensions;
   aspectClassName?: string;
+  /** Frame styling so each case study keeps its own visual identity. */
+  frameClassName?: string;
   caption?: string;
   priority?: boolean;
   sizes?: string;
+  theme?: MediaTheme;
 }
 
 export function ProductFigure({
@@ -104,9 +129,11 @@ export function ProductFigure({
   alt,
   dims,
   aspectClassName = 'aspect-[16/10]',
+  frameClassName = 'rounded-[1.75rem] border border-black/10 bg-white shadow-sm hover:shadow-xl hover:shadow-black/5',
   caption,
   priority,
   sizes,
+  theme = DEFAULT_THEME,
 }: ProductFigureProps) {
   const [open, setOpen] = useState(false);
 
@@ -116,7 +143,7 @@ export function ProductFigure({
         type="button"
         onClick={() => setOpen(true)}
         aria-label={`Expand ${alt}`}
-        className="group relative block w-full overflow-hidden rounded-[1.75rem] border border-black/10 bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-black/5"
+        className={`group relative block w-full overflow-hidden text-left transition hover:-translate-y-0.5 ${frameClassName}`}
       >
         <div className={`relative ${aspectClassName}`}>
           <Image
@@ -129,14 +156,18 @@ export function ProductFigure({
             priority={priority}
           />
           <span
-            className="pointer-events-none absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100"
-            style={{ backgroundColor: `${INK}cc` }}
+            className="pointer-events-none absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+            style={{ backgroundColor: `${theme.ink}cc` }}
           >
             <Maximize2 className="h-3.5 w-3.5" /> Expand
           </span>
         </div>
       </button>
-      {caption && <figcaption className="mt-3 text-xs text-[#9a948b]">{caption}</figcaption>}
+      {caption && (
+        <figcaption className={`mt-3 text-xs ${theme.captionClass ?? DEFAULT_THEME.captionClass}`}>
+          {caption}
+        </figcaption>
+      )}
 
       <AnimatePresence>
         {open && <Lightbox src={src} alt={alt} dims={dims} onClose={() => setOpen(false)} />}
@@ -145,16 +176,31 @@ export function ProductFigure({
   );
 }
 
-interface ScrubCanvasProps {
+export interface ScrubCanvasProps {
   src: string;
   alt: string;
-  dims: Dimensions;
+  dims: MediaDimensions;
   caption?: string;
+  label?: string;
+  frameClassName?: string;
+  theme?: MediaTheme;
 }
 
 const AUTO_SCROLL_DURATION_S = 9;
 
-export function ScrubCanvas({ src, alt, dims, caption }: ScrubCanvasProps) {
+/**
+ * Tall full-page capture that auto-scrolls inside a fixed frame on hover
+ * (hold on touch), with a progress thumb and a lightbox for the full image.
+ */
+export function ScrubCanvas({
+  src,
+  alt,
+  dims,
+  caption,
+  label = 'Full page capture',
+  frameClassName = 'rounded-[1.75rem] border border-black/10 bg-white shadow-sm hover:shadow-lg',
+  theme = DEFAULT_THEME,
+}: ScrubCanvasProps) {
   const prefersReducedMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const imageWrapRef = useRef<HTMLDivElement>(null);
@@ -203,6 +249,7 @@ export function ScrubCanvas({ src, alt, dims, caption }: ScrubCanvasProps) {
 
   useEffect(() => {
     startAutoScroll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- restart only when the measured range changes
   }, [maxTranslate]);
 
   const handlePointerEnter = (e: ReactPointerEvent<HTMLDivElement>) => {
@@ -229,14 +276,16 @@ export function ScrubCanvas({ src, alt, dims, caption }: ScrubCanvasProps) {
     autoScrollControls.current = animate(progress, 0, { duration: 0.7, ease: [0.16, 1, 0.3, 1] });
   };
 
+  const captionClass = theme.captionClass ?? DEFAULT_THEME.captionClass;
+
   return (
     <figure>
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-        <span className="text-xs uppercase tracking-[0.24em] text-[#9a948b]">Full landing capture</span>
-        <span className="hidden items-center gap-2 text-xs text-[#9a948b] sm:inline-flex">
-          <MousePointer2 className="h-3.5 w-3.5" style={{ color: ACCENT }} /> Hover to scroll
-          <span className="text-[#d4cfc8]">/</span>
-          <Smartphone className="h-3.5 w-3.5" style={{ color: ACCENT }} /> Hold on mobile
+        <span className={`text-xs uppercase tracking-[0.24em] ${captionClass}`}>{label}</span>
+        <span className={`hidden items-center gap-2 text-xs sm:inline-flex ${captionClass}`}>
+          <MousePointer2 className="h-3.5 w-3.5" style={{ color: theme.accent }} /> Hover to scroll
+          <span aria-hidden="true">/</span>
+          <Smartphone className="h-3.5 w-3.5" style={{ color: theme.accent }} /> Hold on mobile
         </span>
       </div>
 
@@ -247,7 +296,7 @@ export function ScrubCanvas({ src, alt, dims, caption }: ScrubCanvasProps) {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onTouchCancel={handleTouchEnd}
-        className="group relative h-[420px] w-full touch-none select-none overflow-hidden rounded-[1.75rem] border border-black/10 bg-white shadow-sm transition hover:shadow-lg sm:h-[480px] lg:h-[560px]"
+        className={`group relative h-[420px] w-full touch-none select-none overflow-hidden transition sm:h-[480px] lg:h-[560px] ${frameClassName}`}
       >
         <motion.div ref={imageWrapRef} style={{ y }} className="absolute inset-x-0 top-0">
           <Image
@@ -262,12 +311,18 @@ export function ScrubCanvas({ src, alt, dims, caption }: ScrubCanvasProps) {
           />
         </motion.div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-white to-transparent" />
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
+          style={{ background: `linear-gradient(to top, ${theme.surface}, transparent)` }}
+        />
 
-        <div className="pointer-events-none absolute bottom-3 right-3 top-3 w-[3px] rounded-full bg-black/8">
+        <div
+          className="pointer-events-none absolute bottom-3 right-3 top-3 w-[3px] rounded-full"
+          style={{ backgroundColor: theme.trackColor ?? DEFAULT_THEME.trackColor }}
+        >
           <motion.div
             className="absolute inset-x-0 top-0 h-[18%] w-[3px] rounded-full"
-            style={{ y: thumbY, backgroundColor: ACCENT }}
+            style={{ y: thumbY, backgroundColor: theme.accent }}
           />
         </div>
 
@@ -278,13 +333,13 @@ export function ScrubCanvas({ src, alt, dims, caption }: ScrubCanvasProps) {
             setOpen(true);
           }}
           aria-label={`Expand ${alt}`}
-          className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100"
-          style={{ backgroundColor: `${INK}cc` }}
+          className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100"
+          style={{ backgroundColor: `${theme.ink}cc` }}
         >
           <Maximize2 className="h-3.5 w-3.5" /> Full page
         </button>
       </div>
-      {caption && <figcaption className="mt-3 text-xs text-[#9a948b]">{caption}</figcaption>}
+      {caption && <figcaption className={`mt-3 text-xs ${captionClass}`}>{caption}</figcaption>}
 
       <AnimatePresence>
         {open && <Lightbox src={src} alt={alt} dims={dims} onClose={() => setOpen(false)} />}

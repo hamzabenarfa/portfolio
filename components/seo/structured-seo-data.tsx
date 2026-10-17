@@ -170,4 +170,14 @@ const DEFAULT_FAQS = [
     answer:
       "Yes — that's the whole point. I take ownership of the full stack so founders aren't coordinating between two contractors. For larger work I plug into existing teams as a senior IC.",
   },
+  {
+    question: "How long does an MVP take?",
+    answer:
+      "Weeks, not quarters. After a scoping call you get a roadmap with weekly demo milestones, and there's a deployable build on staging from the first sprint — how many sprints it takes depends on the scope we agree on, and you'll know that number before any code is written.",
+  },
+  {
+    question: "What happens after launch?",
+    answer:
+      "Launch isn't the end of the engagement. Every project ships with documentation, a clean handover, and the deploy pipeline set up — Docker, CI/CD, monitoring. If you want me to stay involved, ongoing support and iteration retainers are available.",
+  },
 ];

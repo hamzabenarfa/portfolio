@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { StructuredData } from '@/components/seo/structured-seo-data';
 import AutoPartProjectPage from './client';
 
 export const metadata: Metadata = {
@@ -22,5 +23,17 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <AutoPartProjectPage />;
+  return (
+    <>
+      <StructuredData
+        type="BreadcrumbList"
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Work', url: '/work' },
+          { name: 'AutoParts Tunisia', url: '/work/autopart' },
+        ]}
+      />
+      <AutoPartProjectPage />
+    </>
+  );
 }

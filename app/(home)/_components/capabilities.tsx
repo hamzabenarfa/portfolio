@@ -1,107 +1,58 @@
-"use client";
-
-import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { Boxes, CloudCog, PanelsTopLeft, WandSparkles } from "lucide-react";
 import { SectionHead } from "./section-head";
-
-gsap.registerPlugin(ScrollTrigger);
+import "./supporting-sections.css";
 
 const services = [
   {
     num: "01",
-    glyph: "mvp",
-    title: "Product MVP Build",
-    desc: "For founders who need a working SaaS, dashboard, marketplace, or internal tool — from idea to launch. I handle scope, architecture, frontend, backend, auth, payments, storage, and deployment.",
-    tags: ["Scoping", "Architecture", "Auth & Payments", "Deployment"],
+    icon: WandSparkles,
+    title: "Product MVPs",
+    desc: "A clear path from idea to a working SaaS, dashboard, marketplace, or internal tool — including scope, architecture, build, and launch.",
+    tags: ["Scoping", "Architecture", "Auth & payments", "Launch"],
   },
   {
     num: "02",
-    glyph: "saas",
-    title: "SaaS Platform Development",
-    desc: "For businesses that need a real multi-user platform. Multi-role access, admin panels, analytics, file storage, billing, and scalable architecture — not just a website.",
-    tags: ["Multi-tenant", "Admin Panels", "Billing", "Analytics"],
+    icon: Boxes,
+    title: "SaaS platforms",
+    desc: "Multi-user products with the roles, admin tools, billing, analytics, and storage that a real business needs to operate.",
+    tags: ["Multi-role", "Admin tools", "Billing", "Analytics"],
   },
   {
     num: "03",
-    glyph: "canvas",
-    title: "Custom Editors & Visual Tools",
-    desc: "Canvas-based product customizers, Canva-style editors, mockup generators, and image manipulation tools. Konva.js and Fabric.js specialist — this is a genuine differentiator.",
-    tags: ["Konva.js", "Fabric.js", "Customizers", "Image Pipelines"],
+    icon: PanelsTopLeft,
+    title: "Editors & visual tools",
+    desc: "Custom product builders, canvas-based editors, mockup generators, and image tools built around the way people create.",
+    tags: ["Konva.js", "Fabric.js", "Customizers", "Image pipelines"],
   },
   {
     num: "04",
-    glyph: "ops",
-    title: "DevOps & Launch Infrastructure",
-    desc: "Docker, GitHub Actions CI/CD, Nginx, cloud deployment, monitoring, and security hardening. For teams that need production stability handled without a dedicated ops hire.",
+    icon: CloudCog,
+    title: "DevOps & infrastructure",
+    desc: "Production deployment and operations, from containers and CI/CD to monitoring and security hardening.",
     tags: ["Docker", "CI/CD", "Nginx", "Monitoring"],
   },
 ];
 
-/**
- * Deck of sticky panels: each card pins below the nav while the next
- * one slides over it; the buried card recedes — scaling down and
- * dimming — like sheets stacking on a desk.
- */
 export function Capabilities() {
-  const root = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-      const cards = gsap.utils.toArray<HTMLElement>(".stack-card");
-      cards.forEach((card, i) => {
-        const next = cards[i + 1];
-        if (!next) return;
-        gsap
-          .timeline({
-            scrollTrigger: {
-              trigger: next,
-              // begin dimming only once the next card has climbed past the
-              // midline (the current card has been read by then), and finish
-              // quickly as it locks under the nav — short, late, snappy.
-              start: "top 60%",
-              end: "top top+=120",
-              scrub: 0.6,
-            },
-          })
-          .to(card, { scale: 0.95, filter: "brightness(0.66)", ease: "none" }, 0);
-      });
-    },
-    { scope: root },
-  );
-
   return (
-    <section id="services" className="section container" ref={root}>
+    <section id="services" className="section container support-services">
       <SectionHead
         index="02"
         label="Services"
-        title={
-          <>
-            What I <em>build</em>
-          </>
-        }
-        meta={<>04 areas of practice</>}
+        title={<>A full-stack<br />point of view.</>}
+        meta={<>Four areas of practice</>}
       />
-
-      <div className="stack-cards">
-        {services.map((s) => (
-          <article key={s.num} className="stack-card">
-            <span className="stack-num">( {s.num} )</span>
-            <div className="stack-body">
-              <h3>{s.title}</h3>
-              <p>{s.desc}</p>
-              <div className="stack-tags">
-                {s.tags.map((t) => (
-                  <span key={t}>{t}</span>
-                ))}
+      <div className="service-list">
+        {services.map(({ num, icon: Icon, title, desc, tags }) => (
+          <article className="service-row" key={num}>
+            <span className="service-icon" aria-hidden="true"><Icon size={21} strokeWidth={1.7} /></span>
+            <div className="service-copy">
+              <h3>{title}</h3>
+              <p>{desc}</p>
+              <div className="service-tags" aria-label={`${title} capabilities`}>
+                {tags.map((tag) => <span key={tag}>{tag}</span>)}
               </div>
             </div>
-            <span className="stack-glyph" aria-hidden="true">
-              {s.glyph}
-            </span>
           </article>
         ))}
       </div>

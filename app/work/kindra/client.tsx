@@ -1,473 +1,523 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
-import {
-  ArrowLeft,
-  ArrowRight,
-  ArrowUpRight,
-  ExternalLink,
-  ShoppingBag,
-  CreditCard,
-  LayoutGrid,
-  Boxes,
-  ShieldCheck,
-  Truck,
-  Database,
-  Server,
-  CheckCircle2,
-} from 'lucide-react';
+import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
+import { ArrowLeft, ArrowRight, ArrowUpRight, ExternalLink, Maximize2 } from 'lucide-react';
 
 import { PROJECTS } from '@/data/consts';
 import { PROJECT_CONTENT } from '@/data/project-content';
 import { trackEvent } from '@/lib/track';
+import { Lightbox, ProductFigure, type MediaTheme } from '@/components/fx/media';
 
 const EMAIL = 'contact@benarfa.com';
-const WHATSAPP = 'https://wa.me/21622633345';
 
-const navItems = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'storefronts', label: 'Storefronts' },
-  { id: 'product', label: 'Product Page' },
-  { id: 'admin', label: 'Operations' },
-  { id: 'stack', label: 'Stack' },
+const media: MediaTheme = {
+  accent: '#0a0a0a',
+  ink: '#0a0a0a',
+  surface: '#ffffff',
+  captionClass: 'text-[#8f8b85]',
+};
+
+const editorialFrame = 'rounded-none border border-black/15 bg-white shadow-none hover:shadow-[0_18px_50px_rgba(0,0,0,0.12)]';
+
+interface CollectionPanel {
+  id: 'women' | 'men';
+  label: string;
+  src: string;
+  alt: string;
+  note: string;
+}
+
+const panels: CollectionPanel[] = [
+  {
+    id: 'women',
+    label: 'Women',
+    src: '/kindra-women.webp',
+    alt: 'KINDRA women’s storefront',
+    note: 'Editorial landing, lookbook galleries',
+  },
+  {
+    id: 'men',
+    label: 'Men',
+    src: '/kindra-men.webp',
+    alt: 'KINDRA men’s storefront',
+    note: 'Same design system, its own voice',
+  },
 ];
 
-const storefrontMoments = [
-  { title: 'Two storefronts, one codebase', copy: 'Separate Men’s and Women’s collections share commerce logic but read as distinct editorial sites.', icon: LayoutGrid },
-  { title: 'Variant-aware catalogue', copy: 'Size and colour stay attached to each purchasable option, down to per-variant stock.', icon: Boxes },
-  { title: 'Stripe checkout', copy: 'Checkout sessions and webhook fulfilment keep order creation reliable and auditable.', icon: CreditCard },
-  { title: 'Built to launch fast', copy: 'A starter kit, not a demo — storefront, payments, and admin are production-ready on day one.', icon: ShoppingBag },
+const mechanics = [
+  {
+    n: 'I',
+    title: 'Routes that come from data',
+    copy: 'Collection pages aren’t hand-built — dynamic section and category routes generate every page of the catalogue from data files, so a new collection is a data change, not a development project.',
+  },
+  {
+    n: 'II',
+    title: 'Product pages that sell fashion',
+    copy: 'Size and colour variants, care instructions, and sticky product navigation — the details a fashion shopper expects, treated as first-class UI rather than an afterthought.',
+  },
+  {
+    n: 'III',
+    title: 'The full purchase journey',
+    copy: 'Cart, checkout, and payment screens complete the walk from lookbook to order, plus a sign-in / sign-up screen — a static UI walkthrough of the whole flow, built to be wired to a real commerce backend.',
+  },
+  {
+    n: 'IV',
+    title: 'A design system underneath',
+    copy: 'Radix primitives styled into one coherent shadcn/ui system, animated throughout with Framer Motion. The editorial look is a layer over disciplined component architecture.',
+  },
 ];
 
-const operationCards = [
-  { title: 'Catalogue control', copy: 'Create products, manage variants, and keep stock levels visible from a focused admin surface.', icon: LayoutGrid },
-  { title: 'Secure sessions', copy: 'Custom session auth, HTTP-only cookies, and role boundaries protect operational workflows.', icon: ShieldCheck },
-  { title: 'Order lifecycle', copy: 'Checkout events flow into admin-ready orders so fulfilment can start without manual stitching.', icon: Truck },
-];
+/** Hover-expand split panel — the two storefronts as a single editorial spread. */
+function SplitCollections() {
+  const [hovered, setHovered] = useState<CollectionPanel['id'] | null>(null);
+  const [openPanel, setOpenPanel] = useState<CollectionPanel | null>(null);
+
+  return (
+    <div>
+      <div className="flex flex-col gap-3 sm:h-[560px] sm:flex-row lg:h-[640px]">
+        {panels.map((panel) => {
+          const isHovered = hovered === panel.id;
+          const isShrunk = hovered !== null && !isHovered;
+          return (
+            <motion.button
+              key={panel.id}
+              type="button"
+              onClick={() => setOpenPanel(panel)}
+              onMouseEnter={() => setHovered(panel.id)}
+              onMouseLeave={() => setHovered(null)}
+              onFocus={() => setHovered(panel.id)}
+              onBlur={() => setHovered(null)}
+              animate={{ flexGrow: isHovered ? 1.7 : isShrunk ? 0.75 : 1 }}
+              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative min-h-[320px] flex-1 basis-0 overflow-hidden border border-black/15 text-left sm:min-h-0"
+              aria-label={`Expand ${panel.alt}`}
+            >
+              <Image
+                src={panel.src}
+                alt={panel.alt}
+                fill
+                sizes="(max-width: 640px) 100vw, 60vw"
+                quality={90}
+                className={`object-cover object-top transition duration-700 ${isShrunk ? 'grayscale' : 'grayscale-0'} group-hover:scale-[1.02]`}
+              />
+              <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/0 to-black/0" />
+              <span className="absolute bottom-0 left-0 right-0 flex items-end justify-between p-5 sm:p-7">
+                <span>
+                  <span className="block font-serif text-4xl text-white sm:text-5xl">{panel.label}</span>
+                  <span className={`mt-2 block font-mono text-[10px] uppercase tracking-[0.24em] text-white/70 transition-opacity duration-500 ${isShrunk ? 'opacity-0' : 'opacity-100'}`}>
+                    {panel.note}
+                  </span>
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-white opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                  <Maximize2 className="h-3 w-3" /> View
+                </span>
+              </span>
+            </motion.button>
+          );
+        })}
+      </div>
+      <p className="mt-3 flex justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-[#8f8b85]">
+        <span>Fig. 02 — Two storefronts, one codebase</span>
+        <span className="hidden sm:inline">Hover to compare · click to expand</span>
+      </p>
+
+      <AnimatePresence>
+        {openPanel && (
+          <Lightbox
+            src={openPanel.src}
+            alt={openPanel.alt}
+            dims={{ width: 1600, height: 1000 }}
+            onClose={() => setOpenPanel(null)}
+          />
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function KindraProjectPage() {
   const t = PROJECT_CONTENT.kindra;
   const project = PROJECTS.find((p) => p.slug === 'kindra');
   const nextProject = PROJECTS.find((p) => p.slug === 'dtalk-ecosystem');
   const tNext = PROJECT_CONTENT['dtalk-ecosystem'];
-  const [imageError, setImageError] = useState(false);
-  const [activeSection, setActiveSection] = useState(navItems[0].id);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 28, restDelta: 0.001 });
-  const heroY = useTransform(scrollYProgress, [0, 0.5], ['0%', '12%']);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      let current = navItems[0].id;
-      for (const item of navItems) {
-        const el = document.getElementById(item.id);
-        if (el && el.getBoundingClientRect().top < 260) current = item.id;
-      }
-      if (window.innerHeight + Math.round(window.scrollY) >= document.body.offsetHeight - 50) {
-        current = navItems[navItems.length - 1].id;
-      }
-      setActiveSection(current);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   if (!project) return null;
 
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const y = el.getBoundingClientRect().top + window.scrollY - 96;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-  };
-
-  const frontendTech = project.tech.filter((x) => ['Next.js', 'React', 'TypeScript', 'Tailwind'].some((n) => x.includes(n)));
-  const backendTech = project.tech.filter((x) => ['PostgreSQL', 'Drizzle', 'Oslo', 'Stripe'].some((n) => x.includes(n)));
-  const platformTech = project.tech.filter((x) => ['Docker', 'Cloudflare', 'Zod'].some((n) => x.includes(n)));
-
   return (
-    <div className="min-h-screen overflow-hidden bg-white text-[#0a0a0a] selection:bg-black/10">
-      <motion.div className="fixed inset-x-0 top-0 z-50 h-1 origin-left bg-black" style={{ scaleX }} />
+    <div className="min-h-screen bg-[#fdfdfb] text-[#0a0a0a] selection:bg-black/90 selection:text-white">
+      <motion.div className="fixed inset-x-0 top-0 z-50 h-0.5 origin-left bg-black" style={{ scaleX }} />
 
-      <nav className="fixed inset-x-0 top-0 z-40 border-b border-black/10 bg-white/85 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
+      <nav className="fixed inset-x-0 top-0 z-40 border-b border-black/12 bg-[#fdfdfb]/90 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
           <Link
             href="/work"
-            className="group flex items-center gap-2 rounded-full border border-black/12 px-3 py-2 text-xs font-medium text-[#555] transition hover:border-black/30 hover:text-black"
+            className="group flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-[#6d6a64] transition hover:text-black"
           >
-            <ArrowLeft className="h-4 w-4 transition group-hover:-translate-x-0.5" />
-            <span className="hidden sm:inline">Back to Portfolio</span>
+            <ArrowLeft className="h-3.5 w-3.5 transition group-hover:-translate-x-0.5" />
+            <span className="hidden sm:inline">Index</span>
             <span className="sm:hidden">Back</span>
           </Link>
-
-          <div className="hidden items-center gap-1 rounded-full border border-black/10 bg-black/[0.02] p-1 lg:flex">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollTo(item.id)}
-                className={`rounded-full px-3 py-1.5 text-xs uppercase tracking-[0.08em] transition ${
-                  activeSection === item.id ? 'bg-black text-white' : 'text-[#777] hover:text-black'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-
+          <span className="font-serif text-lg tracking-[0.08em]">KINDRA</span>
           {project.url && (
             <a
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 rounded-full bg-black px-3 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-white transition hover:bg-[#222] sm:px-4"
+              className="group flex items-center gap-2 bg-black px-3 py-2 font-mono text-[11px] uppercase tracking-[0.16em] text-white transition hover:bg-[#3a3a3a] sm:px-4"
             >
               <span className="hidden sm:inline">Visit store</span>
               <span className="sm:hidden">Live</span>
-              <ExternalLink className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ExternalLink className="h-3.5 w-3.5" />
             </a>
           )}
         </div>
       </nav>
 
       <main className="relative">
-        <header className="relative px-4 pt-28 sm:px-6 lg:pt-36">
-          <motion.div className="mx-auto max-w-7xl" style={{ y: heroY }}>
+        {/* ============ Masthead ============ */}
+        <header className="mx-auto max-w-7xl px-4 pt-24 sm:px-6 sm:pt-28">
+          <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-black py-3 font-mono text-[10px] uppercase tracking-[0.24em] text-[#6d6a64]">
+            <span>Case study N°06</span>
+            <span className="hidden sm:inline">{t.category}</span>
+            <span>{project.year} — Tunisia</span>
+          </div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 26 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="border-b border-black py-4 text-center font-serif text-[19vw] uppercase leading-[0.9] tracking-[0.02em] sm:text-[11.5rem] lg:text-[13.5rem]"
+          >
+            Kindra
+          </motion.h1>
+
+          <div className="grid gap-0 border-b border-black/15 md:grid-cols-[1.2fr_1fr]">
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="border-black/15 py-7 pr-6 font-serif text-2xl italic leading-snug text-[#2c2a27] sm:text-3xl md:border-r"
+            >
+              The front-of-house of a fashion brand — a storefront built like a magazine, not a template shop.
+            </motion.p>
             <motion.div
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45 }}
-              className="mb-6 flex flex-wrap items-center gap-3"
+              transition={{ duration: 0.5, delay: 0.25 }}
+              className="flex flex-col justify-between gap-6 py-7 md:pl-8"
             >
-              <span className="rounded-full border border-black/15 px-3 py-1 text-xs font-medium uppercase tracking-[0.24em] text-[#555]">
-                {t.category}
-              </span>
-              <span className="font-mono text-xs text-[#999]">{project.year}</span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.08 }}
-              className="font-serif text-[18vw] font-medium uppercase leading-[0.82] tracking-[-0.01em] text-black sm:text-[11rem] lg:text-[13rem]"
-            >
-              Kindra
-            </motion.h1>
-
-            <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-end">
-              <motion.p
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.18 }}
-                className="max-w-xl text-xl leading-relaxed text-[#3a3a3a] sm:text-2xl"
-              >
-                {t.description}
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.26 }}
-                className="flex flex-col gap-3 sm:flex-row lg:justify-end"
-              >
+              <p className="text-sm leading-7 text-[#55524c]">{t.description}</p>
+              <div className="flex flex-wrap gap-3">
                 {project.url && (
                   <a
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center justify-center gap-2 rounded-full bg-black px-6 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-white transition hover:bg-[#222]"
+                    className="group inline-flex items-center gap-2 bg-black px-5 py-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white transition hover:bg-[#3a3a3a]"
                   >
-                    Open storefront
-                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                    Open the storefront
+                    <ArrowUpRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                 )}
-                <button
-                  onClick={() => scrollTo('overview')}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-black/15 px-6 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-black transition hover:border-black/40"
+                <a
+                  href="#collections"
+                  className="inline-flex items-center gap-2 border border-black/25 px-5 py-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-black transition hover:border-black"
                 >
-                  Read the case study
-                </button>
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* full-bleed editorial hero photo */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative mt-16 aspect-[16/8] w-full overflow-hidden bg-[#f1f0ec] sm:mt-20"
-          >
-            {!imageError ? (
-              <Image
-                src={project.image || '/placeholder.svg'}
-                alt="Kindra storefront"
-                fill
-                sizes="100vw"
-                className="object-cover object-top"
-                priority
-                quality={92}
-                onError={() => setImageError(true)}
-              />
-            ) : (
-              <div className="flex h-full items-center justify-center">
-                <ShoppingBag className="h-12 w-12 text-black/30" />
+                  The collections
+                </a>
               </div>
-            )}
-          </motion.div>
+            </motion.div>
+          </div>
         </header>
 
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[220px_1fr] lg:gap-20">
-          <aside className="hidden lg:block">
-            <div className="sticky top-28">
-              <div className="mb-5 text-xs uppercase tracking-[0.3em] text-[#999]">Contents</div>
-              <nav className="space-y-2 border-l border-black/10 pl-4">
-                {navItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollTo(item.id)}
-                    className={`block text-left text-sm transition ${
-                      activeSection === item.id ? 'translate-x-1 font-medium text-black' : 'text-[#999] hover:text-black'
-                    }`}
-                  >
-                    {activeSection === item.id && (
-                      <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-black align-middle" />
-                    )}
-                    {item.label}
-                  </button>
-                ))}
-              </nav>
-            </div>
-          </aside>
+        {/* ============ Full-bleed cover ============ */}
+        <motion.figure
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mt-10"
+        >
+          <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#f0efec] sm:aspect-[21/9]">
+            <Image
+              src="/kindra-hero.webp"
+              alt="KINDRA landing page hero"
+              fill
+              sizes="100vw"
+              quality={92}
+              priority
+              className="object-cover object-top"
+            />
+          </div>
+          <figcaption className="mx-auto flex max-w-7xl justify-between px-4 py-3 font-mono text-[10px] uppercase tracking-[0.22em] text-[#8f8b85] sm:px-6">
+            <span>Fig. 01 — The cover</span>
+            <span>kindra.benarfa.com</span>
+          </figcaption>
+        </motion.figure>
 
-          <article className="space-y-28">
-            {/* Overview */}
-            <Section id="overview">
-              <SectionHead n="01" label={t.subtitle} />
-              <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
-                <div>
-                  <h2 className="font-serif text-4xl font-medium tracking-tight text-black sm:text-5xl">
-                    A launch-ready commerce foundation with a fashion-first feel.
-                  </h2>
-                  <p className="mt-6 text-lg leading-8 text-[#444]">{t.longDescription}</p>
-                </div>
-                <div className="border border-black/10 p-6">
-                  <div className="mb-5 flex items-center gap-3">
-                    <div className="border border-black/10 p-3 text-black"><Database className="h-5 w-5" /></div>
-                    <h3 className="text-lg font-semibold">Business problem</h3>
-                  </div>
-                  <p className="text-sm leading-7 text-[#555]">{t.problem}</p>
-                  <div className="my-6 h-px bg-black/10" />
-                  <div className="mb-5 flex items-center gap-3">
-                    <div className="border border-black/10 p-3 text-black"><ShoppingBag className="h-5 w-5" /></div>
-                    <h3 className="text-lg font-semibold">Product answer</h3>
-                  </div>
-                  <p className="text-sm leading-7 text-[#555]">{t.solution}</p>
-                </div>
-              </div>
-            </Section>
-
-            {/* Storefronts — gallery grid using real captures */}
-            <Section id="storefronts">
-              <SectionHead n="02" label="Two collections, one platform" />
-              <h2 className="mb-8 font-serif text-3xl font-medium tracking-tight sm:text-4xl">Storefronts</h2>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <figure className="overflow-hidden border border-black/10">
-                  <div className="relative aspect-[4/5]">
-                    <Image src="/kindra-women.webp" alt="Kindra women's storefront" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
-                  </div>
-                  <figcaption className="border-t border-black/10 px-5 py-3 font-mono text-xs uppercase tracking-[0.1em] text-[#888]">Women</figcaption>
-                </figure>
-                <figure className="overflow-hidden border border-black/10">
-                  <div className="relative aspect-[4/5]">
-                    <Image src="/kindra-men.webp" alt="Kindra men's storefront" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover object-top" />
-                  </div>
-                  <figcaption className="border-t border-black/10 px-5 py-3 font-mono text-xs uppercase tracking-[0.1em] text-[#888]">Men</figcaption>
-                </figure>
-              </div>
-
-              <div className="mt-4 grid gap-4 md:grid-cols-2">
-                {storefrontMoments.map((moment) => {
-                  const Icon = moment.icon;
-                  return (
-                    <div key={moment.title} className="group flex items-start gap-4 border border-black/10 p-6 transition hover:border-black/30">
-                      <div className="border border-black/10 p-2.5 text-black"><Icon className="h-5 w-5" /></div>
-                      <div>
-                        <h3 className="text-base font-semibold text-black">{moment.title}</h3>
-                        <p className="mt-2 text-sm leading-6 text-[#666]">{moment.copy}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </Section>
-
-            {/* Product page detail */}
-            <Section id="product">
-              <SectionHead n="03" label="Where the sale happens" />
-              <h2 className="mb-8 font-serif text-3xl font-medium tracking-tight sm:text-4xl">Product page</h2>
-              <div className="grid items-center gap-8 lg:grid-cols-2">
-                <figure className="overflow-hidden border border-black/10">
-                  <div className="relative aspect-[4/5]">
-                    <Image src="/kindra-product.webp" alt="Kindra product detail page" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-top" />
-                  </div>
-                </figure>
-                <div>
-                  <p className="text-lg leading-8 text-[#444]">
-                    Each product page carries colour and size variants, live TND pricing, and a one-tap add-to-bag — the commerce primitives a fashion storefront actually needs, wired to inventory rather than mocked.
-                  </p>
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                    {keyFeaturePreview(t.keyFeatures).map((feature) => (
-                      <div key={feature} className="flex items-start gap-3 border border-black/10 p-4">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-black" />
-                        <span className="text-sm leading-6 text-[#444]">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Section>
-
-            {/* Admin / operations */}
-            <Section id="admin">
-              <SectionHead n="04" label="Running the business" />
-              <h2 className="mb-8 font-serif text-3xl font-medium tracking-tight sm:text-4xl">Admin operations</h2>
-              <div className="grid border border-black/10 md:grid-cols-3">
-                {operationCards.map((card) => {
-                  const Icon = card.icon;
-                  return (
-                    <div key={card.title} className="border-black/10 p-6 md:border-r md:last:border-r-0">
-                      <Icon className="mb-8 h-6 w-6 text-black" />
-                      <h3 className="text-lg font-semibold text-black">{card.title}</h3>
-                      <p className="mt-3 text-sm leading-7 text-[#666]">{card.copy}</p>
-                    </div>
-                  );
-                })}
-              </div>
-              <figure className="mt-4 overflow-hidden border border-black/10">
-                <div className="relative aspect-[16/9]">
-                  <Image src="/kindra-highlights.webp" alt="Kindra highlights and collections" fill sizes="100vw" className="object-cover object-top" />
-                </div>
-                <figcaption className="border-t border-black/10 px-5 py-3 font-mono text-xs uppercase tracking-[0.1em] text-[#888]">Highlights — curated drops across both storefronts</figcaption>
-              </figure>
-            </Section>
-
-            {/* Stack */}
-            <Section id="stack">
-              <SectionHead n="05" label="What it's built on" />
-              <h2 className="mb-8 font-serif text-3xl font-medium tracking-tight sm:text-4xl">Technology stack</h2>
-              <div className="grid gap-5 md:grid-cols-3">
-                <TechColumn title="Frontend" items={frontendTech} />
-                <TechColumn title="Commerce & Data" items={backendTech} />
-                <TechColumn title="Platform" items={platformTech} />
-              </div>
-              <p className="mt-6 flex items-center gap-3 border border-black/10 p-5 text-sm text-[#555]">
-                <Server className="h-5 w-5 shrink-0 text-black" />
-                Server Actions and Drizzle ORM over PostgreSQL, with Cloudflare R2 and Vercel Blob for dual image storage and a Docker deploy flow.
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          {/* ============ The brief ============ */}
+          <section className="grid gap-10 border-t border-black py-16 md:grid-cols-[0.9fr_1.4fr] lg:gap-16">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5 }}
+            >
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#8f8b85]">01 — The brief</p>
+              <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
+                Shoppers judge a fashion brand in seconds.
+              </h2>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="space-y-8"
+            >
+              <p className="text-lg leading-8 text-[#3b3833] first-letter:float-left first-letter:mr-3 first-letter:font-serif first-letter:text-6xl first-letter:leading-[0.8]">
+                {t.longDescription}
               </p>
-            </Section>
-
-            {/* Black contact CTA */}
-            <section className="relative overflow-hidden border border-black/10 bg-black p-8 text-white sm:p-12">
-              <div className="relative">
-                <p className="text-xs font-medium uppercase tracking-[0.3em] text-white/60">Let&rsquo;s work together</p>
-                <h2 className="mt-5 max-w-2xl font-serif text-3xl font-medium leading-tight tracking-tight sm:text-4xl">
-                  Need something like Kindra built — or taken further?
-                </h2>
-                <p className="mt-4 max-w-xl text-base leading-7 text-white/70">
-                  I partner with founders and small teams to ship production software, start to finish. Tell me what you&rsquo;re building.
-                </p>
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-                  <Link
-                    href="/#contact"
-                    onClick={() => trackEvent('project_cta_click', { project: 'kindra', action: 'contact' })}
-                    className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold uppercase tracking-[0.04em] text-black transition hover:bg-white/85"
-                  >
-                    Start a project
-                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                  </Link>
-                  <a
-                    href={`mailto:${EMAIL}`}
-                    onClick={() => trackEvent('contact_click', { project: 'kindra', method: 'email' })}
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/[0.06]"
-                  >
-                    Email me
-                  </a>
-                  <a
-                    href={WHATSAPP}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent('contact_click', { project: 'kindra', method: 'whatsapp' })}
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/[0.06]"
-                  >
-                    WhatsApp
-                    <ArrowUpRight className="h-4 w-4" />
-                  </a>
+              <div className="grid gap-6 sm:grid-cols-2">
+                <div className="border-t-2 border-black pt-4">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#8f8b85]">The problem</p>
+                  <p className="mt-3 text-sm leading-7 text-[#55524c]">{t.problem}</p>
                 </div>
-
-                {nextProject && (
-                  <div className="mt-10 border-t border-white/15 pt-6">
-                    <Link
-                      href={`/work/${nextProject.slug}`}
-                      onClick={() => trackEvent('project_cta_click', { project: 'kindra', action: 'next_project' })}
-                      className="group inline-flex items-center gap-3 text-sm text-white/60 transition hover:text-white"
-                    >
-                      <span className="uppercase tracking-[0.24em] text-white/40">Next case study</span>
-                      <span className="font-semibold text-white">{tNext.title}</span>
-                      <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                    </Link>
-                  </div>
-                )}
+                <div className="border-t-2 border-black pt-4">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#8f8b85]">The answer</p>
+                  <p className="mt-3 text-sm leading-7 text-[#55524c]">{t.solution}</p>
+                </div>
               </div>
-            </section>
-          </article>
+            </motion.div>
+          </section>
+
+          {/* ============ Collections — split screen ============ */}
+          <section id="collections" className="scroll-mt-24 border-t border-black py-16">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5 }}
+              className="mb-10 flex flex-wrap items-end justify-between gap-4"
+            >
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#8f8b85]">02 — The collections</p>
+                <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
+                  Her side, <span className="italic">his side.</span>
+                </h2>
+              </div>
+              <p className="max-w-sm text-sm leading-7 text-[#55524c]">
+                Two storefronts share one codebase and one design system, but each reads as its own editorial
+                world — separate landings, galleries, and collections.
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.6 }}
+            >
+              <SplitCollections />
+            </motion.div>
+          </section>
+
+          {/* ============ In the pages — asymmetric spreads ============ */}
+          <section className="border-t border-black py-16">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5 }}
+              className="mb-10"
+            >
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#8f8b85]">03 — In the pages</p>
+              <h2 className="mt-4 max-w-xl font-serif text-4xl leading-tight sm:text-5xl">
+                From lookbook to checkout.
+              </h2>
+            </motion.div>
+
+            <div className="grid gap-10 lg:grid-cols-[1.35fr_1fr] lg:gap-14">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.55 }}
+              >
+                <ProductFigure
+                  src="/kindra-store.webp"
+                  alt="KINDRA collection browsing experience"
+                  dims={{ width: 1440, height: 900 }}
+                  caption="Fig. 03 — Collection pages, generated from data"
+                  theme={media}
+                  frameClassName={editorialFrame}
+                  aspectClassName="aspect-[16/10]"
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.55, delay: 0.1 }}
+                className="lg:mt-20"
+              >
+                <ProductFigure
+                  src="/kindra-product.webp"
+                  alt="KINDRA product detail page with size and colour variants"
+                  dims={{ width: 1200, height: 1500 }}
+                  caption="Fig. 04 — Variant-aware product page"
+                  theme={media}
+                  frameClassName={editorialFrame}
+                  aspectClassName="aspect-[4/5]"
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                />
+              </motion.div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.55 }}
+              className="mt-10 lg:mx-24"
+            >
+              <ProductFigure
+                src="/kindra-highlights.webp"
+                alt="KINDRA editorial homepage — lookbook mosaic and capsule collections"
+                dims={{ width: 1440, height: 810 }}
+                caption="Fig. 05 — The editorial home: lookbook mosaic & capsule collections"
+                theme={media}
+                frameClassName={editorialFrame}
+                aspectClassName="aspect-[16/9]"
+                sizes="(max-width: 1024px) 100vw, 75vw"
+              />
+            </motion.div>
+          </section>
+
+          {/* ============ The mechanics ============ */}
+          <section className="border-t border-black py-16">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5 }}
+              className="mb-12"
+            >
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#8f8b85]">04 — The mechanics</p>
+              <h2 className="mt-4 max-w-xl font-serif text-4xl leading-tight sm:text-5xl">
+                An editorial skin over disciplined structure.
+              </h2>
+            </motion.div>
+            <div className="grid gap-x-14 gap-y-12 md:grid-cols-2">
+              {mechanics.map((m, i) => (
+                <motion.article
+                  key={m.n}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.5, delay: (i % 2) * 0.08 }}
+                  className="group relative border-t border-black/20 pt-6 transition-colors hover:border-black"
+                >
+                  <span className="absolute right-0 top-6 font-serif text-5xl italic text-black/10 transition-colors group-hover:text-black/25">
+                    {m.n}
+                  </span>
+                  <h3 className="max-w-[85%] font-serif text-2xl">{m.title}</h3>
+                  <p className="mt-3 max-w-[92%] text-sm leading-7 text-[#55524c]">{m.copy}</p>
+                </motion.article>
+              ))}
+            </div>
+          </section>
+
+          {/* ============ Colophon ============ */}
+          <section className="border-t border-black py-16">
+            <div className="grid gap-10 md:grid-cols-[0.9fr_1.4fr]">
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.5 }}
+              >
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#8f8b85]">05 — Colophon</p>
+                <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">Built with</h2>
+              </motion.div>
+              <motion.dl
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="font-mono text-xs"
+              >
+                {[
+                  ['Framework', 'Next.js 15 · React 19 · TypeScript'],
+                  ['Interface', 'Tailwind CSS · shadcn/ui · Radix primitives'],
+                  ['Motion', 'Framer Motion · marquee & carousel galleries'],
+                  ['Forms', 'Controlled inputs · UI only'],
+                  ['Typography', 'Custom display faces, self-hosted'],
+                ].map(([k, v]) => (
+                  <div
+                    key={k}
+                    className="grid grid-cols-[8rem_1fr] items-baseline gap-4 border-b border-black/15 py-4 transition-colors hover:bg-black/[0.03] sm:grid-cols-[10rem_1fr]"
+                  >
+                    <dt className="uppercase tracking-[0.2em] text-[#8f8b85]">{k}</dt>
+                    <dd className="text-sm text-[#0a0a0a]">{v}</dd>
+                  </div>
+                ))}
+              </motion.dl>
+            </div>
+          </section>
         </div>
+
+        {/* ============ CTA ============ */}
+        <section className="bg-black text-white">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">Back page — work with me</p>
+            <h2 className="mt-6 max-w-3xl font-serif text-4xl leading-tight sm:text-5xl">
+              Need a storefront that <span className="italic">feels</span> like the brand?
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-7 text-white/65">
+              I partner with founders and small teams to ship production software, start to finish. Tell me what
+              you&rsquo;re building.
+            </p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <Link
+                href="/#contact"
+                onClick={() => trackEvent('project_cta_click', { project: 'kindra', action: 'contact' })}
+                className="group inline-flex items-center justify-center gap-2 bg-white px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-black transition hover:bg-white/85"
+              >
+                Start a project
+                <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+              </Link>
+              <a
+                href={`mailto:${EMAIL}`}
+                onClick={() => trackEvent('contact_click', { project: 'kindra', method: 'email' })}
+                className="inline-flex items-center justify-center gap-2 border border-white/25 px-6 py-3 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white transition hover:border-white/60 hover:bg-white/[0.06]"
+              >
+                Email me
+              </a>
+            </div>
+
+            {nextProject && (
+              <div className="mt-12 border-t border-white/15 pt-6">
+                <Link
+                  href={`/work/${nextProject.slug}`}
+                  onClick={() => trackEvent('project_cta_click', { project: 'kindra', action: 'next_project' })}
+                  className="group inline-flex flex-wrap items-center gap-3 text-sm text-white/60 transition hover:text-white"
+                >
+                  <span className="font-mono text-[10px] uppercase tracking-[0.26em] text-white/40">Next case study</span>
+                  <span className="font-serif text-lg italic text-white">{tNext.title}</span>
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </Link>
+              </div>
+            )}
+          </div>
+        </section>
       </main>
-    </div>
-  );
-}
-
-function keyFeaturePreview(features: string[]): string[] {
-  return features.slice(0, 4);
-}
-
-function Section({ id, children }: { id: string; children: React.ReactNode }) {
-  return (
-    <motion.section
-      id={id}
-      className="scroll-mt-32"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-120px' }}
-      transition={{ duration: 0.5 }}
-    >
-      {children}
-    </motion.section>
-  );
-}
-
-function SectionHead({ n, label }: { n: string; label: string }) {
-  return (
-    <div className="mb-8 flex items-center gap-3">
-      <span className="bg-black px-2.5 py-1 font-mono text-xs font-bold text-white">{n}</span>
-      <p className="text-xs uppercase tracking-[0.3em] text-[#999]">{label}</p>
-    </div>
-  );
-}
-
-function TechColumn({ title, items }: { title: string; items: string[] }) {
-  return (
-    <div className="border border-black/10 p-5">
-      <h3 className="mb-5 font-semibold text-black">{title}</h3>
-      <div className="space-y-2">
-        {items.map((item) => (
-          <div key={item} className="border border-black/10 px-4 py-3 text-sm text-[#444]">{item}</div>
-        ))}
-      </div>
     </div>
   );
 }
