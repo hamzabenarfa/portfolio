@@ -1,4 +1,5 @@
 import Script from 'next/script';
+import { EMAIL, PHONE_E164 } from '@/data/contact';
 
 interface StructuredDataProps {
   type?: "Organization" | "WebSite" | "BreadcrumbList" | "FAQPage" | "ProfilePage";
@@ -23,8 +24,8 @@ export function StructuredData({
       "https://github.com/hamzabenarfa",
     ],
     image: `${baseUrl}/avatar.jpeg`,
-    email: "contact@benarfa.com",
-    telephone: "+21650407687",
+    email: EMAIL,
+    telephone: PHONE_E164,
     jobTitle: "Full-Stack Developer & DevOps Engineer",
     description:
       "Freelance full-stack developer and DevOps engineer from Tunisia specializing in Next.js, React, TypeScript, NestJS, and cloud infrastructure.",

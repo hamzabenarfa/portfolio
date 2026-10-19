@@ -230,7 +230,7 @@ export default function AutoPartProjectPage() {
       </CaseSection>
 
       <CaseSection label="Job card" title="How an order works">
-        <CaseCards items={flow} columns={4} />
+        <CaseCards items={flow} columns={4} ordered />
       </CaseSection>
 
       <CaseSection

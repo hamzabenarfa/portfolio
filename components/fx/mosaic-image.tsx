@@ -167,7 +167,7 @@ export function MosaicImage({
         delete el.dataset.resolved;
       };
     },
-    { scope: wrap, dependencies: [src, play] },
+    { scope: wrap, dependencies: [src, play], revertOnUpdate: true },
   );
 
   return (

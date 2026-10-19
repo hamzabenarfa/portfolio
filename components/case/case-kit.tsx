@@ -71,10 +71,14 @@ export function CasePage({ slug, children }: { slug: string; children: ReactNode
 /** Sizes the title so its longest line spans the wall, measured with the settled (expanded) font. */
 function useFitTitle(lines: string[]) {
   const ref = useRef<HTMLHeadingElement>(null);
+  const key = lines.join("\n");
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    const textLines = key.split("\n");
+    let alive = true;
     const measure = () => {
+      if (!alive) return;
       const probe = document.createElement("span");
       const cs = getComputedStyle(el);
       Object.assign(probe.style, {
@@ -88,13 +92,14 @@ function useFitTitle(lines: string[]) {
         fontSize: "100px",
       });
       document.body.appendChild(probe);
-      const widest = Math.max(...lines.map((line) => { probe.textContent = line; return probe.getBoundingClientRect().width; }));
+      const widest = Math.max(...textLines.map((line) => { probe.textContent = line; return probe.getBoundingClientRect().width; }));
       probe.remove();
       if (widest > 0) el.style.setProperty("--fit", String(widest / 100 + 0.04));
     };
     if (document.fonts?.status === "loaded") measure();
     document.fonts?.ready.then(measure);
-  }, [lines]);
+    return () => { alive = false; };
+  }, [key]);
   return ref;
 }
 
@@ -124,7 +129,8 @@ export function CaseHero({ slug, title, titleLines, meta, liveUrl, liveLabel = "
   const lines = titleLines ?? title.split(" ");
   const titleRef = useFitTitle(lines);
   const titleId = useId();
-  const fallbackFit = Math.max(...lines.map((l) => l.length)) * 0.72;
+  // Close to the measured ~0.6em per character, so the title barely moves when the measurement lands.
+  const fallbackFit = Math.max(...lines.map((l) => l.length)) * 0.6 + 0.04;
   return (
     <>
       <section className="page-intro case-hero" id="top" aria-labelledby={titleId}>
@@ -353,9 +359,10 @@ export function CaseFeatures({ items, columns = 2 }: { items: ReactNode[]; colum
 }
 
 /** Titled cards in a grid: dashboards, roles, surfaces. */
-export function CaseCards({ items, columns = 2 }: { items: { title: ReactNode; body: ReactNode; meta?: ReactNode }[]; columns?: 2 | 3 | 4 }) {
+export function CaseCards({ items, columns = 2, ordered = false }: { items: { title: ReactNode; body: ReactNode; meta?: ReactNode }[]; columns?: 2 | 3 | 4; /** A real sequence: renders an ordered list with step numbers. */ ordered?: boolean }) {
+  const List = ordered ? "ol" : "ul";
   return (
-    <ul className="case-cards" style={{ "--cols": columns } as React.CSSProperties}>
+    <List className="case-cards" style={{ "--cols": columns } as React.CSSProperties}>
       {items.map((c, i) => (
         <li key={i}>
           {c.meta && <p className="case-card-meta">{c.meta}</p>}
@@ -363,7 +370,7 @@ export function CaseCards({ items, columns = 2 }: { items: { title: ReactNode; b
           <div className="case-card-body">{c.body}</div>
         </li>
       ))}
-    </ul>
+    </List>
   );
 }
 
@@ -413,9 +420,9 @@ export function CaseNext({ from, slug }: { from: string; slug: string }) {
 
   useGSAP(
     () => {
-      if (prefersReducedMotion()) return;
+      if (!root.current || prefersReducedMotion()) return;
       gsap.fromTo(
-        root.current!.querySelector(".case-next-title"),
+        root.current.querySelector(".case-next-title"),
         { "--wdth": 80 },
         { "--wdth": 125, ease: "none", scrollTrigger: { trigger: root.current, start: "top bottom", end: "top 25%", scrub: true } },
       );

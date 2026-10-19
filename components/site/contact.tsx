@@ -22,7 +22,7 @@ export function Contact({
         <h2 id="contact-title" className="contact-title">{title}</h2>
         <p className="contact-lede">{lede}</p>
         <Magnetic strength={0.12} className="contact-email-wrap">
-          <TrackedLink href={`mailto:${EMAIL}`} className="contact-email" event="contact_click" eventData={{ method: "email", ...source }}>
+          <TrackedLink href={`mailto:${EMAIL}`} className="contact-email" event="contact_click" eventData={{ method: "email", ...source }} alsoTrack={project ? { event: "project_cta_click", data: { project, action: "contact" } } : undefined}>
             {EMAIL}
           </TrackedLink>
         </Magnetic>

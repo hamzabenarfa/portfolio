@@ -147,7 +147,7 @@ function StrandBuilder() {
               type="button"
               onClick={() => setPaletteId(p.id)}
               aria-pressed={active}
-              className="chip h-auto flex-col items-stretch gap-1 py-3"
+              className="chip chip-stack"
             >
               <span className="flex items-center justify-between gap-3">
                 <span className="text-base font-bold">{p.name}</span>

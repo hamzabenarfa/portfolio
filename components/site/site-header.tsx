@@ -94,7 +94,7 @@ export function SiteHeader({ variant = "home" }: { variant?: "home" | "page" }) 
           : <Link href="/" className="brand" aria-label="Hamza Benarfa, home">{brand}</Link>}
         <nav className="header-nav" aria-label="Main navigation">
           {links.map((link) => (
-            <NavLink key={link.href} href={link.href} aria-current={pathname === link.href || pathname.startsWith(`${link.href}/`) ? "page" : undefined}>{link.label}</NavLink>
+            <NavLink key={link.href} href={link.href} aria-current={pathname === link.href ? "page" : pathname.startsWith(`${link.href}/`) ? "true" : undefined}>{link.label}</NavLink>
           ))}
         </nav>
         <NavLink href={contactHref} className="header-cta">Let’s talk</NavLink>

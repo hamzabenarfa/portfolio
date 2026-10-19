@@ -46,3 +46,8 @@
 @media (prefers-reduced-motion: reduce) {
   .cursor-badge span { transition: none; }
 }
+
+/* Lenis's own state rules: a stopped scroller must not fall back to native scrolling,
+   and scrollable dialogs marked data-lenis-prevent keep their own scroll. */
+.lenis.lenis-stopped { overflow: clip; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }

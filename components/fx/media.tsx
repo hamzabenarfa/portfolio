@@ -56,16 +56,32 @@ export function Lightbox({
   dims: MediaDimensions;
   onClose: () => void;
 }) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
+      // Only one control lives in the dialog, so keep Tab on it rather than the page behind.
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        closeRef.current?.focus();
+      }
     };
     window.addEventListener('keydown', onKey);
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    // Lock the root scroller: <html> clips overflow-x in globals.css, so a body-only
+    // overflow:hidden never reaches the viewport.
+    const root = document.documentElement;
+    const previousOverflow = root.style.overflow;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    root.style.overflow = 'hidden';
+    // Pages with smooth scrolling ignore overflow:hidden; pause the scroller too.
+    window.__lenis?.stop();
+    closeRef.current?.focus({ preventScroll: true });
     return () => {
       window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = previousOverflow;
+      root.style.overflow = previousOverflow;
+      window.__lenis?.start();
+      previousFocus?.focus({ preventScroll: true });
     };
   }, [onClose]);
 
@@ -80,6 +96,7 @@ export function Lightbox({
       role="dialog"
       aria-modal="true"
       aria-label={alt}
+      data-lenis-prevent=""
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.96, y: 14 }}
@@ -100,6 +117,7 @@ export function Lightbox({
         />
       </motion.div>
       <button
+        ref={closeRef}
         type="button"
         onClick={onClose}
         aria-label="Close preview"

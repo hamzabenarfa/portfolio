@@ -3,9 +3,13 @@
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 import { trackEvent, type FunnelEvent } from "@/lib/track";
 
+type EventData = Record<string, string | number | boolean | null>;
+
 interface TrackedLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   event: FunnelEvent;
-  eventData?: Record<string, string | number | boolean | null>;
+  eventData?: EventData;
+  /** A second funnel event for the same click, e.g. attributing a contact to a case study. */
+  alsoTrack?: { event: FunnelEvent; data?: EventData };
   children: ReactNode;
 }
 
@@ -17,6 +21,7 @@ interface TrackedLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 export function TrackedLink({
   event,
   eventData,
+  alsoTrack,
   onClick,
   children,
   ...rest
@@ -26,6 +31,7 @@ export function TrackedLink({
       {...rest}
       onClick={(e) => {
         trackEvent(event, eventData);
+        if (alsoTrack) trackEvent(alsoTrack.event, alsoTrack.data);
         onClick?.(e);
       }}
     >

@@ -163,7 +163,7 @@ body:has(.site) {
   color: var(--ink-2);
   transition: color var(--duration-fast) ease, background-color var(--duration-fast) ease;
 }
-.header-nav a[aria-current="page"] { color: var(--ink); background: rgb(15 26 54 / 0.07); }
+.header-nav a[aria-current] { color: var(--ink); background: rgb(15 26 54 / 0.07); }
 
 .header-cta {
   display: inline-flex;
