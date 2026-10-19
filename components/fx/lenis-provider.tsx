@@ -29,6 +29,8 @@ export function LenisProvider({ children }: { children: ReactNode }) {
     const raf = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
+    // Display type changes width once the variable font lands; re-measure triggers.
+    document.fonts?.ready.then(() => ScrollTrigger.refresh());
 
     return () => {
       gsap.ticker.remove(raf);

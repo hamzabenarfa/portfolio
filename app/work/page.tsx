@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { PROJECTS } from "@/data/consts";
 import { PROJECT_CONTENT } from "@/data/project-content";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { SubpageNav } from "@/components/subpage-nav";
-import { Footer } from "@/app/(home)/_components/footer";
-import "@/app/(home)/portfolio.css";
-import "@/app/(home)/_components/supporting-sections.css";
+import { SiteHeader } from "@/components/site/site-header";
+import { PageIntro } from "@/components/site/page-intro";
+import { Contact } from "@/components/site/contact";
+import { SiteFooter } from "@/components/site/site-footer";
+import { LenisProvider } from "@/components/fx/lenis-provider";
+import { MosaicImage } from "@/components/fx/mosaic-image";
+import "@/app/site.css";
 import "@/app/subpage.css";
 
 const SITE_URL = process.env.NEXT_PUBLIC_WEB_URL || "https://benarfa.com";
@@ -28,59 +29,60 @@ export const metadata: Metadata = {
   },
 };
 
-const tones = ["sand", "blue", "sage", "rose"];
-
 export default function WorkPage() {
   const projects = PROJECTS.filter((p) => p.listed !== false && PROJECT_CONTENT[p.slug]);
 
   return (
-    <div className="portfolio-v2 subpage-v2">
-      <SubpageNav />
-
-      <main id="main-content">
-        <section className="subpage-intro" id="top" aria-labelledby="work-title">
-          <div className="subpage-intro-inner">
-            <span className="intro-identity"><span className="little-spark" aria-hidden="true" /> Index — projects &amp; case studies</span>
-            <h1 id="work-title">All work<span className="title-period">.</span></h1>
-            <p>
-              A closer look at products I&rsquo;ve designed, built, and shipped — from
-              first scope to production. Each one taken from blank page to live, by one
-              person.
+    <LenisProvider>
+      <div className="site">
+        <SiteHeader variant="page" />
+        <main id="main-content">
+          <PageIntro id="work-title" title="All work">
+            <p className="page-lead">
+              A closer look at products I&rsquo;ve designed, built, and shipped — from first scope to production.
+              Each one taken from blank page to live, by one person.
             </p>
-          </div>
-        </section>
+          </PageIntro>
 
-        <section className="project-gallery work-gallery" aria-label="Projects">
-          <div className="project-grid">
-            {projects.map((p, i) => {
+          <section className="work-list-page" aria-label="Projects">
+            {projects.map((p) => {
               const c = PROJECT_CONTENT[p.slug];
+              const href = `/work/${p.slug}`;
               return (
-                <article key={p.slug} className={`project-tile project-${tones[i % tones.length]}`}>
-                  <Link href={`/work/${p.slug}`} className="project-canvas" aria-label={`${c.title} — case study`}>
-                    <div className="project-canvas-top"><span>{c.category}</span><span>{p.year}</span></div>
-                    <div className="project-screenshot"><Image src={p.image} alt="" fill sizes="(max-width: 760px) 90vw, 43vw" /></div>
-                    <span className="project-open" aria-hidden="true"><ArrowUpRight size={24} /></span>
+                <article key={p.slug} className="work-entry" aria-labelledby={`entry-${p.slug}`}>
+                  <Link href={href} className="work-entry-media" tabIndex={-1} aria-hidden="true" data-cursor-label="View case study">
+                    <MosaicImage src={p.image} alt={`${c.title} homepage`} sizes="(max-width: 860px) 92vw, 58vw" grout="#e1e3dc" />
                   </Link>
-                  <div className="project-heading"><h2>{c.title}</h2><span>/{String(i + 1).padStart(2, "0")}</span></div>
-                  <p>{c.description}</p>
-                  <ul className="work-tags" aria-label="Tech stack">
-                    {p.tech.slice(0, 6).map((t) => <li key={t}>{t}</li>)}
-                  </ul>
-                  <div className="work-links">
-                    <Link href={`/work/${p.slug}`}>Case study <ArrowRight size={16} aria-hidden="true" /></Link>
-                    {p.url && <a href={p.url} target="_blank" rel="noreferrer">Live site <ArrowUpRight size={16} aria-hidden="true" /></a>}
+                  <div className="work-entry-info">
+                    <p className="work-entry-meta"><span>{c.category}</span><span>{p.year}</span></p>
+                    <h2 id={`entry-${p.slug}`}>{c.title}</h2>
+                    <p className="work-entry-desc">{c.description}</p>
+                    <ul className="work-entry-tags" aria-label="Tech stack">
+                      {p.tech.slice(0, 6).map((t) => <li key={t}>{t}</li>)}
+                    </ul>
+                    <div className="work-entry-links">
+                      <Link href={href} className="button button-solid">Read the case study</Link>
+                      {p.url && (
+                        <a href={p.url} target="_blank" rel="noreferrer" className="text-link">
+                          Live site <span aria-hidden="true">↗</span><span className="visually-hidden"> (opens in a new tab)</span>
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </article>
               );
             })}
-          </div>
-          <div className="gallery-outro">
-            <span>More code, experiments and smaller builds.</span>
-            <a href="https://github.com/hamzabenarfa/" target="_blank" rel="noreferrer">View GitHub <ArrowUpRight size={18} aria-hidden="true" /></a>
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
+            <div className="work-outro">
+              <p>More code, experiments and smaller builds live on GitHub.</p>
+              <a href="https://github.com/hamzabenarfa/" target="_blank" rel="noreferrer" className="text-link">
+                View GitHub <span aria-hidden="true">↗</span><span className="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </div>
+          </section>
+          <Contact />
+        </main>
+        <SiteFooter />
+      </div>
+    </LenisProvider>
   );
 }

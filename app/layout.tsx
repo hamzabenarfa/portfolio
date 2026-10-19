@@ -2,11 +2,21 @@ import type React from "react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import "./overlays.css";
 import { Analytics } from "@vercel/analytics/next";
 import { MotionConfigProvider } from "@/components/fx/motion-config-provider";
+import { TileCurtain } from "@/components/fx/tile-curtain";
+import { CursorBadge } from "@/components/fx/cursor-badge";
 import { SEO } from "@/components/seo/seo";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
+
+const monaSans = localFont({
+  src: [{ path: "./fonts/mona-sans-latin-variable.woff2", weight: "200 900", style: "normal" }],
+  variable: "--font-mona",
+  display: "swap",
+  declarations: [{ prop: "font-stretch", value: "75% 125%" }],
+});
 
 const interTight = localFont({
   src: [
@@ -103,13 +113,25 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon.ico", shortcut: "/favicon.ico", apple: "/apple-icon.png" },
 };
 
+/**
+ * Runs before first paint. `motion` lets CSS pre-hide elements that JS will
+ * animate in (never set when the visitor prefers reduced motion), and `intro`
+ * raises the tile curtain on the first homepage visit of a session.
+ */
+const bootScript = `(function(){try{var d=document.documentElement;if(window.matchMedia('(prefers-reduced-motion: no-preference)').matches){d.classList.add('motion');if(location.pathname==='/'&&!sessionStorage.getItem('intro-seen'))d.classList.add('intro');}}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
+      </head>
       <body
-        className={`${interTight.variable} ${instrumentSerif.variable} ${jetBrainsMono.variable}`}
+        className={`${monaSans.variable} ${interTight.variable} ${instrumentSerif.variable} ${jetBrainsMono.variable}`}
       >
         <MotionConfigProvider>{children}</MotionConfigProvider>
+        <TileCurtain />
+        <CursorBadge />
         <SEO />
         <Analytics />
         <SpeedInsights />

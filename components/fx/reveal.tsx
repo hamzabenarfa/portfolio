@@ -20,12 +20,14 @@ export function TextReveal({
   as: Tag = "div",
   children,
   className,
+  id,
   delay = 0,
   start = "top 88%",
 }: {
   as?: ElementType;
   children: ReactNode;
   className?: string;
+  id?: string;
   delay?: number;
   start?: string;
 }) {
@@ -60,7 +62,7 @@ export function TextReveal({
 
   const Comp = Tag as "div";
   return (
-    <Comp ref={ref as React.RefObject<HTMLDivElement>} className={className}>
+    <Comp ref={ref as React.RefObject<HTMLDivElement>} className={className} id={id}>
       {children}
     </Comp>
   );

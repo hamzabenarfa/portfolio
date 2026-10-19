@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { SectionHead } from "./section-head";
 
 const faqs = [
   {
@@ -36,46 +35,33 @@ const faqs = [
 
 export function FAQ() {
   const [open, setOpen] = useState<number>(-1);
-  const toggle = (i: number) => setOpen(open === i ? -1 : i);
 
   return (
-    <section className="section container questions-section" aria-label="Frequently asked questions">
-      <div className="faq-layout">
-      <SectionHead
-        index="04"
-        label="FAQ"
-        title={
-          <>
-            Common <em>questions</em>
-          </>
-        }
-        meta={<>Tap to expand</>}
-      />
-
-      <div className="faq-list">
-        {faqs.map((f, i) => (
-          <div key={f.q} className={`faq-item${open === i ? " open" : ""}`}>
-            <button
-              type="button"
-              className="faq-q"
-              id={`faq-question-${i}`}
-              aria-expanded={open === i}
-              aria-controls={`faq-answer-${i}`}
-              onClick={() => toggle(i)}
-            >
-              <span>{f.q}</span>
-              <span className="faq-toggle" aria-hidden="true">
-                +
-              </span>
-            </button>
-            <div className="faq-a" id={`faq-answer-${i}`} role="region" aria-labelledby={`faq-question-${i}`} aria-hidden={open !== i}>
-              <div className="faq-a-clip">
-                <p className="faq-a-inner">{f.a}</p>
+    <section className="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title" className="section-title">Questions</h2>
+      <div className="faq-items">
+        {faqs.map((f, i) => {
+          const expanded = open === i;
+          return (
+            <div key={f.q} className="faq-entry" data-open={expanded}>
+              <h3>
+                <button
+                  type="button"
+                  id={`faq-question-${i}`}
+                  aria-expanded={expanded}
+                  aria-controls={`faq-answer-${i}`}
+                  onClick={() => setOpen(expanded ? -1 : i)}
+                >
+                  <span>{f.q}</span>
+                  <span className="faq-icon" aria-hidden="true" />
+                </button>
+              </h3>
+              <div className="faq-answer" id={`faq-answer-${i}`} role="region" aria-labelledby={`faq-question-${i}`} aria-hidden={!expanded}>
+                <div><p>{f.a}</p></div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          );
+        })}
       </div>
     </section>
   );

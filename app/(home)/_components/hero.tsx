@@ -1,62 +1,97 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowDown, ArrowUpRight, ChevronLeft, ChevronRight, Asterisk } from "lucide-react";
-import { PROJECTS } from "@/data/consts";
-import { trackEvent } from "@/lib/track";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+import { useGSAP } from "@gsap/react";
+import { TesseraField, WALL } from "@/components/fx/tessera-field";
+import { Magnetic } from "@/components/fx/magnetic";
+import { LocalTime } from "@/components/fx/local-time";
+import { TrackedLink } from "@/components/fx/tracked-link";
+import { prefersReducedMotion, whenStageReady } from "@/lib/stage";
 
-const previews = [
-  { slug: "beadcraft", name: "BeadCraft Studio", category: "Commerce with a personal touch", color: "sand" },
-  { slug: "autopart", name: "AutoParts Tunisia", category: "Car parts that fit, first time", color: "blue" },
-  { slug: "menu-qr", name: "Menu QR", category: "From a scan to the kitchen", color: "sage" },
-].map((project) => ({ ...project, image: PROJECTS.find((p) => p.slug === project.slug)!.image }));
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export function Hero() {
-  const [active, setActive] = useState(0);
-  const project = previews[active];
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    (_, contextSafe) => {
+      const el = root.current;
+      if (!el || prefersReducedMotion() || !contextSafe) return;
+      const name = el.querySelector<HTMLElement>(".hero-name")!;
+
+      const squeezeOnScroll = () => {
+        // Once settled, scrolling away squeezes the name back toward condensed.
+        gsap.fromTo(
+          name,
+          { "--wdth": 125 },
+          {
+            "--wdth": 86,
+            ease: "none",
+            immediateRender: false,
+            scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub: true },
+          },
+        );
+      };
+
+      const play = contextSafe(() => {
+        const enter = el.querySelectorAll("[data-enter]");
+        // Scripts were slow and the CSS fallback already showed everything: don't replay it.
+        if (getComputedStyle(name).opacity === "1") {
+          gsap.set([name, ...enter], { autoAlpha: 1, y: 0, animation: "none" });
+          squeezeOnScroll();
+          return;
+        }
+        const lines = SplitText.create(name.querySelectorAll(".hero-line"), { type: "chars", aria: "none" });
+        // Scripts own these now; drop the CSS fallback so it can't snap mid-animation.
+        gsap.set([name, ...enter], { animation: "none" });
+        gsap.set(name, { autoAlpha: 1 });
+        const tl = gsap.timeline({ delay: 0.1 });
+        // The name rises out of the wall while stretching from condensed to expanded.
+        tl.from(lines.chars, { yPercent: 115, duration: 1.2, ease: "expo.out", stagger: 0.04 }, 0)
+          .fromTo(name, { "--wdth": 75 }, { "--wdth": 125, duration: 1.7, ease: "expo.out" }, 0)
+          .to(enter, { autoAlpha: 1, y: 0, duration: 0.9, ease: "expo.out", stagger: 0.07 }, 0.45)
+          .add(squeezeOnScroll);
+      });
+
+      return whenStageReady(play);
+    },
+    { scope: root },
+  );
 
   return (
-    <section className="intro" id="top" aria-labelledby="intro-title">
-      <div className="intro-topline">
-        <span className="intro-identity"><span className="little-spark" aria-hidden="true" /> Independent full-stack developer</span>
-        <span className="intro-location">Tunis, Tunisia <span aria-hidden="true">↗</span> Working worldwide</span>
-      </div>
-      <div className="intro-layout">
-        <div className="intro-copy">
-          <h1 id="intro-title">Big ideas.<br />Built right<span className="title-period">.</span></h1>
-          <p>I’m Hamza. I turn ambitious ideas into digital products that feel good to use — and work beautifully under the hood.</p>
-          <div className="intro-actions">
-            <a href="#work" className="pill-link pill-dark">Explore my work <ArrowDown size={18} aria-hidden="true" /></a>
-            <a href="#contact" className="intro-contact">Let’s talk <ArrowUpRight size={18} aria-hidden="true" /></a>
-          </div>
-          <div className="intro-person">
-            <Image src="/avatar.jpeg" alt="Hamza Benarfa" width={42} height={42} />
-            <span>Design-minded. Engineering-led.<br /><span>One person, from idea to launch.</span></span>
-          </div>
-        </div>
-        <div className="intro-showcase">
-          <div className="showcase-orbit" aria-hidden="true" />
-          <div className="showcase-stamp" aria-hidden="true"><Asterisk size={70} strokeWidth={1.4} /></div>
-          <div className="showcase-note">A little of what I do</div>
-          <div className={`showcase-window showcase-${project.color}`}>
-            <div className="window-bar"><span className="window-dots" aria-hidden="true"><i /><i /><i /></span><span>Selected project</span><ArrowUpRight size={14} aria-hidden="true" /></div>
-            <Link href={`/work/${project.slug}`} className="showcase-image" aria-label={`Explore ${project.name}`} onClick={() => trackEvent("project_card_click", { project: project.name, source: "hero" })}>
-              <Image key={project.slug} src={project.image} alt={`${project.name} website preview`} fill sizes="(max-width: 760px) 90vw, 48vw" priority={active === 0} />
-              <span className="showcase-open">Explore project <ArrowUpRight size={16} aria-hidden="true" /></span>
-            </Link>
-            <div className="showcase-caption" aria-live="polite" aria-atomic="true"><strong>{project.name}</strong><span>{project.category}</span></div>
-          </div>
-          <div className="showcase-controls">
-            <div className="showcase-pagination" role="group" aria-label="Choose a project preview">
-              {previews.map((p, i) => <button key={p.slug} type="button" aria-label={`Preview ${p.name}`} aria-pressed={active === i} onClick={() => setActive(i)}><span /></button>)}
-            </div>
-            <div className="showcase-arrows"><button type="button" aria-label="Previous project preview" onClick={() => setActive((active + previews.length - 1) % previews.length)}><ChevronLeft size={19} /></button><button type="button" aria-label="Next project preview" onClick={() => setActive((active + 1) % previews.length)}><ChevronRight size={19} /></button></div>
-          </div>
+    <section ref={root} className="home-hero" id="top" aria-labelledby="hero-title">
+      <div className="hero-wall">
+        <TesseraField palette={WALL} className="wall-canvas" />
+        <div className="hero-stage">
+          <p className="hero-role" data-enter="">
+            Independent full-stack developer in Tunis, working with teams worldwide.
+          </p>
+          <h1 id="hero-title" className="hero-name" aria-label="Hamza Benarfa">
+            <span className="hero-line" aria-hidden="true">Hamza</span>
+            <span className="hero-line" aria-hidden="true">Benarfa</span>
+          </h1>
         </div>
       </div>
-      <div className="intro-bottom"><span>Thoughtful interfaces. Solid foundations.</span><span className="intro-stack">Next.js <span>/</span> TypeScript <span>/</span> Node.js</span><a href="#work">Scroll to discover <ArrowDown size={16} aria-hidden="true" /></a></div>
+      <div className="hero-bar">
+        <p className="hero-lead" data-enter="">
+          I design and build web products end to end, from the first Figma frame to the deployed app, for founders and small teams.
+        </p>
+        <div className="hero-actions" data-enter="">
+          <Magnetic strength={0.25}>
+            <a href="#work" className="button button-solid">See the work</a>
+          </Magnetic>
+          <TrackedLink href="mailto:contact@benarfa.com" className="button button-ghost" event="contact_click" eventData={{ method: "email", source: "hero" }}>
+            Email me
+          </TrackedLink>
+        </div>
+        <p className="hero-meta" data-enter="">
+          <LocalTime />
+          <span>Replies within one business day</span>
+        </p>
+      </div>
     </section>
   );
 }
