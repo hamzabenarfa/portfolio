@@ -6,6 +6,9 @@
 # remotion studio (local only; the rendered video in public/ IS committed)
 /remotion
 
+# hyperframes / brag video projects (local only; rendered films in public/videos ARE committed)
+/video
+
 .agents
 .agent
 skills-lock.json

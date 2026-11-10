@@ -1,10 +1,24 @@
 import Script from 'next/script';
 import { EMAIL, PHONE_E164 } from '@/data/contact';
 
+/** A case-study film, for Google's video rich results. Paths are site-relative. */
+export interface VideoStructuredData {
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  /** ISO date (YYYY-MM-DD). */
+  uploadDate: string;
+  /** ISO 8601 duration, e.g. PT58S. */
+  duration: string;
+  contentUrl: string;
+  transcript?: string;
+}
+
 interface StructuredDataProps {
-  type?: "Organization" | "WebSite" | "BreadcrumbList" | "FAQPage" | "ProfilePage";
+  type?: "Organization" | "WebSite" | "BreadcrumbList" | "FAQPage" | "ProfilePage" | "VideoObject";
   breadcrumbs?: Array<{ name: string; url: string }>;
   faqs?: Array<{ question: string; answer: string }>;
+  video?: VideoStructuredData;
   baseUrl?: string;
 }
 
@@ -12,8 +26,11 @@ export function StructuredData({
   type = "Organization",
   breadcrumbs,
   faqs,
+  video,
   baseUrl = process.env.NEXT_PUBLIC_WEB_URL || "https://benarfa.com",
 }: StructuredDataProps) {
+  const absolute = (url: string) => (url.startsWith("http") ? url : `${baseUrl}${url}`);
+
   const generatePersonSchema = () => ({
     "@context": "https://schema.org",
     "@type": "Person",
@@ -112,8 +129,29 @@ export function StructuredData({
     dateModified: new Date().toISOString().split("T")[0],
   });
 
+  const generateVideoSchema = () =>
+    video && {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      name: video.name,
+      description: video.description,
+      thumbnailUrl: [absolute(video.thumbnailUrl)],
+      uploadDate: video.uploadDate,
+      duration: video.duration,
+      contentUrl: absolute(video.contentUrl),
+      inLanguage: "en",
+      ...(video.transcript && { transcript: video.transcript }),
+      author: {
+        "@type": "Person",
+        name: "Hamza Benarfa",
+        url: baseUrl,
+      },
+    };
+
   const getSchema = () => {
     switch (type) {
+      case "VideoObject":
+        return generateVideoSchema();
       case "Organization":
         return generatePersonSchema();
       case "WebSite":

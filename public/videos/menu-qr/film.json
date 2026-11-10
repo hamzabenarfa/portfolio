@@ -1,0 +1,35 @@
+{
+  "slug": "menu-qr",
+  "title": "Menu QR",
+  "duration": 57.41,
+  "engine": "remotion",
+  "engineVersion": "4.0.539",
+  "workflow": "Remotion project: TransitionSeries scenes timed from measured Kokoro clip durations",
+  "voice": "Kokoro-82M · af_heart",
+  "music": "Happy Beats / Business Moves vol. 12 · Sascha Ende, ende.app (CC BY 4.0)",
+  "sfx": "Kenney (CC0)",
+  "posterTime": 12.4,
+  "chapters": [
+    {
+      "start": 0,
+      "label": "The reprint"
+    },
+    {
+      "start": 4.06,
+      "label": "Menu QR"
+    },
+    {
+      "start": 13.56,
+      "label": "Scan to kitchen"
+    },
+    {
+      "start": 30.55,
+      "label": "One codebase"
+    },
+    {
+      "start": 51.61,
+      "label": "Stack"
+    }
+  ],
+  "transcript": "A paper menu dies the day a price changes. Menu QR puts the whole menu behind one code per table. Diners scan, the kitchen sees the order, and nobody installs anything. Scan table four at Café Green and the menu opens in the browser. Switch to Arabic and the whole page flips right to left. Pick a cappuccino, choose the milk, and send it to the kitchen. Seconds later it's a ticket on the board, under the right table. The hard part: one codebase serves every venue. Each table's code names the venue and the table, and it's signed. The server verifies that signature before it touches the database. Then the storefront renders in the venue's own design, one of twenty-eight. And the kitchen board polls for new tickets every three seconds. Full write-up at benarfa.com."
+}

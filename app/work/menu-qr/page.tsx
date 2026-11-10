@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { StructuredData } from '@/components/seo/structured-seo-data';
+import { isoDuration, loadCaseFilm } from '@/data/films';
 import MenuQRProjectPage from './client';
 
 export const metadata: Metadata = {
@@ -20,7 +21,8 @@ export const metadata: Metadata = {
     },
 };
 
-export default function Page() {
+export default async function Page() {
+    const film = await loadCaseFilm('menu-qr');
     return (
         <>
             <StructuredData
@@ -31,8 +33,21 @@ export default function Page() {
                     { name: 'Menu QR', url: '/work/menu-qr' },
                 ]}
             />
-            <MenuQRProjectPage />
+            {film && (
+                <StructuredData
+                    type="VideoObject"
+                    video={{
+                        name: film.title,
+                        description: metadata.description as string,
+                        thumbnailUrl: film.poster,
+                        uploadDate: film.uploadDate,
+                        duration: isoDuration(film.duration),
+                        contentUrl: film.src,
+                        transcript: film.transcript,
+                    }}
+                />
+            )}
+            <MenuQRProjectPage film={film} />
         </>
     );
 }
-

@@ -6,13 +6,14 @@ import { Maximize2 } from 'lucide-react';
 
 import { PROJECTS } from '@/data/consts';
 import { PROJECT_CONTENT } from '@/data/project-content';
+import type { CaseFilmData } from '@/data/films';
 import { Lightbox } from '@/components/fx/media';
 import { MosaicImage } from '@/components/fx/mosaic-image';
+import { CaseFilm } from '@/components/case/case-film';
 import {
   CaseCards,
   CaseContact,
   CaseDemo,
-  CaseFeatures,
   CaseFigure,
   CaseHero,
   CaseHeroImage,
@@ -24,62 +25,331 @@ import {
   CaseStats,
 } from '@/components/case/case-kit';
 
+/* ---------- Vehicle-fit finder ---------- */
+
+interface Generation {
+  name: string;
+  from: number;
+  to: number | null;
+}
+
+interface VehicleModel {
+  name: string;
+  generations: Generation[];
+}
+
+/* Makes from the Tunisian best-seller allowlist; models and generations as the
+   vehicle database seeds them. */
+const vehicles: { make: string; models: VehicleModel[] }[] = [
+  { make: 'Renault', models: [{ name: 'Clio', generations: [{ name: 'Mk3 (BR0)', from: 2005, to: 2012 }, { name: 'Mk4 (BZ0)', from: 2012, to: 2019 }, { name: 'Mk5 (BZ1)', from: 2019, to: null }] }] },
+  { make: 'Peugeot', models: [{ name: '208', generations: [{ name: 'MK1', from: 2012, to: 2019 }, { name: 'MK2', from: 2019, to: null }] }] },
+  {
+    make: 'Volkswagen',
+    models: [
+      { name: 'Polo', generations: [{ name: 'Mk5 (Type 6R)', from: 2009, to: 2014 }, { name: 'Mk6 (Type AW)', from: 2014, to: 2017 }, { name: 'Mk6 (Facelift)', from: 2017, to: null }] },
+      { name: 'Golf', generations: [{ name: 'Mk6 (Type 5K)', from: 2008, to: 2012 }, { name: 'Mk7 (Type 5G)', from: 2012, to: 2017 }, { name: 'Mk8 (Type 5H)', from: 2019, to: null }] },
+    ],
+  },
+  {
+    make: 'Kia',
+    models: [
+      { name: 'Picanto', generations: [{ name: 'TA', from: 2011, to: 2017 }, { name: 'JA', from: 2017, to: 2023 }, { name: 'LA', from: 2023, to: null }] },
+      { name: 'Rio', generations: [{ name: 'UB', from: 2011, to: 2017 }, { name: 'YB', from: 2017, to: 2023 }] },
+    ],
+  },
+  {
+    make: 'Hyundai',
+    models: [
+      { name: 'i10', generations: [{ name: 'i10 II (BA)', from: 2013, to: 2019 }, { name: 'i10 III (AC3/AI3)', from: 2019, to: null }] },
+      { name: 'Accent', generations: [{ name: 'Accent IV (RB)', from: 2010, to: 2017 }, { name: 'Accent V (HCI)', from: 2017, to: 2023 }] },
+    ],
+  },
+  { make: 'Toyota', models: [{ name: 'Yaris', generations: [{ name: 'XP130', from: 2011, to: 2020 }, { name: 'XP210', from: 2020, to: null }] }] },
+];
+
+/* Twelve parts from the seeded catalogue: French names, real brands. */
+const parts = [
+  { name: 'Plaquettes de frein avant', brand: 'TRW', category: 'Freinage' },
+  { name: 'Disques de frein avant', brand: 'Bosch', category: 'Freinage' },
+  { name: "Bougie d'allumage", brand: 'NGK', category: 'Moteur' },
+  { name: 'Kit de distribution', brand: 'Gates', category: 'Moteur' },
+  { name: 'Filtre à huile', brand: 'Mann', category: 'Filtres' },
+  { name: 'Filtre à air', brand: 'Mann', category: 'Filtres' },
+  { name: 'Pompe à eau', brand: 'SKF', category: 'Refroidissement' },
+  { name: 'Amortisseur avant', brand: 'Monroe', category: 'Suspension' },
+  { name: 'Rotule de direction', brand: 'Lemförder', category: 'Suspension' },
+  { name: 'Kit embrayage', brand: 'LUK', category: 'Transmission' },
+  { name: 'Alternateur', brand: 'Valeo', category: 'Électricité' },
+  { name: 'Batterie 12V', brand: 'Varta', category: 'Électricité' },
+];
+
+/** Sample fitment: a stable two-thirds of the pool per generation, so every car narrows differently. */
+function fits(generation: string, index: number): boolean {
+  let hash = 0;
+  for (const ch of generation) hash = (hash * 31 + ch.charCodeAt(0)) % 9973;
+  return (hash + index * 5) % 3 !== 0;
+}
+
+function years(g: Generation): string {
+  return `${g.from}–${g.to ?? 'now'}`;
+}
+
+/** Make → model → generation, narrowing a part list the way the storefront does. */
+function FitFinder() {
+  const [makeName, setMakeName] = useState<string | null>(null);
+  const [modelName, setModelName] = useState<string | null>(null);
+  const [genName, setGenName] = useState<string | null>(null);
+
+  const make = vehicles.find((v) => v.make === makeName);
+  const model = make?.models.find((m) => m.name === modelName);
+  const generation = model?.generations.find((g) => g.name === genName);
+  const shown = generation ? parts.filter((_, i) => fits(generation.name, i)) : parts;
+
+  const pickMake = (name: string) => { setMakeName(name); setModelName(null); setGenName(null); };
+  const pickModel = (name: string) => { setModelName(name); setGenName(null); };
+
+  const headline = generation
+    ? `${shown.length} of ${parts.length} parts fit a ${make!.make} ${model!.name} ${generation.name}`
+    : model
+      ? `Which ${make!.make} ${model.name}?`
+      : make
+        ? `Which ${make.make}?`
+        : 'Pick your car to see only what fits';
+
+  return (
+    <CaseDemo
+      title="Vehicle-fit finder — try it"
+      action={
+        (makeName || modelName || genName) && (
+          <button type="button" className="demo-action" onClick={() => pickMake('')}>Start over</button>
+        )
+      }
+      note="Cars and part names come from the seeded catalogue. Which part fits which generation is sample data on this page."
+    >
+      <div className="finder">
+        <div className="finder-steps">
+          <div className="finder-step" role="group" aria-label="Make">
+            <p className="finder-step-label"><span>01</span> Make</p>
+            <div className="chip-row">
+              {vehicles.map((v) => (
+                <button key={v.make} type="button" className="chip" aria-pressed={v.make === makeName} onClick={() => pickMake(v.make)}>{v.make}</button>
+              ))}
+            </div>
+          </div>
+          <div className="finder-step" role="group" aria-label="Model" data-waiting={!make || undefined}>
+            <p className="finder-step-label"><span>02</span> Model</p>
+            {make ? (
+              <div className="chip-row">
+                {make.models.map((m) => (
+                  <button key={m.name} type="button" className="chip" aria-pressed={m.name === modelName} onClick={() => pickModel(m.name)}>{m.name}</button>
+                ))}
+              </div>
+            ) : (
+              <p className="finder-wait">Choose a make first</p>
+            )}
+          </div>
+          <div className="finder-step" role="group" aria-label="Generation" data-waiting={!model || undefined}>
+            <p className="finder-step-label"><span>03</span> Generation</p>
+            {model ? (
+              <div className="chip-row">
+                {model.generations.map((g) => (
+                  <button key={g.name} type="button" className="chip chip-stack" aria-pressed={g.name === genName} onClick={() => setGenName(g.name)}>
+                    <span>{g.name}</span>
+                    <span className="text-xs font-medium opacity-75">{years(g)}</span>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className="finder-wait">Choose a model first</p>
+            )}
+          </div>
+        </div>
+
+        <div className="finder-results" aria-live="polite">
+          <h3 className="finder-headline">{headline}</h3>
+          <p className="finder-sub">
+            {generation
+              ? `${years(generation)} · every listing below is filtered by this generation, the same way the storefront filters by compatibility.`
+              : 'Browsing needs no account. Until a car is chosen, the catalogue shows everything.'}
+          </p>
+          <ul className="finder-list">
+            <AnimatePresence initial={false}>
+              {shown.map((p) => (
+                <motion.li
+                  key={p.name}
+                  layout="position"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.18 }}
+                >
+                  <span className="finder-part">
+                    <span className="finder-part-name">{p.name}</span>
+                    <span className="finder-part-meta">{p.brand} · {p.category}</span>
+                  </span>
+                  <span className="finder-fit" data-fit={generation ? 'true' : undefined}>{generation ? 'Fits' : 'Any car'}</span>
+                </motion.li>
+              ))}
+            </AnimatePresence>
+          </ul>
+        </div>
+      </div>
+    </CaseDemo>
+  );
+}
+
+/* ---------- Deposit order engine ---------- */
+
 interface OrderState {
   id: string;
   label: string;
-  tone: 'idle' | 'ok' | 'fail';
   headline: string;
   copy: string;
+  /** An end state the happy path can fall into. */
+  exit?: boolean;
 }
 
-const orderStates: OrderState[] = [
+/* The real OrderStatus enum, in the order an order moves through it. */
+const orderPath: OrderState[] = [
   {
-    id: 'awaiting',
-    label: 'AWAITING_DEPOSIT',
-    tone: 'idle',
-    headline: 'Order locked, deposit pending',
-    copy: 'The order reserves the part and waits for the 20% deposit. A reminder fires 3–4 hours before the deadline, and the buyer uploads a deposit proof photo straight from their phone.',
+    id: 'VERIFICATION_IN_PROGRESS',
+    label: 'Verification in progress',
+    headline: 'A human phones the supplier',
+    copy: 'The order lands in the admin call queue. Someone calls the supplier, confirms the part is really on the shelf and agrees the final price. No money has been requested yet.',
   },
   {
-    id: 'confirmed',
-    label: 'CONFIRMED',
-    tone: 'ok',
-    headline: 'Deposit cleared, stock verified by a human',
-    copy: 'An operator phones the supplier and confirms the part is genuinely on the shelf before anything ships. Only then does fulfilment start — the remaining 80% is paid cash on delivery.',
+    id: 'CONFIRMED_HELD',
+    label: 'Confirmed, held',
+    headline: 'Stock confirmed, price locked',
+    copy: 'The supplier said yes. The part is held for this buyer at the agreed price, and only now does the order ask for its deposit.',
   },
   {
-    id: 'failed',
-    label: 'FAILED_REJECTED',
-    tone: 'fail',
-    headline: 'Deadline passed, stock released',
-    copy: 'A deposit-deadline cron expires unpaid orders automatically, so reserved inventory never gets stuck behind a buyer who walked away.',
+    id: 'AWAITING_DEPOSIT',
+    label: 'Awaiting deposit',
+    headline: 'The 24-hour clock starts',
+    copy: 'The buyer pays 20% through an external channel — D17, Wafacash, a bank transfer or a postal mandat. The deadline is set 24 hours out, and a cron job sends a reminder 3 to 4 hours before it expires.',
+  },
+  {
+    id: 'DEPOSIT_UNDER_REVIEW',
+    label: 'Deposit under review',
+    headline: 'A reference code or a receipt photo',
+    copy: 'The buyer submits the transfer reference and/or a photo of the receipt from their phone. An admin checks it before anything ships.',
+  },
+  {
+    id: 'DEPOSIT_CONFIRMED',
+    label: 'Deposit confirmed',
+    headline: 'Inventory bound to the order',
+    copy: 'The deposit is accepted and the supplier’s inventory is bound to this order. From here the deadline cron can no longer fail it.',
+  },
+  {
+    id: 'OUT_FOR_DELIVERY',
+    label: 'Out for delivery',
+    headline: 'The remaining 80%, on the doorstep',
+    copy: 'The part ships and the balance is paid cash on delivery. A failed delivery and a dispute each have their own state rather than a note in a text field.',
+  },
+  {
+    id: 'COMPLETED',
+    label: 'Completed',
+    headline: 'Commission and payout',
+    copy: 'On completion the platform’s 8% commission is computed on the agreed price, and the supplier’s payout is recorded for the rest.',
   },
 ];
 
-const flow = [
-  { title: 'Find the part', body: 'Pick make, model, and engine — or full-text search the catalogue through Meilisearch.' },
-  { title: 'Pay 20% deposit', body: 'The deposit locks the order in. No deposit by the deadline, no reservation.' },
-  { title: 'We call the supplier', body: 'A real person confirms real stock before a single dinar of the balance is committed.' },
-  { title: 'Cash on delivery', body: 'The part ships and the remaining 80% is paid on the doorstep.' },
+const orderExits: OrderState[] = [
+  {
+    id: 'FAILED_REJECTED',
+    label: 'Failed / rejected',
+    headline: 'Deadline passed, part released',
+    copy: 'No deposit by the deadline: the cron fails the order automatically and the reserved part is free for the next buyer. Every re-entry into Awaiting deposit restarts the clock.',
+    exit: true,
+  },
+  {
+    id: 'CANCELLED',
+    label: 'Cancelled',
+    headline: 'Cancelled, cleanly',
+    copy: 'An order that dies after its deposit was confirmed leaves money and bound inventory behind. Both are unwound as explicit records, not forgotten.',
+    exit: true,
+  },
 ];
+
+/** Walk the real state machine; every state is a button, the readout says what the system does there. */
+function OrderEngine() {
+  const [activeId, setActiveId] = useState(orderPath[0].id);
+  const active = [...orderPath, ...orderExits].find((s) => s.id === activeId)!;
+  const pathIndex = orderPath.findIndex((s) => s.id === activeId);
+
+  return (
+    <CaseDemo title="Order engine — every state of the real enum" note="Two cron jobs run underneath: a deposit reminder at the 3–4 hour mark, and the deadline expiry that frees the part.">
+      <ol className="engine-rail" aria-label="Order states">
+        {orderPath.map((s, i) => (
+          <li key={s.id} data-done={pathIndex > i ? 'true' : undefined} data-current={activeId === s.id ? 'true' : undefined}>
+            <button type="button" className="engine-state" aria-pressed={activeId === s.id} onClick={() => setActiveId(s.id)}>
+              <span className="engine-tile" aria-hidden="true" />
+              <span className="engine-label">{s.label}</span>
+            </button>
+          </li>
+        ))}
+      </ol>
+      <div className="engine-body">
+        <motion.div
+          key={active.id}
+          initial={{ opacity: 0, x: 8 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.25 }}
+          className="engine-readout"
+        >
+          <p className="engine-code" data-exit={active.exit || undefined}>{active.id}</p>
+          <h3 className="engine-headline">{active.headline}</h3>
+          <p className="engine-copy">{active.copy}</p>
+          {active.id === 'AWAITING_DEPOSIT' && (
+            <button type="button" className="demo-action mt-5" onClick={() => setActiveId('FAILED_REJECTED')}>
+              Let the deadline pass →
+            </button>
+          )}
+          {active.exit && (
+            <button type="button" className="demo-action mt-5" onClick={() => setActiveId(orderPath[0].id)}>
+              ← Back to the start
+            </button>
+          )}
+        </motion.div>
+        <div className="engine-side">
+          <p className="engine-side-label">Exit states</p>
+          <div className="chip-row">
+            {orderExits.map((s) => (
+              <button key={s.id} type="button" className="chip" aria-pressed={activeId === s.id} onClick={() => setActiveId(s.id)}>{s.label}</button>
+            ))}
+          </div>
+          <dl className="engine-facts">
+            <div><dt>Deposit</dt><dd>20%</dd></div>
+            <div><dt>Deadline</dt><dd>24 h</dd></div>
+            <div><dt>Reminder</dt><dd>3–4 h before</dd></div>
+            <div><dt>Commission</dt><dd>8%</dd></div>
+          </dl>
+        </div>
+      </div>
+    </CaseDemo>
+  );
+}
+
+/* ---------- Surfaces and captures ---------- */
 
 const surfaces = [
   {
     tag: 'Bay 01',
     title: 'Customer',
-    copy: 'Vehicle-fit catalogue, part search, garage, manual deposit submission with proof upload, and order tracking — French and mobile-first.',
+    copy: 'Vehicle-fit catalogue, Meilisearch part search, a garage of saved cars, deposit submission with proof upload and order tracking. French, mobile-first, no account needed to browse.',
     points: ['Vehicle finder', 'Part search', 'Deposit submission'],
   },
   {
     tag: 'Bay 02',
     title: 'Admin',
-    copy: 'A call queue for human stock verification, deposit review, and the full order lifecycle.',
+    copy: 'A click-to-call queue for stock verification, deposit review against the account, and the full order lifecycle.',
     points: ['Call queue', 'Deposit review', 'Order ops'],
   },
   {
     tag: 'Bay 03',
     title: 'Supplier',
-    copy: 'Inventory management, shipping, and payout tracking for verified parts vendors.',
+    copy: 'Inventory, shipment handoff and payout tracking for verified parts vendors, with the 8% commission computed on completed orders.',
     points: ['Inventory', 'Shipping', 'Payouts'],
   },
 ];
@@ -99,61 +369,13 @@ const catalogueWall: CatalogueTile[] = [
   { src: '/autopart-plaquettes.webp', label: 'Plaquettes', alt: 'Brake pads listing' },
 ];
 
-/** Order-status colours: pending, cleared, failed. */
-function toneDot(tone: OrderState['tone']): string {
-  if (tone === 'ok') return 'bg-emerald-500';
-  if (tone === 'fail') return 'bg-red-500';
-  return 'bg-[color:var(--saffron)]';
-}
-
-/** Diagnostic-console view of the deposit order engine. */
-function OrderEngine() {
-  const [active, setActive] = useState<OrderState>(orderStates[0]);
-
-  return (
-    <CaseDemo title="Order engine — diagnostic" note="cron: reminders + auto-expiry">
-      <div className="grid gap-6 md:grid-cols-[minmax(14rem,0.9fr)_1.6fr] md:gap-[var(--gutter)]">
-        <div className="flex flex-col gap-2">
-          {orderStates.map((state) => {
-            const isActive = active.id === state.id;
-            return (
-              <button key={state.id} type="button" onClick={() => setActive(state)} aria-pressed={isActive} className="chip">
-                <span className="flex w-full items-center gap-3 py-3">
-                  <span
-                    aria-hidden="true"
-                    className={`h-2 w-2 shrink-0 rounded-[1px] ${isActive ? toneDot(state.tone) : 'bg-[color:var(--line-strong)]'}`}
-                  />
-                  {state.label}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-        <motion.div
-          key={active.id}
-          initial={{ opacity: 0, x: 8 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.25 }}
-          className="border-t border-[color:var(--line)] pt-6 md:border-l md:border-t-0 md:pl-[var(--gutter)] md:pt-1"
-        >
-          <p className="text-[length:var(--text-xs)] font-semibold text-[color:var(--ink-2)]">state readout</p>
-          <h3 className="mt-3 text-[length:var(--text-xl)] font-[720] leading-[1.05] tracking-[-0.025em] [font-stretch:112%] [text-wrap:balance]">
-            {active.headline}
-          </h3>
-          <p className="mt-4 max-w-[52ch] leading-[1.6] text-[color:var(--ink-2)]">{active.copy}</p>
-        </motion.div>
-      </div>
-    </CaseDemo>
-  );
-}
-
 /** Mosaic of real catalogue captures, each expandable. */
 function CatalogueWall() {
   const [open, setOpen] = useState<CatalogueTile | null>(null);
 
   return (
     <CaseDemo
-      title="Catalogue — real captures, fit-filtered per vehicle"
+      title="Customer surface — real captures"
       action={<span className="hidden text-[length:var(--text-xs)] text-[color:var(--ink-2)] sm:inline">Click to inspect</span>}
     >
       <div className="grid grid-cols-2 gap-x-4 gap-y-6 lg:grid-cols-3 lg:gap-x-6">
@@ -192,7 +414,7 @@ function CatalogueWall() {
   );
 }
 
-export default function AutoPartProjectPage() {
+export default function AutoPartProjectPage({ film }: { film: CaseFilmData | null }) {
   const t = PROJECT_CONTENT.autopart;
   const project = PROJECTS.find((p) => p.slug === 'autopart');
 
@@ -207,9 +429,10 @@ export default function AutoPartProjectPage() {
         liveUrl={project.url}
         tagline="Real parts. Real stock."
         description={t.description}
-        primary={{ href: '#engine', label: 'Open the order engine' }}
-        media={<CaseHeroImage slug="autopart" src={project.image || '/autopart.webp'} alt="AutoParts Tunisia storefront" />}
-        mediaAspect="16 / 8"
+        primary={{ href: '#finder', label: 'Find a part' }}
+        media={film ? <CaseFilm film={film} /> : <CaseHeroImage slug="autopart" src={project.image || '/autopart.webp'} alt="AutoParts Tunisia storefront" />}
+        mediaAspect={film ? 'auto' : '16 / 8'}
+        facts={['100+ brands · 2,000+ models', '20% deposit, balance on delivery', 'A phone call before every order', 'French, mobile-first']}
       />
 
       <CaseSection label="The problem" title="Trust, engineered into the order itself.">
@@ -222,29 +445,49 @@ export default function AutoPartProjectPage() {
         />
         <CaseStats
           items={[
-            { value: '03', label: 'Surfaces', detail: 'Customer · Admin · Supplier' },
-            { value: '20%', label: 'Deposit', detail: 'Balance cash on delivery' },
-            { value: '1 call', label: 'Verification', detail: 'Human stock check, every order' },
+            { value: '20%', label: 'Deposit', detail: 'Paid off-platform, reviewed by an admin' },
+            { value: '24 h', label: 'Deposit deadline', detail: 'A cron fails unpaid orders and frees the part' },
+            { value: '8%', label: 'Platform commission', detail: 'Computed on completed orders' },
           ]}
         />
       </CaseSection>
 
-      <CaseSection label="Job card" title="How an order works">
-        <CaseCards items={flow} columns={4} ordered />
+      <CaseSection
+        id="finder"
+        label="Find the part"
+        title="Does it fit my car?"
+        aside="Buyers narrow the catalogue by make, model and generation before they see a single part — or go straight to typo-tolerant Meilisearch search. The seeded vehicle data covers 100+ brands and 2,000+ models, and a signed-in buyer keeps their cars in a garage so the next visit starts filtered."
+      >
+        <FitFinder />
+        <div className="case-pair">
+          <CaseFigure
+            src="/autopart-catalogue.webp"
+            alt="AutoParts category catalogue with live counts"
+            dims={{ width: 1440, height: 900 }}
+            caption="Catalogue — categories with live counts"
+            sizes="(max-width: 860px) 100vw, 50vw"
+          />
+          <CaseFigure
+            src="/autopart-marques.webp"
+            alt="AutoParts brand index"
+            dims={{ width: 1440, height: 900 }}
+            caption="Marques — the brand index behind the finder"
+            sizes="(max-width: 860px) 100vw, 50vw"
+          />
+        </div>
       </CaseSection>
 
       <CaseSection
         id="engine"
         label="The hard part"
         title="Deposit order engine"
-        aside="Every order is a small state machine. Select a state to read what the system does — and what it refuses to do — at each step."
+        aside="Every order is a small state machine with eleven states. Select one to read what the system does there — and what it refuses to do until a human has checked."
         surface="night"
       >
         <OrderEngine />
-        <CaseFeatures items={t.keyFeatures} />
       </CaseSection>
 
-      <CaseSection label="One workshop, three bays" title="Three-sided platform">
+      <CaseSection label="One workshop, three bays" title="Three-sided platform" surface="tone">
         <CaseCards
           columns={3}
           items={surfaces.map((s) => ({
@@ -260,28 +503,7 @@ export default function AutoPartProjectPage() {
             ),
           }))}
         />
-      </CaseSection>
-
-      <CaseSection label="On the shelves" title="The catalogue wall" surface="tone">
         <CatalogueWall />
-        <div className="case-pair">
-          <CaseFigure
-            src="/autopart-catalogue.webp"
-            alt="AutoParts category catalogue with live counts"
-            dims={{ width: 1440, height: 900 }}
-            caption="Catalogue — verified categories with live counts"
-            sizes="(max-width: 860px) 100vw, 50vw"
-            surface="sidi"
-          />
-          <CaseFigure
-            src="/autopart-marques.webp"
-            alt="AutoParts brand index"
-            dims={{ width: 1440, height: 900 }}
-            caption="Brands — the supplier-verified marque index"
-            sizes="(max-width: 860px) 100vw, 50vw"
-            surface="sidi"
-          />
-        </div>
       </CaseSection>
 
       <CaseSection label="Tools on the wall" title="Technology stack">

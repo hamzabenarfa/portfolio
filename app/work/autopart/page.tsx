@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { StructuredData } from '@/components/seo/structured-seo-data';
+import { isoDuration, loadCaseFilm } from '@/data/films';
 import AutoPartProjectPage from './client';
 
 export const metadata: Metadata = {
@@ -22,7 +23,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
+export default async function Page() {
+  const film = await loadCaseFilm('autopart');
   return (
     <>
       <StructuredData
@@ -33,7 +35,21 @@ export default function Page() {
           { name: 'AutoParts Tunisia', url: '/work/autopart' },
         ]}
       />
-      <AutoPartProjectPage />
+      {film && (
+        <StructuredData
+          type="VideoObject"
+          video={{
+            name: film.title,
+            description: metadata.description as string,
+            thumbnailUrl: film.poster,
+            uploadDate: film.uploadDate,
+            duration: isoDuration(film.duration),
+            contentUrl: film.src,
+            transcript: film.transcript,
+          }}
+        />
+      )}
+      <AutoPartProjectPage film={film} />
     </>
   );
 }

@@ -1,0 +1,35 @@
+{
+  "slug": "beadcraft",
+  "title": "BeadCraft Studio",
+  "duration": 56.0,
+  "engine": "hyperframes",
+  "engineVersion": "0.8.204",
+  "workflow": "HyperFrames composition: HTML + GSAP sub-compositions, story → SPEC → check → snapshot review",
+  "voice": "Kokoro-82M · af_heart",
+  "music": "Happy Beats / Business Moves vol. 12 · Sascha Ende, ende.app (CC BY 4.0)",
+  "sfx": "Kenney (CC0)",
+  "posterTime": 8.5,
+  "chapters": [
+    {
+      "start": 0,
+      "label": "Chat orders"
+    },
+    {
+      "start": 4.5,
+      "label": "BeadCraft Studio"
+    },
+    {
+      "start": 9.7,
+      "label": "Design to order"
+    },
+    {
+      "start": 27.0,
+      "label": "Trusted totals"
+    },
+    {
+      "start": 49.3,
+      "label": "Stack"
+    }
+  ],
+  "transcript": "A custom bracelet usually starts as a dozen chat messages. BeadCraft Studio turns that into a storefront, in English and French. Shoppers pick a bead and place it slot by slot, then a cord and a charm. The price updates with every choice. A finished design gets a link that opens on any phone. Checkout makes it a job on the maker's dashboard, tracked through five stages. The hard part is trust in the numbers. One pure function adds beads, cord, charm and labour. The browser runs it for the estimate, the server for the final total. Checkout carries a key, so a retried request returns the same order. Status changes check the order's version, so two makers can't overwrite each other. It's live today, built by Hamza Benarfa in Tunis."
+}

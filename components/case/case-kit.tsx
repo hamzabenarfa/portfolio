@@ -42,7 +42,7 @@ export const CASE_TONES: Record<string, CaseTone> = {
 };
 
 /** Grout between mosaic tiles, a shade darker than each panel colour. */
-const TONE_GROUT: Record<CaseTone, string> = {
+export const TONE_GROUT: Record<CaseTone, string> = {
   saffron: "#c88e26",
   sidi: "#1542a8",
   night: "#071a47",

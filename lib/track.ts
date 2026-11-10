@@ -8,6 +8,7 @@ import { track } from "@vercel/analytics";
 export type FunnelEvent =
   | "project_card_click" // home work index → case study
   | "project_cta_click" // case-study closing CTA → contact
+  | "film_play" // case-study film started (once per page view)
   | "contact_click"; // any contact destination (mail / cv)
 
 type EventProps = Record<string, string | number | boolean | null>;

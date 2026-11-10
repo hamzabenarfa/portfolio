@@ -1,0 +1,50 @@
+WEBVTT
+
+1
+00:00:00.400 --> 00:00:04.325
+A custom bracelet usually starts as a dozen chat messages.
+
+2
+00:00:05.100 --> 00:00:09.303
+BeadCraft Studio turns that into a storefront, in English and French.
+
+3
+00:00:10.100 --> 00:00:14.367
+Shoppers pick a bead and place it slot by slot, then a cord and a charm.
+
+4
+00:00:14.900 --> 00:00:16.969
+The price updates with every choice.
+
+5
+00:00:17.600 --> 00:00:20.971
+A finished design gets a link that opens on any phone.
+
+6
+00:00:21.600 --> 00:00:26.123
+Checkout makes it a job on the maker's dashboard, tracked through five stages.
+
+7
+00:00:27.000 --> 00:00:29.304
+The hard part is trust in the numbers.
+
+8
+00:00:29.800 --> 00:00:33.469
+One pure function adds beads, cord, charm and labour.
+
+9
+00:00:34.000 --> 00:00:38.075
+The browser runs it for the estimate, the server for the final total.
+
+10
+00:00:38.700 --> 00:00:43.052
+Checkout carries a key, so a retried request returns the same order.
+
+11
+00:00:43.550 --> 00:00:48.521
+Status changes check the order's version, so two makers can't overwrite each other.
+
+12
+00:00:49.400 --> 00:00:52.728
+It's live today, built by Hamza Benarfa in Tunis.
+

@@ -1,0 +1,54 @@
+WEBVTT
+
+1
+00:00:00.600 --> 00:00:03.608
+A paper menu dies the day a price changes.
+
+2
+00:00:04.408 --> 00:00:08.333
+Menu QR puts the whole menu behind one code per table.
+
+3
+00:00:08.783 --> 00:00:13.156
+Diners scan, the kitchen sees the order, and nobody installs anything.
+
+4
+00:00:13.956 --> 00:00:18.308
+Scan table four at Café Green and the menu opens in the browser.
+
+5
+00:00:18.758 --> 00:00:22.086
+Switch to Arabic and the whole page flips right to left.
+
+6
+00:00:22.536 --> 00:00:26.120
+Pick a cappuccino, choose the milk, and send it to the kitchen.
+
+7
+00:00:26.570 --> 00:00:30.047
+Seconds later it's a ticket on the board, under the right table.
+
+8
+00:00:30.847 --> 00:00:33.898
+The hard part: one codebase serves every venue.
+
+9
+00:00:34.348 --> 00:00:38.103
+Each table's code names the venue and the table, and it's signed.
+
+10
+00:00:38.553 --> 00:00:42.478
+The server verifies that signature before it touches the database.
+
+11
+00:00:42.928 --> 00:00:47.045
+Then the storefront renders in the venue's own design, one of twenty-eight.
+
+12
+00:00:47.495 --> 00:00:51.058
+And the kitchen board polls for new tickets every three seconds.
+
+13
+00:00:51.858 --> 00:00:54.205
+Full write-up at benarfa.com.
+

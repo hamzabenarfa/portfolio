@@ -1,0 +1,61 @@
+WEBVTT
+
+1
+00:00:00.300 --> 00:00:01.836
+The listing says in stock.
+
+2
+00:00:02.140 --> 00:00:05.233
+The buyer drives across town; the shelf is empty.
+
+3
+00:00:05.830 --> 00:00:10.758
+AutoParts Tunisia: a French, mobile-first marketplace for car parts.
+
+4
+00:00:11.060 --> 00:00:14.367
+No order moves until a human has called the supplier.
+
+5
+00:00:14.970 --> 00:00:17.637
+Start with the car: make, model, engine.
+
+6
+00:00:17.940 --> 00:00:20.607
+The catalogue narrows to what fits that engine.
+
+7
+00:00:20.910 --> 00:00:25.475
+Open a part: the listed price, and the twenty percent deposit, up front.
+
+8
+00:00:25.780 --> 00:00:28.255
+Ask for it, and an agent phones the shop.
+
+9
+00:00:28.550 --> 00:00:33.990
+The deposit goes by D17 or bank transfer, proof uploaded from the phone.
+
+10
+00:00:34.290 --> 00:00:37.554
+An admin checks it; the balance is cash on delivery.
+
+11
+00:00:38.150 --> 00:00:40.433
+Underneath is one order state machine.
+
+12
+00:00:40.730 --> 00:00:43.119
+Only the right actor can make each move.
+
+13
+00:00:43.420 --> 00:00:47.068
+A twenty-four hour clock starts at every deposit request.
+
+14
+00:00:47.370 --> 00:00:50.442
+Miss it, and a cron fails the order and frees the part.
+
+15
+00:00:51.040 --> 00:00:55.861
+Storefront, admin queue, supplier dashboard: built by Hamza Benarfa.

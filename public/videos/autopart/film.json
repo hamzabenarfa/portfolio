@@ -1,0 +1,35 @@
+{
+  "slug": "autopart",
+  "title": "AutoParts Tunisia",
+  "duration": 58.5,
+  "engine": "brag",
+  "engineVersion": "brag (video-skills) on hyperframes 0.8.204",
+  "workflow": "/brag --full --voice --tone polished --format landscape --duration 55; Kokoro per-sentence clips; HyperFrames check + delivery render; shared ffmpeg mastering",
+  "voice": "Kokoro-82M · af_heart",
+  "music": "Happy Beats / Business Moves vol. 12 · Sascha Ende, ende.app (CC BY 4.0)",
+  "sfx": "Kenney (CC0)",
+  "posterTime": 10.0,
+  "chapters": [
+    {
+      "start": 0,
+      "label": "The problem"
+    },
+    {
+      "start": 5.6,
+      "label": "AutoParts Tunisia"
+    },
+    {
+      "start": 14.8,
+      "label": "In use"
+    },
+    {
+      "start": 38.2,
+      "label": "The state machine"
+    },
+    {
+      "start": 50.7,
+      "label": "Credits"
+    }
+  ],
+  "transcript": "The listing says in stock. The buyer drives across town; the shelf is empty. AutoParts Tunisia: a French, mobile-first marketplace for car parts. No order moves until a human has called the supplier. Start with the car: make, model, engine. The catalogue narrows to what fits that engine. Open a part: the listed price, and the twenty percent deposit, up front. Ask for it, and an agent phones the shop. The deposit goes by D17 or bank transfer, proof uploaded from the phone. An admin checks it; the balance is cash on delivery. Underneath is one order state machine. Only the right actor can make each move. A twenty-four hour clock starts at every deposit request. Miss it, and a cron fails the order and frees the part. Storefront, admin queue, supplier dashboard: built by Hamza Benarfa."
+}

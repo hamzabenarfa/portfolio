@@ -10,6 +10,9 @@ export default defineConfig([
     "out/**",
     "build/**",
     "scripts/**",
+    "remotion/**",
+    "video/**",
+    ".claude/**",
     "next-env.d.ts",
   ]),
 ]);
