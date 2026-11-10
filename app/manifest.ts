@@ -4,11 +4,11 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Hamza Benarfa — Full-Stack Developer",
     short_name: "H. Benarfa",
-    description: "Portfolio of Hamza Benarfa — Full-Stack Developer & DevOps Engineer from Tunisia. Building fast, accessible web & mobile apps.",
+    description: "Portfolio of Hamza Benarfa — independent full-stack developer in Tunisia, taking products from blank page to production.",
     start_url: "/",
     display: "standalone",
-    theme_color: "#ffffff",
-    background_color: "#ffffff",
+    theme_color: "#f2f3ef",
+    background_color: "#f2f3ef",
     icons: [
       {
         src: "/web-app-manifest-192x192.png",

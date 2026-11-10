@@ -1,5 +1,10 @@
+// PostHog region of the project behind NEXT_PUBLIC_POSTHOG_KEY: "us" or "eu".
+const posthogRegion = process.env.NEXT_PUBLIC_POSTHOG_REGION === "eu" ? "eu" : "us";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // PostHog API paths end with a slash; without this Next.js 308-redirects them.
+  skipTrailingSlashRedirect: true,
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -17,6 +22,14 @@ const nextConfig = {
         destination: "/work/:slug",
         permanent: true,
       },
+    ];
+  },
+  // Reverse proxy so analytics isn't dropped by ad blockers and stays same-origin (CSP 'self').
+  async rewrites() {
+    return [
+      { source: "/ingest/static/:path*", destination: `https://${posthogRegion}-assets.i.posthog.com/static/:path*` },
+      { source: "/ingest/array/:path*", destination: `https://${posthogRegion}-assets.i.posthog.com/array/:path*` },
+      { source: "/ingest/:path*", destination: `https://${posthogRegion}.i.posthog.com/:path*` },
     ];
   },
   async headers() {

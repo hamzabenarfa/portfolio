@@ -1,25 +1,18 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from '@/components/seo/structured-seo-data';
 import { isoDuration, loadCaseFilm } from '@/data/films';
 import MenuQRProjectPage from './client';
 
-export const metadata: Metadata = {
-    title: 'Menu QR — QR Ordering for Restaurants | Hamza Benarfa',
-    description: 'A multi-tenant SaaS that turns any table into a QR ordering page — passwordless sign-in, a live kitchen dashboard, and 28 built storefront designs, trilingual with full Arabic RTL support.',
-    alternates: { canonical: '/work/menu-qr' },
-    openGraph: {
-        title: 'Menu QR — QR Ordering for Restaurants | Hamza Benarfa',
-        description: 'A multi-tenant SaaS platform that puts a restaurant\'s menu on every table behind a single QR code — turning scans into live orders with no app to download and no POS terminal.',
-        images: [
-            {
-                url: '/menu-qr.webp',
-                width: 1200,
-                height: 630,
-                alt: 'Menu QR - Digital Restaurant Menu Platform',
-            },
-        ],
-    },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Menu QR — QR Ordering for Restaurants",
+  description:
+    'A multi-tenant SaaS that turns any table into a QR ordering page — passwordless sign-in, a live kitchen dashboard, and 28 built storefront designs, trilingual with full Arabic RTL support.',
+  shareDescription:
+    'A multi-tenant SaaS platform that puts a restaurant\'s menu on every table behind a single QR code — turning scans into live orders with no app to download and no POS terminal.',
+  path: "/work/menu-qr",
+  type: "article",
+});
 
 export default async function Page() {
     const film = await loadCaseFilm('menu-qr');

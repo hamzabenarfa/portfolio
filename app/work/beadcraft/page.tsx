@@ -1,27 +1,18 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from "@/lib/seo";
 import { StructuredData } from '@/components/seo/structured-seo-data';
 import { isoDuration, loadCaseFilm } from '@/data/films';
 import BeadCraftProjectPage from './client';
 
-export const metadata: Metadata = {
-  title: 'BeadCraft Studio — Made-to-Order Bracelet Commerce | Hamza Benarfa',
+export const metadata: Metadata = pageMetadata({
+  title: "BeadCraft Studio — Made-to-Order Bracelet Commerce",
   description:
     'A bilingual storefront and crafter dashboard for a Tunisian artisan selling custom beaded bracelets — with a real-time visual configurator, idempotent checkout, and a New → Delivered order pipeline.',
-  alternates: { canonical: '/work/beadcraft' },
-  openGraph: {
-    title: 'BeadCraft Studio — Made-to-Order Bracelet Commerce | Hamza Benarfa',
-    description:
-      'Made-to-order jewelry commerce for a Tunisian artisan — a tactile visual configurator, bilingual storefront, and a crafter dashboard for inventory, orders, and a New → Delivered production pipeline.',
-    images: [
-      {
-        url: '/beadcraft.webp',
-        width: 1200,
-        height: 630,
-        alt: 'BeadCraft Studio — made-to-order beaded bracelets',
-      },
-    ],
-  },
-};
+  shareDescription:
+    'Made-to-order jewelry commerce for a Tunisian artisan — a tactile visual configurator, bilingual storefront, and a crafter dashboard for inventory, orders, and a New → Delivered production pipeline.',
+  path: "/work/beadcraft",
+  type: "article",
+});
 
 export default async function Page() {
   const film = await loadCaseFilm('beadcraft');

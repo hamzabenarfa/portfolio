@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { PROJECTS } from "@/data/consts";
 import { PROJECT_CONTENT } from "@/data/project-content";
@@ -11,23 +12,16 @@ import { MosaicImage } from "@/components/fx/mosaic-image";
 import "@/app/site.css";
 import "@/app/subpage.css";
 
-const SITE_URL = process.env.NEXT_PUBLIC_WEB_URL || "https://benarfa.com";
-const baseUrl = SITE_URL.replace(/\/$/, "");
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Selected Work",
   description:
     "Case studies and projects by Hamza Benarfa — SaaS platforms, e-commerce builds, and custom web tools designed and shipped end to end.",
-  alternates: { canonical: `${baseUrl}/work` },
-  openGraph: {
-    title: "Selected Work | Hamza Benarfa",
-    description:
-      "Case studies and projects — SaaS platforms, e-commerce, and custom web tools built end to end.",
-    url: `${baseUrl}/work`,
-    type: "website",
-    images: [{ url: "/api/og", width: 1200, height: 630, alt: "Hamza Benarfa — Work" }],
-  },
-};
+  shareDescription:
+    "Case studies and projects — SaaS platforms, e-commerce, and custom web tools built end to end.",
+  path: "/work",
+  type: "website",
+});
 
 export default function WorkPage() {
   const projects = PROJECTS.filter((p) => p.listed !== false && PROJECT_CONTENT[p.slug]);

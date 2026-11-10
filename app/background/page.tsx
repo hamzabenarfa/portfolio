@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site/site-header";
 import { PageIntro } from "@/components/site/page-intro";
@@ -10,23 +11,16 @@ import { ENGAGEMENTS, STACK_GROUPS } from "@/data/experience";
 import "@/app/site.css";
 import "@/app/subpage.css";
 
-const SITE_URL = process.env.NEXT_PUBLIC_WEB_URL || "https://benarfa.com";
-const baseUrl = SITE_URL.replace(/\/$/, "");
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Engineering Background",
   description:
     "The engineering background of Hamza Benarfa — full-stack developer experience across fashion-tech, agency, teaching, and independent consulting, plus the stack behind the work.",
-  alternates: { canonical: `${baseUrl}/background` },
-  openGraph: {
-    title: "Engineering Background | Hamza Benarfa",
-    description:
-      "Full-stack developer experience across fashion-tech, agency, teaching, and independent consulting.",
-    url: `${baseUrl}/background`,
-    type: "profile",
-    images: [{ url: "/api/og", width: 1200, height: 630, alt: "Hamza Benarfa — Background" }],
-  },
-};
+  shareDescription:
+    "Full-stack developer experience across fashion-tech, agency, teaching, and independent consulting.",
+  path: "/background",
+  type: "profile",
+});
 
 const GLYPHS = ["bsb/sbs/bsb", "nnn/nbn/nnn", "bbb/.../nnn", "s.s/.r./s.s", "bnb/nbn/bnb", "sss/s.s/sss"];
 

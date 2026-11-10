@@ -1,9 +1,10 @@
 import { track } from "@vercel/analytics";
+import posthog from "posthog-js";
 
 /**
  * Conversion funnel events for the case-study → contact journey.
- * Wraps Vercel Analytics' `track` so event names stay typed and consistent —
- * this is what makes the project→contact funnel measurable end to end.
+ * Sent to both Vercel Analytics and PostHog so event names stay typed and
+ * consistent — this is what makes the project→contact funnel measurable.
  */
 export type FunnelEvent =
   | "project_card_click" // home work index → case study
@@ -14,7 +15,8 @@ export type FunnelEvent =
 type EventProps = Record<string, string | number | boolean | null>;
 
 export function trackEvent(event: FunnelEvent, props?: EventProps): void {
-  // `track` is a no-op outside the browser and when analytics is disabled,
-  // so this is safe to call directly from event handlers.
+  // Both calls are no-ops when their client isn't initialised (server, no key,
+  // analytics disabled), so this is safe to call directly from event handlers.
   track(event, props);
+  if (posthog.__loaded) posthog.capture(event, props);
 }
